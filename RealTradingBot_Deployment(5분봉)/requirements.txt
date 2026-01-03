@@ -1,0 +1,9 @@
+ccxt
+pandas
+numpy
+xgboost
+scikit-learn
+joblib
+pandas_ta
+python-dotenv
+schedule

@@ -1,0 +1,52 @@
+{
+  "exchange": {
+    "name": "bybit",
+    "api_key": "ENV_VAR",
+    "api_secret": "ENV_VAR",
+    "symbol": "BTC/USDT",
+    "timeframe": "15m",
+    "leverage": 25
+  },
+  "strategy": {
+    "name": "RSI2_Trend_MeanReversion_MaxROI",
+    "bb_length": 20,
+    "bb_std": 2.0,
+    "adx_length": 14,
+    "adx_threshold": 25.0,
+    "rsi_length": 14,
+    "rsi_overbought": 75.0,
+    "rsi_oversold": 25.0,
+    "rsi_buy_threshold": 5.0,
+    "rsi_sell_threshold": 95.0,
+    "lgbm_threshold": 0.58,
+    "ema_long_period": 2000,
+    "donchian_4h_period": 24,
+    "volume_ma_period": 20,
+    "volume_multiplier": 1.0,
+    "atr_length": 14,
+    "atr_sl_dip": 3.0,
+    "atr_tp_dip": 15.0,
+    "atr_sl_breakout": 3.0,
+    "atr_tp_breakout": 60.0,
+    "atr_sl_sell": 3.0,
+    "atr_tp_sell": 15.0,
+    "take_profit_atr_mult": 15.0,
+    "stop_loss_atr_mult": 3.0,
+    "trailing_stop_activation_atr": 5.0,
+    "breakeven_activation_atr": 3.0,
+    "use_trailing_stop": true,
+    "use_breakeven": true,
+    "use_hedging": false
+  },
+  "risk": {
+    "risk_per_trade_percent": 12.0,
+    "max_drawdown_percent": 50.0,
+    "compound_interest": true,
+    "compound_rate": 1.0,
+    "max_position_size_percent": 100.0
+  },
+  "system": {
+    "dry_run": true,
+    "loop_delay_seconds": 10
+  }
+}

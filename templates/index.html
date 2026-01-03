@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>봇 통합 관리 플랫폼</title>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; }
+        .card { background-color: #1e293b; border-radius: 0.75rem; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-7xl mx-auto">
+        <header class="mb-8 flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-blue-400">봇 통합 관리 플랫폼</h1>
+            <div class="text-right">
+                <p class="text-sm text-slate-400">전체 합산 자산</p>
+                <p id="total-balance" class="text-2xl font-mono font-bold text-green-400">0.00 USDT</p>
+            </div>
+        </header>
+
+        <!-- Status Table -->
+        <div class="card mb-8 overflow-x-auto">
+            <h2 class="text-xl font-semibold mb-4 text-slate-200">봇별 상세 상태</h2>
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="text-slate-400 border-b border-slate-700">
+                        <th class="pb-3 px-2">봇 이름</th>
+                        <th class="pb-3 px-2">봉 간격</th>
+                        <th class="pb-3 px-2">상태</th>
+                        <th class="pb-3 px-2">현재잔고</th>
+                        <th class="pb-3 px-2">현재포지션</th>
+                        <th class="pb-3 px-2">청산가격</th>
+                        <th class="pb-3 px-2">청산수익</th>
+                        <th class="pb-3 px-2">총수익률</th>
+                    </tr>
+                </thead>
+                <tbody id="bot-table-body">
+                    <!-- Data will be injected here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Graphs Section -->
+        <div class="grid grid-cols-1 gap-8">
+            <!-- Total Asset Graph -->
+            <div class="card">
+                <h2 class="text-xl font-semibold mb-4 text-yellow-400">전체 자산 수익률 추이 (Total Balance)</h2>
+                <div id="total-chart"></div>
+            </div>
+
+            <!-- Individual Asset Graphs Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h2 class="text-xl font-semibold mb-4 text-cyan-400">5분봉 봇 자산 추이 (Bot_5M)</h2>
+                    <div id="chart-Bot_5M"></div>
+                </div>
+                <div class="card">
+                    <h2 class="text-xl font-semibold mb-4 text-cyan-400">15분봉 봇 자산 추이 (Bot_15M)</h2>
+                    <div id="chart-Bot_15M"></div>
+                </div>
+                <div class="card">
+                    <h2 class="text-xl font-semibold mb-4 text-cyan-400">30분봉 봇 자산 추이 (Bot_30M)</h2>
+                    <div id="chart-Bot_30M"></div>
+                </div>
+                <div class="card">
+                    <h2 class="text-xl font-semibold mb-4 text-cyan-400">1시간봉 봇 자산 추이 (Bot_1H)</h2>
+                    <div id="chart-Bot_1H"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const charts = {};
+
+        function initChart(elementId, title, color, height = 300) {
+            const options = {
+                series: [{ name: 'Balance', data: [] }],
+                chart: {
+                    type: 'area',
+                    height: height,
+                    animations: { enabled: true, easing: 'linear', dynamicAnimation: { speed: 1000 } },
+                    toolbar: { show: false },
+                    background: 'transparent'
+                },
+                stroke: { curve: 'smooth', width: 3 },
+                fill: {
+                    type: 'gradient',
+                    gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.0, stops: [0, 90, 100] }
+                },
+                colors: [color],
+                dataLabels: { enabled: false },
+                xaxis: { labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
+                yaxis: { labels: { style: { colors: '#94a3b8' } } },
+                grid: { borderColor: '#334155', strokeDashArray: 4 },
+                theme: { mode: 'dark' }
+            };
+            const element = document.querySelector(`#${elementId}`);
+            if (!element) return null;
+            const chart = new ApexCharts(element, options);
+            chart.render();
+            return chart;
+        }
+
+        // Initialize predefined charts
+        const totalChart = initChart('total-chart', 'Total Asset', '#fbbf24', 350);
+        charts['Bot_5M'] = initChart('chart-Bot_5M', '5M Bot', '#22d3ee');
+        charts['Bot_15M'] = initChart('chart-Bot_15M', '15M Bot', '#22d3ee');
+        charts['Bot_30M'] = initChart('chart-Bot_30M', '30M Bot', '#22d3ee');
+        charts['Bot_1H'] = initChart('chart-Bot_1H', '1H Bot', '#22d3ee');
+
+        async function updateDashboard() {
+            try {
+                const response = await fetch('/api/data');
+                const data = await response.json();
+
+                // Update Total Balance
+                document.getElementById('total-balance').textContent = `${data.total_balance.toLocaleString()} USDT`;
+
+                // Update Table
+                const tbody = document.getElementById('bot-table-body');
+                tbody.innerHTML = '';
+                data.bots.forEach(bot => {
+                    const statusColor = bot.status === 'Running' ? 'text-green-400' : 'text-red-400';
+                    const posColor = bot.current_position === 'Long' ? 'text-green-400' : (bot.current_position === 'Short' ? 'text-red-400' : 'text-slate-400');
+                    
+                    const row = `
+                        <tr class="border-b border-slate-800 hover:bg-slate-800/50 transition-colors">
+                            <td class="py-3 px-2 font-medium text-blue-300">${bot.name}</td>
+                            <td class="py-3 px-2 text-slate-300">${bot.interval}</td>
+                            <td class="py-3 px-2 ${statusColor} font-bold">${bot.status}</td>
+                            <td class="py-3 px-2 text-green-300 font-mono">${bot.current_balance.toLocaleString()} USDT</td>
+                            <td class="py-3 px-2 ${posColor}">${bot.current_position}</td>
+                            <td class="py-3 px-2 text-red-300 font-mono">${bot.liquidation_price.toLocaleString()}</td>
+                            <td class="py-3 px-2 text-blue-300 font-mono">${bot.liquidation_profit > 0 ? '+' : ''}${bot.liquidation_profit.toLocaleString()} USDT</td>
+                            <td class="py-3 px-2 font-bold ${bot.total_roi >= 0 ? 'text-magenta-400' : 'text-red-400'}">${bot.total_roi > 0 ? '+' : ''}${bot.total_roi.toFixed(2)}%</td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+
+                    // Update Individual Charts if they exist
+                    if (charts[bot.name]) {
+                        charts[bot.name].updateSeries([{ data: bot.history }]);
+                    }
+                });
+
+                // Update Total Chart
+                if (totalChart) {
+                    totalChart.updateSeries([{ data: data.total_history }]);
+                }
+
+            } catch (error) {
+                console.error('Failed to fetch data:', error);
+            }
+        }
+
+        setInterval(updateDashboard, 2000);
+        updateDashboard();
+    </script>
+</body>
+</html>
