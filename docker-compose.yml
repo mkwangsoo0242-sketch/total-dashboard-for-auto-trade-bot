@@ -1,0 +1,80 @@
+services:
+  # 1. BTC 30m Live Bot
+  btc-30m-live:
+    build:
+      context: .
+      dockerfile: ./BTC_30분봉_Live/Dockerfile
+    container_name: btc-30m-live
+    restart: always
+    volumes:
+      - ./BTC_30분봉_Live:/app/project
+      - ./bots:/app/bots
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Seoul
+
+  # 2. Bybit 1h Bot (Integrated) - Bot Service
+  bybit-1h-bot:
+    build:
+      context: .
+      dockerfile: ./bybit_bot_usb(1시간-통합)/Dockerfile
+    container_name: bybit-1h-bot
+    restart: always
+    volumes:
+      - ./bybit_bot_usb(1시간-통합):/app/project
+      - ./bots:/app/bots
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Seoul
+    command: python -u live_trader_bybit.py
+
+  # 2. Bybit 1h Bot (Integrated) - Dashboard Service
+  # Dashboard accessible at http://localhost:5000
+  bybit-1h-dashboard:
+    build:
+      context: .
+      dockerfile: ./bybit_bot_usb(1시간-통합)/Dockerfile
+    container_name: bybit-1h-dashboard
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./bybit_bot_usb(1시간-통합):/app/project
+      - ./bots:/app/bots
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Seoul
+    command: python -u web_dashboard.py
+
+  # 3. Deploy Package 15m Bot
+  deploy-15m-bot:
+    build:
+      context: .
+      dockerfile: ./deploy_package--15분봉/Dockerfile
+    container_name: deploy-15m-bot
+    restart: always
+    volumes:
+      - ./deploy_package--15분봉:/app/project
+      - ./bots:/app/bots
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Seoul
+
+  # 4. Real Trading Bot 5m (Unified 5m)
+  # Dashboard accessible at http://localhost:5001
+  real-5m-unified:
+    build:
+      context: .
+      dockerfile: ./RealTradingBot_Deployment(5분봉)/Dockerfile
+    container_name: real-5m-unified
+    restart: always
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./RealTradingBot_Deployment(5분봉):/app/project
+      - ./bots:/app/bots
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Seoul
+    # Runs both the dashboard (background) and the bot (foreground)
+    command: sh -c "python -u app.py & sleep 5 && python -u live_trading_bot.py"
