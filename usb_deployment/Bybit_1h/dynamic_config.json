@@ -1,0 +1,19 @@
+{
+    "updated_at": "2026-01-02 19:24:35",
+    "last_optimized_date": "2026-01-02",
+    "parameters": {
+        "leverage": 1.0,
+        "adx_trending_min": 25,
+        "adx_ranging_max": 15,
+        "trend_sl_atr": 1.5,
+        "range_sl_atr": 1.0,
+        "session_start_hour": 0,
+        "session_end_hour": 23
+    },
+    "performance": {
+        "recent_return": -0.0744946357130641,
+        "recent_mdd": 0.0744946357130641,
+        "win_rate": 0.0,
+        "score": -0.4269164803184079
+    }
+}

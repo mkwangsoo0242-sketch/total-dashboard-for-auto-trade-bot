@@ -1,0 +1,12 @@
+ccxt
+pandas
+pandas_ta
+numpy
+matplotlib
+schedule
+requests
+lightgbm
+joblib
+scikit-learn
+flask
+flask-cors

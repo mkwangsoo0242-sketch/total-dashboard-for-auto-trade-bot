@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # 1. BTC 30분봉 봇
+  bot_btc_30m:
+    build: 
+      context: ./BTC_30m
+      dockerfile: Dockerfile
+    container_name: bot_btc_30m
+    restart: always  # 전원이 켜지거나 실패시 자동 재시작
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./BTC_30m:/app
+    # 필요시 네트워크 모드 설정 (host 모드는 포트 포워딩 없이 호스트 네트워크 사용)
+    # network_mode: host 
+
+  # 2. Bybit 1시간봉 봇 (통합)
+  bot_bybit_1h:
+    build: 
+      context: ./Bybit_1h
+      dockerfile: Dockerfile
+    container_name: bot_bybit_1h
+    restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "5000:5000" # 대시보드 포트 (필요한 경우)
+    volumes:
+      - ./Bybit_1h:/app
+
+  # 3. 배포 패키지 15분봉 봇
+  bot_deploy_15m:
+    build: 
+      context: ./Deploy_15m
+      dockerfile: Dockerfile
+    container_name: bot_deploy_15m
+    restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./Deploy_15m:/app
+
+  # 4. 실거래 5분봉 봇
+  bot_real_5m:
+    build: 
+      context: ./Real_5m
+      dockerfile: Dockerfile
+    container_name: bot_real_5m
+    restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "5001:5000" # 대시보드 포트 (충돌 방지를 위해 5001로 매핑)
+    volumes:
+      - ./Real_5m:/app

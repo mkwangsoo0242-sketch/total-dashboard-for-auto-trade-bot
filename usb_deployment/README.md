@@ -1,58 +1,52 @@
-# 🤖 트레이딩 봇 통합 USB 설치 가이드
+# 🤖 트레이딩 봇 통합 USB (Docker 버전)
 
-이 폴더는 다른 컴퓨터에 봇을 쉽게 설치하고 실행하기 위해 준비되었습니다.
+이 폴더는 **Docker**를 사용하여 모든 트레이딩 봇을 한 번에 설치하고, **컴퓨터 전원이 켜지면 자동으로 실행**되도록 구성되어 있습니다.
 
-## 📁 구성 요소
+## 📁 폴더 구성
 
-1. **bots/**: 공통 라이브러리 폴더
-2. **BTC_30분봉_Live/**: 비트코인 30분봉 자동매매 봇
-3. **bybit_bot_usb(1시간-통합)/**: 바이비트 1시간봉 봇 및 대시보드
-4. **deploy_package--15분봉/**: 15분봉 봇 패키지
-5. **RealTradingBot_Deployment(5분봉)/**: 5분봉 실거래 봇 및 대시보드
-6. **docker-compose.yml**: 전체 봇 통합 실행 설정 파일
-7. **install.sh**: 원클릭 설치 스크립트
+- **BTC_30m/**: 비트코인 30분봉 봇
+- **Bybit_1h/**: 바이비트 1시간봉 봇
+- **Deploy_15m/**: 15분봉 봇
+- **Real_5m/**: 실거래 5분봉 봇
+- **docker-compose.yml**: 통합 실행 설정 파일
+- **install.sh**: 원클릭 설치/실행 스크립트
 
-## 🚀 설치 및 실행 방법 (새 컴퓨터에서)
+## 🚀 새 컴퓨터 설치 방법
 
-### 1단계: 폴더 이동
+1. `usb_deployment` 폴더 전체를 새 컴퓨터로 복사합니다.
+2. 터미널을 열고 폴더로 이동합니다.
 
-USB를 꽂고 이 `usb_deployment` 폴더를 컴퓨터 원하는 곳으로 복사하세요.
-터미널을 열고 해당 폴더로 이동합니다.
+   ```bash
+   cd /경로/usb_deployment
+   ```
 
-```bash
-cd /경로/usb_deployment
-```
+3. 설치 스크립트를 실행합니다. (인터넷 연결 필수)
 
-(예: 바탕화면에 복사했다면 `cd ~/Desktop/usb_deployment`)
+   ```bash
+   chmod +x install.sh
+   ./install.sh
+   ```
 
-### 2단계: 설치 및 실행
+   *비밀번호를 물어보면 입력하세요.*
 
-`install.sh` 스크립트를 실행하면 Docker 설치부터 봇 실행까지 자동으로 수행됩니다.
+## ✅ 설치 후 동작
 
-```bash
-# 실행 권한 부여
-chmod +x install.sh
+- 스크립트가 Docker를 설치하고, 4개의 봇을 즉시 실행합니다.
+- `restart: always` 설정이 적용되어 있어, **컴퓨터를 재부팅해도 봇이 자동으로 다시 켜집니다.**
+- **따로 설정을 만질 필요가 없습니다.**
 
-# 설치 스크립트 실행 (비밀번호 입력 필요)
-./install.sh
-```
+## 🛠 관리 명령어
 
-### 3단계: 확인
+터미널에서 `usb_deployment` 폴더로 이동한 후 사용하세요.
 
-설치가 완료되면 다음 명령어로 봇들이 정상적으로 동작하는지 확인하세요.
+- **상태 확인**: `sudo docker-compose ps`
+- **로그 보기**: `sudo docker-compose logs -f` (나가기는 `Ctrl+C`)
+- **봇 끄기**: `sudo docker-compose down`
+- **봇 켜기/업데이트**: `sudo docker-compose up -d --build`
 
-```bash
-sudo docker-compose ps
-```
+## 📊 대시보드 (웹)
 
-### 4단계: 대시보드 접속
+봇이 실행 중일 때 브라우저에서 볼 수 있습니다.
 
-웹 브라우저를 열고 다음 주소로 접속하여 봇 상태를 확인하세요.
-
-- **바이비트 1시간 봇**: [http://localhost:5000](http://localhost:5000)
-- **실거래 5분봉 봇**: [http://localhost:5001](http://localhost:5001)
-
-## ⚠️ 주의사항
-
-- 인터넷이 연결되어 있어야 합니다 (Docker 설치 및 라이브러리 다운로드).
-- 우분투(Linux) 환경을 기준으로 작성되었습니다. Windows의 경우 Docker Desktop을 설치한 후 `docker-compose up -d --build`를 직접 실행하세요.
+- Bybit 1시간 봇: <http://localhost:5000>
+- 실거래 5분 봇: <http://localhost:5001>
