@@ -15,7 +15,7 @@ services:
     # 필요시 네트워크 모드 설정 (host 모드는 포트 포워딩 없이 호스트 네트워크 사용)
     # network_mode: host 
 
-  # 2. Bybit 1시간봉 봇 (통합)
+    # 2. Bybit 1시간봉 봇 (통합)
   bot_bybit_1h:
     build:
       context: ./Bybit_1h
@@ -78,10 +78,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - botnet
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - botnet
+
   # 대시보드 웹 서비스 (정적 파일 제공)
   dashboard_web:
     image: nginx:alpine
