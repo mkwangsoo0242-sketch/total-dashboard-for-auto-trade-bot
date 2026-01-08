@@ -12,16 +12,11 @@ def get_mdd(equity_series):
 
 def run_live_simulation():
     # 데이터 경로 설정 (부모 디렉토리의 데이터 사용)
-    path_17_19 = "../btc_2015_2019_5m.csv"
-    path_20_21 = "../btc_2020_2021_5m.csv"
-    path_22 = "../btc_2022_2022_5m.csv"
-    path_23_25 = "../btc_3years_5m_binance.csv"
+    # 공통 데이터 파일 사용
+    data_path = "../portfolio_data.csv"
 
     print("전체 데이터 로딩 및 통합 중...")
     try:
-        df_17_19 = pd.read_csv(path_17_19)
-        df_20_21 = pd.read_csv(path_20_21)
-        df_22 = pd.read_csv(path_22)
         df_23_25 = pd.read_csv(path_23_25)
     except FileNotFoundError as e:
         print(f"데이터 파일을 찾을 수 없습니다: {e}")
