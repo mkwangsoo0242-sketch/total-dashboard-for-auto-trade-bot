@@ -1,0 +1,226 @@
+/* ----- 전역 스타일 ----- */
+:root {
+  --bg-dark: hsl(220, 12%, 12%);
+  --bg-light: hsl(0, 0%, 98%);
+  --card-bg: hsla(0, 0%, 100%, 0.08);
+  --card-glass: rgba(255, 255, 255, 0.12);
+  --primary: hsl(210, 80%, 60%);
+  --accent: hsl(340, 80%, 60%);
+  --text: #e0e0e0;
+  --font: 'Inter', system-ui, sans-serif;
+}
+
+[data-theme="light"] {
+  --bg-dark: var(--bg-light);
+  --text: #222;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg-dark);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+header,
+footer {
+  text-align: center;
+  padding: 1rem;
+}
+
+header {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+}
+
+h1 {
+  margin: 0;
+  font-weight: 300;
+}
+
+button#themeToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+/* ----- 그리드 ----- */
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+/* ----- 카드 ----- */
+.card {
+  backdrop-filter: blur(12px);
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform .2s, box-shadow .2s;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .3);
+}
+
+.card h2 {
+  margin: 0 0 .2rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.market-price {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  color: #ffcc00;
+  font-weight: bold;
+}
+
+.pos-badge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.pos-long {
+  background: rgba(0, 255, 136, 0.15);
+  color: #00ff88;
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.pos-short {
+  background: rgba(255, 68, 68, 0.15);
+  color: #ff4444;
+  border: 1px solid rgba(255, 68, 68, 0.3);
+}
+
+.pos-none {
+  background: rgba(255, 255, 255, 0.1);
+  color: #aaa;
+}
+
+/* ----- 차트 컨테이너 ----- */
+.chart-container {
+  width: 100%;
+  height: 180px;
+  margin: 10px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.btn {
+  margin-top: .8rem;
+  padding: .5rem .8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: var(--primary);
+  color: #fff;
+  transition: background .2s;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.btn:hover {
+  background: hsl(210, 80%, 55%);
+}
+
+.log {
+  max-height: 150px;
+  overflow: auto;
+  font-size: .8rem;
+  background: var(--card-glass);
+  padding: .6rem;
+  border-radius: 6px;
+  margin-top: .6rem;
+}
+
+/* ----- 메트릭 ----- */
+.metrics {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0 1rem;
+  padding: 0.8rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.metric-item {
+  text-align: center;
+  flex: 1;
+}
+
+.metric-label {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.metric-value {
+  font-size: 1rem;
+  font-weight: 600;
+  display: block;
+}
+
+.profit-up {
+  color: #00ff88;
+}
+
+.profit-down {
+  color: #ff4444;
+}
+
+/* ----- 거래 상세 정보 ----- */
+.trading-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-label {
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
+.info-value {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.sl {
+  color: #ff6666;
+}
+
+.tp {
+  color: #55aaff;
+}
+
+/* 파란색으로 변경 */

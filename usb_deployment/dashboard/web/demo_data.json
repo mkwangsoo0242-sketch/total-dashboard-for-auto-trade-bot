@@ -1,0 +1,57 @@
+{
+    "BTC_30m": {
+        "status": "Running",
+        "position": "LONG",
+        "market_price": "43,450.20",
+        "balance": "1,250.50 USDT",
+        "profit": "+12.5%",
+        "today_profit": "+15.20 USDT",
+        "entry_price": "43,500.00",
+        "stop_loss": "42,800.00",
+        "take_profit": "45,000.00"
+    },
+    "Bybit_1h": {
+        "status": "Running",
+        "position": "SHORT",
+        "market_price": "43,450.20",
+        "balance": "890.20 USDT",
+        "profit": "+45.8%",
+        "today_profit": "+42.10 USDT",
+        "entry_price": "43,200.00",
+        "stop_loss": "42,500.00",
+        "take_profit": "46,000.00"
+    },
+    "Deploy_15m": {
+        "status": "Stopped",
+        "position": "NONE",
+        "market_price": "43,450.20",
+        "balance": "500.00 USDT",
+        "profit": "0.0%",
+        "today_profit": "0.00 USDT",
+        "entry_price": "-",
+        "stop_loss": "-",
+        "take_profit": "-"
+    },
+    "Real_5m": {
+        "status": "Running",
+        "position": "LONG",
+        "market_price": "43,451.50",
+        "balance": "2,450.00 USDT",
+        "profit": "+112.4%",
+        "today_profit": "+120.50 USDT",
+        "entry_price": "43,850.00",
+        "stop_loss": "43,400.00",
+        "take_profit": "44,800.00"
+    },
+    "Ultimate_100m": {
+        "status": "Running",
+        "position": "SHORT",
+        "market_price": "43,450.20",
+        "balance": "1,120.30 USDT",
+        "profit": "+8.2%",
+        "today_profit": "+5.80 USDT",
+        "entry_price": "43,100.00",
+        "stop_loss": "42,600.00",
+        "take_profit": "44,500.00"
+    }
+}
