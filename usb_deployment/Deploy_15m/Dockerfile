@@ -1,16 +1,15 @@
-FROM python:3.10-slim
+FROM python:3.9-slim
 
 WORKDIR /app
-# Copy the shared bots module
-COPY bots /app/bots
 
-# Copy the project files
-COPY "deploy_package--15분봉" /app/project
+# 타임존 설정 (한국 시간)
+ENV TZ=Asia/Seoul
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-WORKDIR /app/project
-
-# Install dependencies
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Run the bot
-CMD ["python", "-u", "main.py"]
+COPY . .
+
+# 실행 명령어 변경
+CMD ["python", "final_bot_15m.py"]

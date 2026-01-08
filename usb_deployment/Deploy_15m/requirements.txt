@@ -1,12 +1,8 @@
 ccxt
 pandas
-pandas_ta
 numpy
-matplotlib
-schedule
-requests
+xgboost
 lightgbm
 joblib
-scikit-learn
-flask
-flask-cors
+schedule
+python-dotenv
