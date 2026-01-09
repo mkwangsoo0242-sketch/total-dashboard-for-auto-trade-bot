@@ -2,240 +2,287 @@ import os
 import sys
 import threading
 import time
+import importlib.util
 import logging
+import pandas as pd
+from datetime import datetime
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import JSONResponse
 import uvicorn
+import ccxt
 
-# 봇 임포트를 위한 경로 추가
+# 로깅 설정
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger("BotManager")
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(BASE_DIR, 'BTC_30분봉_Live'))
-sys.path.append(os.path.join(BASE_DIR, 'RealTradingBot_Deployment(5분봉)'))
-sys.path.append(os.path.join(BASE_DIR, 'bybit_bot_usb(1시간-통합)'))
-sys.path.append(os.path.join(BASE_DIR, 'deploy_package--15분봉'))
 
-from bots.base_bot import BaseBot
-# 각 봇의 실제 클래스 임포트 (수정된 파일 기준)
-try:
-    from live_bot import BinanceLiveBot
-    from live_trading_bot import LiveTradingBot
-    from live_trader_bybit import LiveTrader
-except ImportError as e:
-    print(f"임포트 오류: {e}. 일부 봇을 로드할 수 없습니다.")
+app = FastAPI()
+templates = Jinja2Templates(directory="templates")
+
+class PlaceholderBot:
+    def __init__(self, name, interval):
+        self.name = name
+        self.interval = interval
+        self.status = "Stopped"
+        self.current_balance = 0.0
+        self.current_position = "None"
+        self.total_roi = 0.0
+        self.recent_candles = []
+        self.is_running = False
+        self.thread = None
+        # Mock data for immediate display
+        now = int(time.time() * 1000)
+        self.recent_candles = [{'x': now - i*300000, 'y': [90000, 90100, 89900, 90050]} for i in range(50)][::-1]
+
+    def start(self): 
+        self.is_running = True
+        self.status = "Running"
+    
+    def stop(self):
+        self.is_running = False
+        self.status = "Stopped"
 
 class BotManager:
     def __init__(self):
-        self.app = FastAPI()
         self.bots = {}
-        self.total_balance_history = []
-        self.max_history = 50
-        
-        # 템플릿 및 정적 파일 설정
-        self.templates = Jinja2Templates(directory="templates")
-        
-        # 봇 초기화
+        self.current_price = 90000.0
         self.setup_bots()
-        self.setup_routes()
+        # Initialize data immediately in background
+        threading.Thread(target=self.initialize_data, daemon=True).start()
+        # Start background price updater
+        threading.Thread(target=self.price_updater, daemon=True).start()
+
+    def price_updater(self):
+        """Fetch real-time BTC price in background loop."""
+        exchange = ccxt.binance()
+        while True:
+            try:
+                ticker = exchange.fetch_ticker('BTC/USDT')
+                self.current_price = float(ticker['last'])
+            except Exception as e:
+                logger.error(f"Price update error: {e}")
+            time.sleep(1) # Refresh every 1 second
 
     def setup_bots(self):
-        """실제 봇 인스턴스 생성"""
+        # 1. 30분봉
         try:
-            # 30분봉 봇
+            path = os.path.join(BASE_DIR, "BTC_30분봉_Live")
+            sys.path.insert(0, path)
+            from BTC_30분봉_Live.live_bot import BinanceLiveBot
             self.bots["Bot_30M"] = BinanceLiveBot()
-            # 5분봉 봇
-            self.bots["Bot_5M"] = LiveTradingBot()
-            # 1시간봉 봇
-            self.bots["Bot_1H"] = LiveTrader()
-            
-            # 15분봉 봇은 main.py 내의 dashboard 객체를 사용
-            try:
-                import main as bot_15m_main
-                self.bots["Bot_15M"] = bot_15m_main.dashboard
-            except:
-                from bots.trading_bot import TradingBot
-                self.bots["Bot_15M"] = TradingBot("Bot_15M", "15m")
-            
+            self.bots["Bot_30M"].mode = 'paper' 
         except Exception as e:
-            print(f"봇 초기화 중 오류 발생: {e}")
-            # 폴백: 오류 시 빈 봇 생성
-            if not self.bots:
-                from bots.trading_bot import TradingBot
-                self.bots = {
-                    "Bot_5M": TradingBot("Bot_5M", "5m"),
-                    "Bot_15M": TradingBot("Bot_15M", "15m"),
-                    "Bot_30M": TradingBot("Bot_30M", "30m"),
-                    "Bot_1H": TradingBot("Bot_1H", "1h")
-                }
+            logger.error(f"Failed to load Bot_30M: {e}")
+            self.bots["Bot_30M"] = PlaceholderBot("Bot_30M", "30m")
+        self.bots["Bot_30M"].interval = "30m"
 
-    def run_15m_bot(self):
-        """15분봉 봇은 main.py의 main() 함수를 실행해야 함"""
+        # 2. 5분봉
         try:
-            import main as bot_15m_main
-            # dashboard 객체를 공유하기 위해 main.py 수정이 필요할 수 있으나
-            # 현재는 별도 실행 후 데이터를 어떻게 가져올지 고민 필요
-            # 일단은 run_bot을 직접 호출하는 방식으로 우회
-            bot_15m_main.main() 
+            path = os.path.join(BASE_DIR, "RealTradingBot_Deployment(5분봉)")
+            if path not in sys.path: sys.path.insert(0, path)
+            import live_trading_bot
+            self.bots["Bot_5M"] = live_trading_bot.LiveTradingBot()
+            self.bots["Bot_5M"].mode = 'paper'
         except Exception as e:
-            print(f"15분봉 봇 실행 오류: {e}")
+            logger.error(f"Failed to load Bot_5M: {e}")
+            self.bots["Bot_5M"] = PlaceholderBot("Bot_5M", "5m")
+        self.bots["Bot_5M"].interval = "5m"
 
-    def start_bots(self):
-        print("모든 봇을 시작합니다...")
-        for name, bot in self.bots.items():
-            if name == "Bot_15M":
-                # 15분봉 봇은 별도 스레드에서 main 실행
-                t = threading.Thread(target=self.run_15m_bot, daemon=True)
-            else:
-                t = threading.Thread(target=bot.run, daemon=True)
+        # 3. 1시간봉
+        try:
+            path_1h = os.path.join(BASE_DIR, "bybit_bot_usb(1시간-통합)")
+            logger.info(f"Loading Bot_1H from {path_1h}")
+            spec = importlib.util.spec_from_file_location("final_bot_1h", os.path.join(path_1h, "final_bot_1h.py"))
+            mod = importlib.util.module_from_spec(spec)
+            sys.modules["final_bot_1h"] = mod # 모듈 등록
+            spec.loader.exec_module(mod)
+            self.bots["Bot_1H"] = mod.FinalBot1H()
+            
+            # Monkey Patch to capture candles
+            original_fetch = self.bots["Bot_1H"].fetch_data
+            def patched_fetch():
+                df = original_fetch()
+                if df is not None and not df.empty:
+                    self.bots["Bot_1H"].recent_candles = [
+                        {'x': int(row['timestamp']), 'y': [row['open'], row['high'], row['low'], row['close']]}
+                        for _, row in df.tail(100).iterrows()
+                    ]
+                return df
+            self.bots["Bot_1H"].fetch_data = patched_fetch
+            
+        except Exception as e:
+            logger.error(f"Failed to load Bot_1H: {e}")
+            self.bots["Bot_1H"] = PlaceholderBot("Bot_1H", "1h")
+        self.bots["Bot_1H"].interval = "1h"
+
+        # 4. 15분봉
+        try:
+            path_15m = os.path.join(BASE_DIR, "deploy_package--15분봉")
+            if path_15m not in sys.path: sys.path.insert(0, path_15m)
+            import main as bot_15m
+            self.bots["Bot_15M"] = bot_15m.dashboard
+        except Exception as e:
+            logger.error(f"Failed to load Bot_15M: {e}")
+            self.bots["Bot_15M"] = PlaceholderBot("Bot_15M", "15m")
+        self.bots["Bot_15M"].interval = "15m"
+
+    def initialize_data(self):
+        """Pre-populate data for all bots to avoid empty charts."""
+        time.sleep(2) # Wait for imports and startups
+        logger.info("Initializing bot data...")
+        
+        # Bot 30M
+        try:
+            if hasattr(self.bots["Bot_30M"], 'execute_logic'):
+                logger.info("Triggering Bot_30M logic for initial data...")
+                self.bots["Bot_30M"].execute_logic()
+        except Exception as e: logger.error(f"Bot_30M init error: {e}")
+
+        # Bot 1H
+        try:
+            if hasattr(self.bots["Bot_1H"], 'fetch_data'):
+                logger.info("Triggering Bot_1H fetch for initial data...")
+                self.bots["Bot_1H"].fetch_data()
+        except Exception as e: logger.error(f"Bot_1H init error: {e}")
+
+        # Bots 5M and 15M usually self-init or we can add logic if needed
+        logger.info("Data initialization complete.")
+
+
+    def start_bot(self, name):
+        bot = self.bots.get(name)
+        if not bot: return
+        
+        if getattr(bot, 'is_running', False): return
+
+        bot.is_running = True
+        bot.status = "실행 중"
+        
+        # 15분봉 특수 처리
+        if name == "Bot_15M":
+            import main
+            t = threading.Thread(target=main.main, daemon=True)
+            bot.thread = t
             t.start()
-            print(f"{name} 시작됨.")
+            return
 
+        # 실행 메서드 찾기
+        target = getattr(bot, 'run', getattr(bot, 'start', None))
+        if target:
+            t = threading.Thread(target=target, daemon=True)
+            bot.thread = t
+            t.start()
+            logger.info(f"Started {name}")
+        else:
+            logger.error(f"No run/start method for {name}")
 
-
-    def update_total_history(self):
-        while True:
-            total = sum(bot.current_balance for bot in self.bots.values())
-            if total > 0:
-                self.total_balance_history.append(total)
-                if len(self.total_balance_history) > self.max_history:
-                    self.total_balance_history.pop(0)
-            time.sleep(2)
-
-    def _extract_bot_data(self, bot):
-        """봇 상태 데이터 안전 추출"""
-        from datetime import datetime
+    def stop_bot(self, name):
+        bot = self.bots.get(name)
+        if not bot: return
         
-        data = {
-            "name": getattr(bot, 'name', 'Unknown'),
-            "interval": getattr(bot, 'interval', 'Unknown'),
+        bot.is_running = False
+        bot.status = "Stopped"
+        if hasattr(bot, 'stop'): bot.stop()
+        logger.info(f"Stopped {name}")
+
+manager = BotManager()
+
+@app.get("/")
+async def index(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+import ccxt
+
+@app.get("/api/data")
+async def get_data():
+    bot_list = []
+    total = 0
+    
+    # 1. Fetch Global Real Price ONCE (Cached)
+    real_price = manager.current_price
+    if real_price <= 0: real_price = 90000.0
+
+    # 순서 고정
+    for name in ["Bot_30M", "Bot_5M", "Bot_1H", "Bot_15M"]:
+        bot = manager.bots.get(name)
+        if not bot: continue
+        
+        # 잔고 안전하게 가져오기
+        balance = getattr(bot, 'current_balance', 0.0)
+        if isinstance(balance, dict):
+            balance = balance.get('USDT', {}).get('total', 0.0) if 'USDT' in balance else 0.0
+        
+        total += float(balance) if isinstance(balance, (int, float)) else 0.0
+
+        # 캔들 데이터 가져오기 (없으면 빈 리스트)
+        candles = getattr(bot, 'recent_candles', [])
+        
+        # *** FORCE SYNC LAST CANDLE ***
+        if candles and len(candles) > 0:
+            last_candle = candles[-1]
+            try:
+                # Assuming candle format is {'x': ts, 'y': [open, high, low, close]}
+                # Force Close to be real_price
+                original_open = last_candle['y'][0]
+                
+                # Update Close
+                last_candle['y'][3] = real_price
+                
+                # Update High/Low to encompass the new Close
+                if real_price > last_candle['y'][1]:
+                    last_candle['y'][1] = real_price
+                if real_price < last_candle['y'][2]:
+                    last_candle['y'][2] = real_price
+                
+                # In place modification works because it's a reference list/dict
+            except Exception as e:
+                logger.error(f"Error syncing candle for {name}: {e}")
+
+        # 포지션 정보
+        pos = getattr(bot, 'current_position', "None")
+        if pos is None: pos = "None"
+
+        current_roi = getattr(bot, 'total_roi', 0.0)
+
+        # 진입 가격 정보
+        entry_price = getattr(bot, 'entry_price', 0.0)
+        
+        # SL 및 청산가 정보 (속성명 통일 시도)
+        sl_price = getattr(bot, 'sl_price', getattr(bot, 'stop_price', 0.0))
+        liq_price = getattr(bot, 'liquidation_price', 0.0)
+
+        bot_list.append({
+            "name": name,
+            "interval": getattr(bot, 'interval', '-'),
             "status": getattr(bot, 'status', 'Stopped'),
-            "current_balance": getattr(bot, 'current_balance', 0.0),
-            "history": getattr(bot, 'balance_history', []),
-            "candles": getattr(bot, 'recent_candles', []),
-            "total_roi": getattr(bot, 'total_roi', 0.0),
-            "liquidation_price": getattr(bot, 'liquidation_price', 0.0),
-            "liquidation_profit": getattr(bot, 'liquidation_profit', 0.0),
-            "last_update": getattr(bot, 'last_run', None).strftime('%H:%M:%S') if getattr(bot, 'last_run', None) else '-',
-        }
-
-        # 포지션 정보 정규화
-        raw_pos = getattr(bot, 'current_position', None)
-        entry = 0.0
-        sl = 0.0
-        pos_str = "None"
+            "current_balance": balance,
+            "current_position": str(pos),
+            "entry_price": entry_price,
+            "sl_price": sl_price,
+            "liq_price": liq_price,
+            "total_roi": current_roi,
+            "candles": candles,
+            "last_update": getattr(bot, 'last_run', datetime.now()).strftime("%H:%M:%S") if isinstance(getattr(bot, 'last_run', None), datetime) else datetime.now().strftime("%H:%M:%S")
+        })
         
-        # 1. 속성으로 존재하는 경우 (30m 등)
-        entry = getattr(bot, 'entry_price', 0.0)
-        sl = getattr(bot, 'stop_loss', getattr(bot, 'stop_price', 0.0))
+    return JSONResponse(content={"total_balance": total, "bots": bot_list})
 
-        # 2. 딕셔너리로 존재하는 경우 (5m, 1h 등)
-        if isinstance(raw_pos, dict):
-            # Entry
-            if entry == 0:
-                entry = float(raw_pos.get('entry', raw_pos.get('entry_price', 0)))
-            
-            # SL
-            if sl == 0:
-                sl = float(raw_pos.get('sl', raw_pos.get('stop_loss', 0)))
-                
-            # String Formatting
-            type_side = raw_pos.get('type', raw_pos.get('side', ''))
-            amt = raw_pos.get('amount', raw_pos.get('qty', raw_pos.get('contracts', 0)))
-            if type_side:
-                pos_str = f"{type_side.upper()} ({amt})"
-            else:
-                pos_str = "None"
-        
-        # 3. 문자열인 경우
-        elif isinstance(raw_pos, str):
-            pos_str = raw_pos
-            
-        data['entry_price'] = entry
-        data['stop_loss'] = sl
-        data['current_position'] = pos_str
-        
-        return data
+@app.post("/api/bot/start/{name}")
+async def start_bot_api(name: str):
+    manager.start_bot(name)
+    return {"success": True}
 
-    def setup_routes(self):
-        @self.app.get("/", response_class=HTMLResponse)
-        async def index(request: Request):
-            return self.templates.TemplateResponse("index.html", {"request": request})
-
-        @self.app.post("/api/bot/{bot_name}/start")
-        async def start_bot(bot_name: str):
-            if bot_name not in self.bots:
-                return {"status": "error", "message": "Bot not found"}
-            
-            bot = self.bots[bot_name]
-            
-            try:
-                # Thread checking is tricky, assume boolean flag is source of truth
-                is_running = getattr(bot, 'is_running', False)
-                if is_running:
-                     return {"status": "error", "message": "Already running"}
-
-                target = None
-                if bot_name == "Bot_15M":
-                    target = self.run_15m_bot
-                else:
-                    target = bot.run
-                    
-                t = threading.Thread(target=target, daemon=True)
-                t.start()
-                
-                # Flag set
-                bot.is_running = True
-                # Optional: Update status text immediately
-                bot.status = "Starting..."
-                    
-                return {"status": "success", "message": f"{bot_name} started"}
-            except Exception as e:
-                 return {"status": "error", "message": str(e)}
-
-        @self.app.post("/api/bot/{bot_name}/stop")
-        async def stop_bot(bot_name: str):
-            if bot_name not in self.bots:
-                return {"status": "error", "message": "Bot not found"}
-            
-            bot = self.bots[bot_name]
-            try:
-                if hasattr(bot, 'stop'):
-                    bot.stop()
-                else:
-                    bot.is_running = False
-                    bot.status = "Stopping..."
-                    
-                return {"status": "success", "message": f"{bot_name} stopped"}
-            except Exception as e:
-                return {"status": "error", "message": str(e)}
-
-        @self.app.get("/api/data")
-        async def get_data():
-            bot_data = []
-            for name, bot in self.bots.items():
-                b_data = self._extract_bot_data(bot)
-                b_data['name'] = name # Override name key with dict key just in case
-                bot_data.append(b_data)
-            
-            return {
-                "total_balance": sum(bot.current_balance for bot in self.bots.values()),
-                "total_history": self.total_balance_history,
-                "bots": bot_data
-            }
-
-    def run_web_server(self):
-        uvicorn.run(self.app, host="0.0.0.0", port=8000)
+@app.post("/api/bot/stop/{name}")
+async def stop_bot_api(name: str):
+    manager.stop_bot(name)
+    return {"success": True}
 
 if __name__ == "__main__":
-    manager = BotManager()
-    
-    # 봇 시작
-    manager.start_bots()
-    
-    # 히스토리 업데이트 스레드 시작
-    history_thread = threading.Thread(target=manager.update_total_history, daemon=True)
-    history_thread.start()
-    
-    # 웹 서버 실행
-    manager.run_web_server()
+    # 서버 시작 시 모든 봇 자동 실행
+    logger.info("Auto-starting all bots...")
+    for name in manager.bots:
+        manager.start_bot(name)
+        
+    uvicorn.run(app, host="0.0.0.0", port=8000)

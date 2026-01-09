@@ -163,7 +163,22 @@ def run_bot(exchange, analyzer, strategy, config, paper_trader=None, dashboard=N
                 except: pass
             
             dashboard.current_balance = balance
-            dashboard.status = "신호 대기 중" if not signal else f"{signal} 시그널"
+            dashboard.status = "실행 중" if not signal else f"{signal} 시그널"
+            
+            # Check for generic position if possible, though main.py structure is slightly different.
+            if paper_trader and paper_trader.position:
+                entry = paper_trader.position.get('entry_price', 0)
+                sl = paper_trader.position.get('sl', 0)
+                # side = paper_trader.position.get('side', 'unknown').upper()
+                
+                dashboard.status = "실행 중" # Always "실행 중"
+                dashboard.entry_price = entry
+                dashboard.sl_price = sl
+                dashboard.liq_price = 0 # Not currently simulated in 15m paper trader
+            else:
+                 dashboard.entry_price = 0
+                 dashboard.sl_price = 0
+                 dashboard.liq_price = 0
             dashboard.balance_history.append(balance)
             if len(dashboard.balance_history) > dashboard.max_history:
                 dashboard.balance_history.pop(0)

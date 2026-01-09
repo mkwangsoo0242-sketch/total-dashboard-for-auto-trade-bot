@@ -80,7 +80,9 @@ class BaseBot(ABC):
     def _interval_to_seconds(self, interval):
         unit = interval[-1]
         value = int(interval[:-1])
-        if unit == 'm':
+        if unit == 's':
+            return value
+        elif unit == 'm':
             return value * 60
         elif unit == 'h':
             return value * 3600

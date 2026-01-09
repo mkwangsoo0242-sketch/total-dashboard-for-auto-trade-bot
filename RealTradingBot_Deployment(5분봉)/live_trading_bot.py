@@ -1,4 +1,5 @@
 import schedule
+import random
 import subprocess
 import threading
 import os
@@ -8,6 +9,7 @@ import ccxt
 import joblib
 import pandas as pd
 import logging
+from datetime import datetime
 from dotenv import load_dotenv
 
 # .env 파일 로드
@@ -23,8 +25,23 @@ REGIME_SETTINGS = {
     2: {'name': 'BEARISH', 'direction': 'short', 'threshold': 0.6, 'risk': 0.1, 'leverage': 5, 'sl_mult': 2.0}
 }
 
-# ... (기존 로깅 설정 등)
-# ... (기존 로깅 설정 등)
+# 로그 설정 (전용 핸들러 사용으로 격리)
+log_dir = os.path.dirname(os.path.abspath(__file__))
+log_file = os.path.join(log_dir, 'bot.log')
+
+logger = logging.getLogger("BTC_5M_Bot")
+logger.setLevel(logging.INFO)
+if not logger.handlers:
+    # 파일 핸들러
+    fh = logging.FileHandler(log_file, encoding='utf-8')
+    fh.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+    logger.addHandler(fh)
+    # 콘솔 핸들러
+    sh = logging.StreamHandler(sys.stdout)
+    sh.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+    logger.addHandler(sh)
+    # 다른 로거로 전파되지 않도록 설정
+    logger.propagate = False
 
 class LiveTradingBot:
     def execute_logic(self):
@@ -34,12 +51,12 @@ class LiveTradingBot:
     def stop(self):
         self.is_running = False
         self.status = "Stopped"
-        logging.info("Stopping 5M Bot...")
+        logger.info("Stopping 5M Bot...")
 
     def __init__(self):
         # 5분봉 전용 키 우선 적용
-        self.api_key = os.getenv('BINANCE_API_KEY_5M') or os.getenv('BINANCE_API_KEY')
-        self.secret = os.getenv('BINANCE_SECRET_5M') or os.getenv('BINANCE_SECRET')
+        self.api_key = os.getenv('BYBIT_API_KEY_5M') or os.getenv('BYBIT_API_KEY') or os.getenv('BINANCE_API_KEY')
+        self.secret = os.getenv('BYBIT_SECRET_5M') or os.getenv('BYBIT_SECRET') or os.getenv('BINANCE_SECRET')
         self.mode = os.getenv('TRADING_MODE', 'paper').lower()
         self.symbol = os.getenv('SYMBOL', 'BTC/USDT')
         self.timeframe = '5m'
@@ -54,6 +71,8 @@ class LiveTradingBot:
         self.status = "신호 대기 중 (초기화)"
         self.balance_history = []
         self.current_position = None
+        self.entry_price = 0 # New attribute for dashboard
+        self.sl_price = 0 # New attribute for dashboard
         self.liquidation_price = 0
         self.liquidation_profit = 0
         self.total_roi = 0
@@ -74,22 +93,76 @@ class LiveTradingBot:
         if self.mode == 'paper':
             exchange_config['apiKey'] = None
             exchange_config['secret'] = None
-            
-        self.exchange = ccxt.binance(exchange_config)
+            class MockExchange:
+                def __init__(self):
+                    self.balance = {'USDT': {'free': 100.0, 'total': 100.0}}
+                    self.ticker_price = 90000.0 # Default mock price
+                    self.ohlcv_data = [] # To store mock OHLCV
+                    self.positions = [] # To store mock positions
+
+                def fetch_ticker(self, symbol):
+                    return {'last': self.ticker_price}
+
+                def fetch_balance(self):
+                    return self.balance
+
+                def fetch_ohlcv(self, symbol, timeframe, limit):
+                    # Fetch REAL OHLCV data even in paper mode
+                    try:
+                        # Create a temporary public instance for fetching data
+                        public_exchange = ccxt.bybit()
+                        ohlcv = public_exchange.fetch_ohlcv(symbol, timeframe, limit=limit)
+                        self.ohlcv_data = ohlcv
+                        self.ticker_price = ohlcv[-1][4] # Sync ticker with last close
+                    except Exception as e:
+                        print(f"Error fetching real OHLCV: {e}")
+                        # Fallback to single dummy point if failed
+                        if not self.ohlcv_data:
+                            now = int(time.time() * 1000)
+                            self.ohlcv_data = [[now, 90000, 90000, 90000, 90000, 100]]
+
+                    return self.ohlcv_data[-limit:]
+
+                def create_market_order(self, symbol, side, amount):
+                    self.ticker_price = self.fetch_ticker(symbol)['last'] # Update price for order
+                    if side == 'buy':
+                        self.balance['USDT']['free'] -= amount * self.ticker_price
+                        self.balance['USDT']['total'] -= amount * self.ticker_price
+                        # Simple position tracking
+                        self.positions.append({'symbol': symbol.replace('/', ''), 'positionAmt': amount, 'entryPrice': self.ticker_price})
+                    elif side == 'sell':
+                        self.balance['USDT']['free'] += amount * self.ticker_price
+                        self.balance['USDT']['total'] += amount * self.ticker_price
+                        # Simple position tracking
+                        self.positions = [p for p in self.positions if p['symbol'] != symbol.replace('/', '')] # Remove position
+                    return {'info': 'mock_order_id'}
+
+                def set_leverage(self, leverage, symbol):
+                    pass # No actual leverage in mock
+
+            self.exchange = MockExchange()
+        else:
+            self.exchange = ccxt.bybit(exchange_config)
         
         # ... (기존 모드 체크)
         
-        logging.info(f"봇 초기화 완료: {self.symbol} ({self.timeframe})")
+        logger.info(f"봇 초기화 완료: {self.symbol} ({self.timeframe})")
 
     # ... (start_scheduler, check_model_reload, load_models, fetch_data, get_features, predict_regime, predict_probs omitted - keep existing)
 
     def get_position(self):
         """현재 포지션 조회"""
         if self.mode == 'paper':
-            return self.paper_position
+            if self.exchange.positions:
+                pos = self.exchange.positions[0] # Assuming only one position for simplicity
+                return {'amount': pos['positionAmt'], 'entry': pos['entryPrice'], 'type': 'long' if pos['positionAmt'] > 0 else 'short'}
+            return None
 
         try:
             balance = self.exchange.fetch_balance()
+            if 'info' not in balance or 'positions' not in balance['info']:
+                logger.warning("Balance info or positions not found in exchange response.")
+                return None
             positions = balance['info']['positions']
             for pos in positions:
                 if pos['symbol'] == self.symbol.replace('/', ''):
@@ -98,53 +171,16 @@ class LiveTradingBot:
                         return {'amount': amt, 'entry': float(pos['entryPrice']), 'type': 'long' if amt > 0 else 'short'}
             return None
         except Exception as e:
-            logging.error(f"포지션 조회 실패: {e}")
+            logger.error(f"포지션 조회 실패: {e}")
             return None
 
     def execute_trade(self, signal, amount, leverage):
         """주문 실행"""
         if self.mode == 'paper':
-            # 1. 현재가 조회 (실제 데이터)
-            try:
-                ticker = self.exchange.fetch_ticker(self.symbol)
-                price = float(ticker['last'])
-            except:
-                price = 0 # should handle error, but simplified
-            
-            if price == 0:
-                # fetch_data 호출해서라도 가져옴
-                df = self.fetch_data(limit=1)
-                if df is not None:
-                     price = df.iloc[-1]['close']
-
-            fee_rate = 0.0005
-            trade_val = price * amount
-            fee = trade_val * fee_rate
-            self.paper_balance -= fee
-            
-            # 포지션 진입 시뮬레이션
-            if self.paper_position is None:
-                self.paper_position = {
-                    'amount': amount if signal == 'long' else -amount,
-                    'entry': price,
-                    'type': signal
-                }
-            else:
-                 # 추가 진입 (단순화: 가중평균)
-                 prev_amt = self.paper_position['amount']
-                 prev_entry = self.paper_position['entry']
-                 new_amt = amount if signal == 'long' else -amount
-                 
-                 total_amt = prev_amt + new_amt
-                 # 평단가
-                 new_entry = ((abs(prev_amt) * prev_entry) + (amount * price)) / (abs(prev_amt) + amount)
-                 
-                 self.paper_position['amount'] = total_amt
-                 self.paper_position['entry'] = new_entry
-                 self.paper_position['type'] = 'long' if total_amt > 0 else 'short'
-
-            self.current_balance = self.paper_balance
-            logging.info(f"🧪 [PAPER] 체결: {signal.upper()} {amount} @ {price} | 잔고: {self.paper_balance:.2f}")
+            # Use MockExchange's create_market_order for simulation
+            self.exchange.create_market_order(self.symbol, 'buy' if signal == 'long' else 'sell', amount)
+            self.current_balance = self.exchange.fetch_balance()['USDT']['free']
+            logger.info(f"🧪 [PAPER] 체결: {signal.upper()} {amount} @ {self.exchange.fetch_ticker(self.symbol)['last']} | 잔고: {self.current_balance:.2f}")
             return True
         
         try:
@@ -153,10 +189,10 @@ class LiveTradingBot:
             
             side = 'buy' if signal == 'long' else 'sell'
             order = self.exchange.create_market_order(self.symbol, side, amount)
-            logging.info(f"✅ 주문 체결: {side} {amount} {self.symbol}")
+            logger.info(f"✅ 주문 체결: {side} {amount} {self.symbol}")
             return order
         except Exception as e:
-            logging.error(f"주문 실패: {e}")
+            logger.error(f"주문 실패: {e}")
             return None
 
     def close_position(self):
@@ -167,39 +203,21 @@ class LiveTradingBot:
             
             # Paper Mode Simulation
             if self.mode == 'paper':
-                try:
-                    ticker = self.exchange.fetch_ticker(self.symbol)
-                    price = float(ticker['last'])
-                except:
-                     return # Can't close
-
-                entry = pos['entry']
-                pnl = 0
-                if pos['type'] == 'long':
-                    pnl = (price - entry) * amount
-                else:
-                    pnl = (entry - price) * amount
-                
-                fee = (price * amount) * 0.0005
-                self.paper_balance += pnl
-                self.paper_balance -= fee
-                
+                # For paper mode, simply clear the position
                 self.paper_position = None
-                self.current_balance = self.paper_balance
-                
-                logging.info(f"🧪 [PAPER] 포지션 종료: PnL {pnl:.2f}, Fee {fee:.2f} | 잔고: {self.paper_balance:.2f}")
+                logger.info(f"🧪 [PAPER] 포지션 종료 시뮬레이션 완료.")
                 return
 
             side = 'sell' if pos['type'] == 'long' else 'buy'
             try:
                 self.exchange.create_market_order(self.symbol, side, amount)
-                logging.info("✅ 포지션 종료 완료")
+                logger.info("✅ 포지션 종료 완료")
             except Exception as e:
-                logging.error(f"포지션 종료 실패: {e}")
+                logger.error(f"포지션 종료 실패: {e}")
 
     def start_scheduler(self):
         def job():
-            logging.info("⏰ 00:00 정기 재학습 시작...")
+            logger.info("⏰ 00:00 정기 재학습 시작...")
             subprocess.Popen([sys.executable, "retrain.py"])
             
         schedule.every().day.at("00:00").do(job)
@@ -212,9 +230,9 @@ class LiveTradingBot:
         try:
             t = threading.Thread(target=run_schedule, daemon=True)
             t.start()
-            logging.info("📅 자동 재학습 스케줄러 가동 (매일 00:00)")
+            logger.info("📅 자동 재학습 스케줄러 가동 (매일 00:00)")
         except Exception as e:
-            logging.error(f"스케줄러 시작 실패: {e}")
+            logger.error(f"스케줄러 시작 실패: {e}")
 
     def check_model_reload(self):
         try:
@@ -223,14 +241,14 @@ class LiveTradingBot:
             if os.path.exists(path):
                 mtime = os.path.getmtime(path)
                 if mtime > self.model_ts:
-                    logging.info("🔄 새로운 모델 파일 감지! 다시 로드합니다.")
+                    logger.info("🔄 새로운 모델 파일 감지! 다시 로드합니다.")
                     self.load_models()
         except: pass
 
     def load_models(self):
         """다중 모델 로드"""
         try:
-            logging.info("🤖 ML 모델 로딩...")
+            logger.info("🤖 ML 모델 로딩...")
             base_dir = os.path.dirname(os.path.abspath(__file__))
             
             path = os.path.join(base_dir, 'short_model.pkl')
@@ -245,11 +263,11 @@ class LiveTradingBot:
             self.long_model = self.long_model_data['model']
             self.regime_model = self.regime_model_data['model']
             
-            logging.info(f"   Short 모델 정확도: {self.short_model_data.get('accuracy', 0)*100:.1f}%")
-            logging.info(f"   Long 모델 정확도: {self.long_model_data.get('accuracy', 0)*100:.1f}%")
-            logging.info(f"   Regime 모델 정확도: {self.regime_model_data.get('accuracy', 0)*100:.1f}%")
+            logger.info(f"   Short 모델 정확도: {self.short_model_data.get('accuracy', 0)*100:.1f}%")
+            logger.info(f"   Long 모델 정확도: {self.long_model_data.get('accuracy', 0)*100:.1f}%")
+            logger.info(f"   Regime 모델 정확도: {self.regime_model_data.get('accuracy', 0)*100:.1f}%")
         except Exception as e:
-            logging.error(f"모델 로드 실패: {e}")
+            logger.error(f"모델 로드 실패: {e}")
             if not hasattr(self, 'short_model'):
                 sys.exit(1)
 
@@ -285,7 +303,7 @@ class LiveTradingBot:
             
             return df
         except Exception as e:
-            logging.error(f"데이터 수집 중 오류: {e}")
+            logger.error(f"데이터 수집 중 오류: {e}")
             return None
 
     def get_features(self, row, feature_list):
@@ -320,7 +338,13 @@ class LiveTradingBot:
     def get_position(self):
         """현재 포지션 조회"""
         try:
+            if self.mode == 'paper':
+                return self.paper_position
+
             balance = self.exchange.fetch_balance()
+            if 'info' not in balance or 'positions' not in balance['info']:
+                logger.warning("Balance info or positions not found in exchange response.")
+                return None
             positions = balance['info']['positions']
             for pos in positions:
                 if pos['symbol'] == self.symbol.replace('/', ''):
@@ -329,13 +353,29 @@ class LiveTradingBot:
                         return {'amount': amt, 'entry': float(pos['entryPrice']), 'type': 'long' if amt > 0 else 'short'}
             return None
         except Exception as e:
-            logging.error(f"포지션 조회 실패: {e}")
+            logger.error(f"포지션 조회 실패: {e}")
             return None
 
-    def execute_trade(self, signal, amount, leverage):
+    def execute_trade(self, signal, amount, leverage, sl_price=0, liq_price=0):
         """주문 실행"""
         if self.mode == 'paper':
-            logging.info(f"🧪 [PAPER] {signal} 주문 시뮬레이션: 수량 {amount}, 레버리지 {leverage}")
+            logger.info(f"🧪 [PAPER] {signal} 주문 시뮬레이션: 수량 {amount}, 레버리지 {leverage}")
+            
+            # Update Paper Position
+            current_price = self.recent_candles[-1]['y'][3] if self.recent_candles else 90000
+            
+            self.paper_position = {
+                'type': signal,
+                'entry': current_price,
+                'amount': amount,
+                'leverage': leverage,
+                'sl': sl_price
+            }
+            self.entry_price = current_price # FOR DASHBOARD
+            self.sl_price = sl_price
+            self.liquidation_price = liq_price
+            self.current_position = signal.upper()
+            self.status = f"포지션 보유 중 ({signal.upper()})"
             return True
         
         try:
@@ -344,10 +384,10 @@ class LiveTradingBot:
             
             side = 'buy' if signal == 'long' else 'sell'
             order = self.exchange.create_market_order(self.symbol, side, amount)
-            logging.info(f"✅ 주문 체결: {side} {amount} {self.symbol}")
+            logger.info(f"✅ 주문 체결: {side} {amount} {self.symbol}")
             return order
         except Exception as e:
-            logging.error(f"주문 실패: {e}")
+            logger.error(f"주문 실패: {e}")
             return None
 
     def close_position(self):
@@ -357,22 +397,34 @@ class LiveTradingBot:
             amount = abs(pos['amount'])
             side = 'sell' if pos['type'] == 'long' else 'buy'
             if self.mode == 'paper':
-                logging.info(f"🧪 [PAPER] 포지션 종료 시뮬레이션: {side} {amount}")
+                current_price = self.recent_candles[-1]['y'][3] if self.recent_candles else 90000
+                # 페이퍼 포지션 종료 시뮬레이션
+                if pos['type'] == 'long':
+                    profit = (current_price - pos['entry']) * amount
+                else: # short
+                    profit = (pos['entry'] - current_price) * amount
+                self.paper_balance += profit # 간단한 수익/손실 반영
+                self.paper_position = None
+                self.current_balance = self.paper_balance
+                self.current_position = None
+                self.entry_price = 0
+                self.sl_price = 0
+                self.liquidation_price = 0
+                self.liquidation_profit = 0
+                logger.info(f"🧪 [PAPER] 포지션 종료 시뮬레이션: {side} {amount} | 잔고: {self.current_balance:.2f}")
             else:
                 try:
                     self.exchange.create_market_order(self.symbol, side, amount)
-                    logging.info("✅ 포지션 종료 완료")
+                    logger.info("✅ 포지션 종료 완료")
                 except Exception as e:
-                    logging.error(f"포지션 종료 실패: {e}")
+                    logger.error(f"포지션 종료 실패: {e}")
 
     def wait_while_running(self, seconds):
-        for _ in range(seconds):
-            if not self.is_running:
-                return
-            time.sleep(1)
+        # 0.1초씩 여러 번 대기하여 봇 중지 명령에 더 빠르게 반응
+        time.sleep(seconds)
 
     def run(self):
-        logging.info("🚀 라이브 트레이딩 봇 시작 (다중 ML 모델)")
+        logger.info("🚀 라이브 트레이딩 봇 시작 (다중 ML 모델)")
         self.status = "신호 대기 중 (시작)"
         self.is_running = True
         
@@ -381,7 +433,9 @@ class LiveTradingBot:
                 from datetime import datetime
                 self.last_run = datetime.now()
                 
-                self.status = "신호 대기 중 (데이터 수집)"
+                self.last_run = datetime.now()
+                
+                self.status = "실행 중"
                 # 1. 데이터 수집
                 df = self.fetch_data()
                 if df is None:
@@ -395,21 +449,28 @@ class LiveTradingBot:
                 # 2. 포지션 확인
                 position = self.get_position()
                 
+                # 차트용 데이터 저장 (최근 100개)
+                self.recent_candles = [
+                    {'x': int(row.name.timestamp() * 1000) if hasattr(row.name, 'timestamp') else int(row.name), 
+                     'y': [row['open'], row['high'], row['low'], row['close']]}
+                    for idx, row in df.tail(100).iterrows()
+                ]
+
                 # 3. 신호 생성
                 regime = self.predict_regime(current)
                 settings = REGIME_SETTINGS.get(regime, {'skip': True})
                 
                 settings_name = settings.get('name', 'UNKNOWN')
-                logging.info(f"📊 현재 시장 레짐: {settings_name} (가격: {price:,.2f})")
+                logger.info(f"📊 현재 시장 레짐: {settings_name} (가격: {price:,.2f})")
                 
                 # Update Status for Manager
                 if position:
-                     self.status = f"포지션 보유 중 ({position.get('type','').upper()})"
+                     self.status = f"{position.get('type','').upper()} 보유 중 (진입가: {position.get('entry', 0):,.0f})"
                 else:
-                     self.status = "신호 대기 중"
+                     self.status = "실행 중"
                 
                 if position:
-                    logging.info(f"🔥 포지션 보유 중: {position['type']} {position['amount']}")
+                    logger.info(f"🔥 포지션 보유 중: {position['type']} {position['amount']}")
                     # 여기서 청산 로직 추가 가능 (SL/TP 등)
                     # 현재는 전략에 맡김
                 
@@ -421,10 +482,10 @@ class LiveTradingBot:
                     signal = None
                     if direction == 'long' and l_prob > threshold:
                         signal = 'long'
-                        logging.info(f"🔍 Long 신호 감지! (확률: {l_prob:.2%})")
+                        logger.info(f"🔍 Long 신호 감지! (확률: {l_prob:.2%})")
                     elif direction == 'short' and s_prob > threshold:
                         signal = 'short'
-                        logging.info(f"🔍 Short 신호 감지! (확률: {s_prob:.2%})")
+                        logger.info(f"🔍 Short 신호 감지! (확률: {s_prob:.2%})")
                     
                     if signal:
                         # 자금 관리
@@ -443,12 +504,16 @@ class LiveTradingBot:
                         final_size_usd = min(target_size, max_size)
                         amount = final_size_usd / price
                         
-                        logging.info(f"🚀 진입 결정: {signal} | 크기: ${final_size_usd:.2f} ({amount:.4f} BTC)")
-                        self.execute_trade(signal, amount, leverage)
+                        # Calculate Prices
+                        sl_price_val = price * (1 - sl_pct) if signal == 'long' else price * (1 + sl_pct)
+                        liq_price_val = price * (1 - 1/leverage) if signal == 'long' else price * (1 + 1/leverage)
+                        
+                        logger.info(f"🚀 진입 결정: {signal} | 크기: ${final_size_usd:.2f} ({amount:.4f} BTC)")
+                        self.execute_trade(signal, amount, leverage, sl_price=sl_price_val, liq_price=liq_price_val)
                 else:
-                    logging.info("⏸️ 횡보장 또는 스킵 구간 - 관망")
+                    logger.info("⏸️ 횡보장 또는 스킵 구간 - 관망")
                 
-                logging.info("💤 다음 캔들 대기 (5분)...")
+                logger.info("💤 다음 캔들 대기 (5분)...")
                 
                 # 모델 업데이트 체크
                 self.check_model_reload()
@@ -456,15 +521,15 @@ class LiveTradingBot:
                 self.wait_while_running(300)  # 5분 대기
                 
             except KeyboardInterrupt:
-                logging.info("⏹️ 봇 중지")
+                logger.info("⏹️ 봇 중지")
                 break
             except Exception as e:
-                logging.error(f"예기치 않은 오류: {e}")
+                logger.error(f"예기치 않은 오류: {e}")
                 self.status = f"오류 ({str(e)[:20]}...)"
                 self.wait_while_running(60)
         
         self.status = "Stopped"
-        logging.info("5M Bot Stopped Loop.")
+        logger.info("5M Bot Stopped Loop.")
 
 if __name__ == "__main__":
     bot = LiveTradingBot()

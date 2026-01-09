@@ -465,7 +465,7 @@ def api_history():
         limit = request.args.get('limit', 200, type=int)
         symbol = getattr(cfg, 'SYMBOL', 'BTCUSDT')
         
-        timeframe_map = {'1m': '1', '5m': '5', '15m': '15', '1h': '60', '4h': '240', '1d': 'D'}
+        timeframe_map = {'1m': '1', '5m': '5', '15m': '15', '30m': '30', '1h': '60', '4h': '240', '1d': 'D'}
         interval = timeframe_map.get(timeframe, '15')
         
         try:

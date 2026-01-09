@@ -1,0 +1,196 @@
+2026-01-09 18:56:38,494 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 18:56:38,494 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 18:56:38,494 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 18:56:38,494 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 18:56:38,494 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 18:56:38,494 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 18:56:38,496 - INFO - TRADING_MODE: paper
+2026-01-09 18:56:38,496 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 18:56:38,496 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 18:56:38,496 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 18:56:38,496 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 18:56:38,496 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 18:56:39,409 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 18:56:39,409 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:03:27,816 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:03:27,816 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:03:27,817 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:03:27,817 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:03:27,817 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:03:27,817 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:03:27,819 - INFO - TRADING_MODE: paper
+2026-01-09 19:03:27,819 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:03:27,819 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:03:27,819 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:03:27,819 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:03:27,819 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:03:28,143 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:03:28,143 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:08:17,860 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:08:17,860 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:08:17,861 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:08:17,861 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:08:17,861 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:08:17,861 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:08:17,863 - INFO - TRADING_MODE: paper
+2026-01-09 19:08:17,863 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:08:17,863 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:08:17,863 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:08:17,863 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:08:17,863 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:08:18,217 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:08:18,217 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:08:29,563 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:08:29,563 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:08:29,563 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:08:29,563 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:08:29,563 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:08:29,563 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:08:29,565 - INFO - TRADING_MODE: paper
+2026-01-09 19:08:29,565 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:08:29,565 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:08:29,565 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:08:29,565 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:08:29,565 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:08:29,882 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:08:29,882 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:08:41,572 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:08:41,572 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:08:41,572 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:08:41,572 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:08:41,572 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:08:41,572 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:08:41,574 - INFO - TRADING_MODE: paper
+2026-01-09 19:08:41,574 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:08:41,574 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:08:41,574 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:08:41,574 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:08:41,574 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:08:41,893 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:08:41,893 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:08:53,008 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:08:53,008 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:08:53,008 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:08:53,008 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:08:53,008 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:08:53,008 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:08:53,010 - INFO - TRADING_MODE: paper
+2026-01-09 19:08:53,010 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:08:53,010 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:08:53,010 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:08:53,010 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:08:53,010 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:08:53,352 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:08:53,352 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:10:03,971 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:10:03,971 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:10:03,971 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:10:03,971 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:10:03,971 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:10:03,971 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:10:03,973 - INFO - TRADING_MODE: paper
+2026-01-09 19:10:03,973 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:10:03,973 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:10:03,973 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:10:03,973 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:10:03,973 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:10:04,296 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:10:04,296 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:10:15,489 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:10:15,489 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:10:15,489 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:10:15,489 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:10:15,490 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:10:15,490 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:10:15,492 - INFO - TRADING_MODE: paper
+2026-01-09 19:10:15,492 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:10:15,492 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:10:15,492 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:10:15,492 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:10:15,492 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:10:15,837 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:10:15,837 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:11:06,770 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:11:06,770 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:11:06,770 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:11:06,770 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:11:06,770 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:11:06,770 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:11:06,772 - INFO - TRADING_MODE: paper
+2026-01-09 19:11:06,772 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:11:06,772 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:11:06,772 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:11:06,772 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:11:06,772 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:11:07,113 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:11:07,113 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:11:23,450 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:11:23,450 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:11:23,451 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:11:23,451 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:11:23,451 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:11:23,451 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:11:23,453 - INFO - TRADING_MODE: paper
+2026-01-09 19:11:23,453 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:11:23,453 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:11:23,453 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:11:23,453 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:11:23,453 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:11:23,767 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:11:23,767 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:11:40,632 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:11:40,632 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:11:40,632 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:11:40,632 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:11:40,632 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:11:40,632 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:11:40,634 - INFO - TRADING_MODE: paper
+2026-01-09 19:11:40,634 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:11:40,634 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:11:40,634 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:11:40,634 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:11:40,634 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:11:40,973 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:11:40,973 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:11:53,991 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:11:53,991 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:11:53,991 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:11:53,991 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:11:53,991 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:11:53,991 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:11:53,993 - INFO - TRADING_MODE: paper
+2026-01-09 19:11:53,993 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:11:53,993 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:11:53,993 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:11:53,993 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:11:53,993 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:11:54,310 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:11:54,310 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:12:24,438 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:12:24,438 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:12:24,438 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:12:24,438 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:12:24,438 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:12:24,438 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:12:24,440 - INFO - TRADING_MODE: paper
+2026-01-09 19:12:24,440 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:12:24,440 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:12:24,440 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:12:24,440 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:12:24,440 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:12:24,804 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:12:24,804 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:12:34,791 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:12:34,791 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:12:34,791 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:12:34,791 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:12:34,791 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:12:34,791 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:12:34,793 - INFO - TRADING_MODE: paper
+2026-01-09 19:12:34,793 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:12:34,794 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:12:34,794 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:12:34,794 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:12:34,794 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:12:35,143 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:12:35,143 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.

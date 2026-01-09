@@ -50,9 +50,9 @@ class Strategy30m:
         
         if self.mode in ['robust_extreme', 'robust_dual', 'robust_adaptive', 'extreme_growth', 'ultra_growth']:
             # Donchian Channels (Standard/Bull)
-            df['donchian_high'] = df['high'].rolling(window=self.entry_window).max().shift(1)
-            df['donchian_low'] = df['low'].rolling(window=self.exit_window).min().shift(1)
-            df['donchian_low_entry'] = df['low'].rolling(window=self.entry_window).min().shift(1)
+            df['donchian_high'] = df['high'].rolling(window=self.entry_window).max().shift(1).fillna(0)
+            df['donchian_low'] = df['low'].rolling(window=self.exit_window).min().shift(1).fillna(0)
+            df['donchian_low_entry'] = df['low'].rolling(window=self.entry_window).min().shift(1).fillna(0)
             
             # Donchian Channels (Bear/Fast)
             df['bear_high_entry'] = df['high'].rolling(window=self.bear_entry_window).max().shift(1)
@@ -68,19 +68,23 @@ class Strategy30m:
             # Slow Bull Exit for staying in trends longer
             df['bull_exit_slow'] = df['low'].rolling(window=48).min().shift(1) # 24h window
 
-            df['atr'] = ta.atr(df['high'], df['low'], df['close'], length=14)
+            df['atr'] = ta.atr(df['high'], df['low'], df['close'], length=14).fillna(0)
             adx_df = ta.adx(df['high'], df['low'], df['close'], length=14)
-            df['adx'] = adx_df['ADX_14'] if adx_df is not None else 0
+            df['adx'] = adx_df['ADX_14'].fillna(0) if adx_df is not None else 0
             # ADX Slope: to detect if trend is strengthening or weakening
             df['adx_slope'] = df['adx'].diff(3) 
             
             # Volatility Filter: ATR as % of Price
             df['atr_pct'] = (df['atr'] / df['close']) * 100
             
-            df['ema_50'] = ta.ema(df['close'], length=50)
-            df['ema_200'] = ta.ema(df['close'], length=200)
-            df['ema_1000'] = ta.ema(df['close'], length=1000)
-            df['rsi'] = ta.rsi(df['close'], length=14)
+            e50 = ta.ema(df['close'], length=50)
+            df['ema_50'] = e50.fillna(0) if e50 is not None else 0
+            e200 = ta.ema(df['close'], length=200)
+            df['ema_200'] = e200.fillna(0) if e200 is not None else 0
+            e1000 = ta.ema(df['close'], length=1000)
+            df['ema_1000'] = e1000.fillna(0) if e1000 is not None else 0
+            rsi_val = ta.rsi(df['close'], length=14)
+            df['rsi'] = rsi_val.fillna(0) if rsi_val is not None else 0
             # EMA Slopes
             df['ema_50_slope'] = df['ema_50'].diff(3)
             
@@ -1602,4 +1606,48 @@ class MultiStrategySystemV2:
             'final_balance': balance,
             'multiplier': balance / initial_balance,
             'yearly': yearly_results
+        }
+    def get_current_signal(self, df):
+        """라이브 트레이딩을 위한 현재 시그널 및 파라미터 추출"""
+        if len(df) < 200:
+            return {'action': None, 'reason': 'insufficient_data'}
+            
+        curr = df.iloc[-1]
+        
+        # 지표 유효성 체크 (NaN 필터링)
+        required_cols = ['donchian_high', 'donchian_low', 'donchian_low_entry', 'ema_50', 'adx', 'atr']
+        for col in required_cols:
+            if pd.isna(curr.get(col)):
+                return {'action': None, 'reason': f'null_indicator_{col}'}
+        
+        # 1. 시장 상황 분석
+        is_bull_regime = (curr['ema_50'] > curr['ema_200']) if 'ema_200' in curr else False
+        is_strong_bull = (curr.get('ema_quality', 0) > 0.8 and curr['adx'] > 30)
+        
+        # 2. 진입 조건 판정
+        action = None
+        if curr['close'] > curr['donchian_high'] and curr['close'] > curr['ema_50'] and curr['adx'] > 15:
+            action = 'long'
+        elif curr['close'] < curr['donchian_low_entry'] and curr['close'] < curr['ema_50'] and curr['adx'] > 15:
+            action = 'short'
+            
+        # 3. 파라미터 설정 (Adaptive Strategy 기반)
+        # Ultra/Extreme Growth 모드에 따른 동적 설정
+        if self.mode in ['ultra_growth', 'extreme_growth']:
+            target_leverage = 25.0 if self.mode == 'ultra_growth' else 15.0
+            stop_atr = 1.5 if self.mode == 'ultra_growth' else (2.8 if curr['atr_pct'] < 0.35 else 2.4)
+            risk_pct = 0.10 if self.mode == 'ultra_growth' else 0.09
+        else:
+            target_leverage = self.base_leverage
+            stop_atr = self.stop_atr
+            risk_pct = 0.10
+            
+        return {
+            'action': action,
+            'leverage': target_leverage,
+            'stop_atr': stop_atr,
+            'risk_pct': risk_pct,
+            'donchian_high': curr['donchian_high'],
+            'donchian_low': curr['donchian_low'],
+            'is_strong_bull': is_strong_bull
         }

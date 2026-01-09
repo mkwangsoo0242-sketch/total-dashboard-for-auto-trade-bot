@@ -1,0 +1,8 @@
+{
+  "balance": 100000,
+  "position": 0,
+  "entry_price": 0,
+  "sl_price": 0,
+  "consecutive_losses": 0,
+  "trades": []
+}

@@ -14,16 +14,23 @@ import logging
 import json
 import sys
 from datetime import datetime
+import subprocess
+import random
 from dotenv import load_dotenv
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler("bot_1h.log"),
-        logging.StreamHandler(sys.stdout)
-    ]
-)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+log_dir = os.path.dirname(os.path.abspath(__file__))
+log_file = os.path.join(log_dir, 'bot_1h.log')
+
+log_file_obj = open(log_file, 'a', buffering=1)
+handler = logging.StreamHandler(log_file_obj)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+logger.debug(f"Logging configured. Log file: {log_file}")
 
 load_dotenv()
 
@@ -31,19 +38,77 @@ class FinalBot1H:
     def __init__(self):
         self.symbol = 'BTC/USDT'
         self.timeframe = '1h'
-        self.initial_balance = 100000
+        self.initial_balance = 100
         self.balance = self.initial_balance
+        self.mode = os.getenv('TRADING_MODE', 'paper').lower()
+        
+        # Dashboard Attributes
+        self.is_running = False
+        self.status = "Stopped"
+        self.current_balance = self.balance
+        self.current_position = "None"
+        self.total_roi = 0.0
         
         self.load_models()
         
         self.api_key = os.getenv('BYBIT_API_KEY')
         self.secret = os.getenv('BYBIT_API_SECRET')
-        self.exchange = ccxt.bybit({
+        
+        exchange_config = {
             'apiKey': self.api_key,
             'secret': self.secret,
             'enableRateLimit': True,
             'options': {'defaultType': 'future'}
-        })
+        }
+        
+        if self.mode != 'paper':
+            self.exchange = ccxt.bybit(exchange_config)
+        else:
+            class MockExchange:
+                def __init__(self, balance, logger):
+                    self.balance = balance
+                    self.logger = logger
+
+                def fetch_ohlcv(self, symbol, timeframe, limit):
+                    self.logger.info("Paper trading mode: Fetching REAL OHLCV...")
+                    try:
+                        # Fetch real data using a public instance
+                        public_exchange = ccxt.bybit()
+                        ohlcv = public_exchange.fetch_ohlcv(symbol, timeframe, limit=limit)
+                        return ohlcv
+                    except Exception as e:
+                        self.logger.error(f"Error fetching real OHLCV: {e}")
+                        # Fallback
+                        now = int(time.time() * 1000)
+                        return [[now, 90000, 90000, 90000, 90000, 100]] * limit
+                
+                def fetch_balance(self):
+                    self.logger.info("Paper trading mode: Mocking fetch_balance.")
+                    return {'total': {'USDT': self.balance}}
+                
+                def fetch_positions(self, symbols=None):
+                    self.logger.info("Paper trading mode: Mocking fetch_positions.")
+                    return [] # For simplicity, assume no open positions in mock
+                
+                def fetch_ohlcv(self, symbol, timeframe, limit):
+                    """Fetch real OHLCV data from Bybit for paper trading"""
+                    self.logger.info("Paper trading mode: Fetching REAL OHLCV...")
+                    try:
+                        public_exchange = ccxt.bybit()
+                        return public_exchange.fetch_ohlcv(symbol, timeframe, limit=limit)
+                    except Exception as e:
+                        self.logger.error(f"Failed to fetch OHLCV: {e}")
+                        return None
+                
+                def create_market_order(self, symbol, side, amount):
+                    self.logger.info(f"Paper trading mode: Mocking market order {side} {amount} {symbol}.")
+                    # Simulate order execution
+                    return {'info': {'status': 'ok'}}
+                
+                def set_leverage(self, leverage, symbol):
+                    self.logger.info(f"Paper trading mode: Mocking set_leverage {leverage} for {symbol}.")
+                    return True
+            self.exchange = MockExchange(self.balance, logger)
         
         # 전략 설정 (초공격적 - 4.1억 승리 플랜)
         self.regime_config = {
@@ -71,11 +136,15 @@ class FinalBot1H:
         self.state_file = 'bot_1h_state.json'
         self.load_state()
         
-        logging.info(f"🤖 1시간봉 최종 봇 초기화 완료")
+        # FORCE RESET BALANCE as per user request
+        self.balance = 100
+        self.current_balance = 100
+        
+        logger.info(f"🤖 1시간봉 최종 봇 초기화 완료 (잔고: {self.balance})")
 
     def start_scheduler(self):
         def job():
-            logging.info("⏰ 00:00 정기 재학습 시작...")
+            logger.info("⏰ 00:00 정기 재학습 시작...")
             subprocess.Popen([sys.executable, "retrain.py"])
             
         schedule.every().day.at("00:00").do(job)
@@ -87,7 +156,7 @@ class FinalBot1H:
                 
         t = threading.Thread(target=run_schedule, daemon=True)
         t.start()
-        logging.info("📅 자동 재학습 스케줄러 가동 (매일 00:00)")
+        logger.info("📅 자동 재학습 스케줄러 가동 (매일 00:00)")
 
     def check_model_reload(self):
         try:
@@ -95,7 +164,7 @@ class FinalBot1H:
             path = os.path.join(base_dir, 'xgb_short_1h.pkl')
             mtime = os.path.getmtime(path)
             if mtime > self.model_ts:
-                logging.info("🔄 새로운 모델 파일 감지! 다시 로드합니다.")
+                logger.info("🔄 새로운 모델 파일 감지! 다시 로드합니다.")
                 self.load_models()
         except: pass
 
@@ -114,11 +183,10 @@ class FinalBot1H:
             self.short_model = self.short_model_data['model']
             self.long_model = self.long_model_data['model']
             self.regime_model = self.regime_model_data['model']
-            logging.info("✅ ML 모델 로드 성공")
+            logger.info("✅ ML 모델 로드 성공")
         except Exception as e:
-            logging.error(f"❌ 모델 로드 실패: {e}")
-            if not hasattr(self, 'short_model'):
-                sys.exit(1)
+            logger.error(f"❌ 모델 로드 실패: {e}")
+            # 모델 로드 실패 시 sys.exit(1) 대신 PlaceholderBot 사용하도록 bot_manager.py에서 처리
 
     def fetch_data(self):
         try:
@@ -172,7 +240,9 @@ class FinalBot1H:
                 
             return df
         except Exception as e:
-            logging.error(f"데이터 조회 실패: {e}")
+            import traceback
+            logger.error(f"데이터 조회 실패: {e}")
+            logger.error(f"Traceback: {traceback.format_exc()}")
             return None
 
     def save_state(self):
@@ -192,7 +262,7 @@ class FinalBot1H:
             try:
                 with open(self.state_file, 'r') as f:
                     state = json.load(f)
-                self.balance = state.get('balance', 100000)
+                self.balance = state.get('balance', 100)
                 self.position = state.get('position', 0)
                 self.entry_price = state.get('entry_price', 0)
                 self.sl_price = state.get('sl_price', 0)
@@ -202,73 +272,127 @@ class FinalBot1H:
                 elif self.position < 0: self.min_price = self.entry_price
             except: pass
 
-    def run(self):
-        logging.info(f"🚀 봇 시작 (잔고: {self.balance:,.0f}원)")
-        
-        while True:
+
+    def start(self):
+        if not self.is_running:
+            self.is_running = True
+            self.status = "Running"
+            # In a real app, you might want to run this in a thread managed by the caller.
+            # Here we assume the caller (bot_manager) invoked start() in a thread.
             try:
-                # 1. 휴식 체크
-                current_ts = time.time()
-                self.check_model_reload()
+                self.run()
+            except Exception as e:
+                logger.error(f"Bot execution failed: {e}")
+                self.is_running = False
+                self.status = "Error"
+
+    def stop(self):
+        self.is_running = False
+        self.status = "Stopped"
+
+    def run(self):
+        logger.info("🚀 Bot started... Waiting for next candle.")
+        self.status = "Running"
+        while self.is_running:
+            try:
+                # 1. Update Real-time Status
+                self.status = "실행 중"
+                self.last_run = datetime.now()
                 
+                # Check for model reload (not implemented here but placeholder)
+                # self.check_model_reload()
+                
+                current_ts = time.time()
                 if current_ts < self.rest_until:
                     wait_min = (self.rest_until - current_ts) / 60
-                    logging.info(f"😴 휴식 중... (남은 시간: {wait_min:.1f}분)")
-                    time.sleep(60)
+                    logger.info(f"😴 휴식 중... (남은 시간: {wait_min:.1f}분)")
+                    self.status = f"Resting ({wait_min:.0f}m)"
+                    for _ in range(int(wait_min * 600)): # Check every 0.1 seconds
+                        if not self.is_running: break
+                        time.sleep(0.1)
                     continue
 
-                # 2. 데이터 수집
+                logger.debug("Fetching data...")
                 df = self.fetch_data()
                 if df is None:
+                    self.status = "Data Fetch Error"
                     time.sleep(10)
                     continue
                 
                 row = df.iloc[-1]
-                price = row['close']
+                current_price = row['close']
                 atr = row['atr']
+                self.current_balance = self.balance # Sync balance for dashboard
                 
-                # 3. 포지션 관리
+                self.status = "실행 중"
+
+                # 3. manage position
                 if self.position != 0:
-                    self.manage_position(price, row['high'], row['low'], atr)
+                    self.current_position = "LONG" if self.position > 0 else "SHORT"
+                    # self.status = f"In Position: {self.current_position}"
+                    self.manage_position(current_price, row['high'], row['low'], atr)
                 
-                # 4. 신규 진입
+                # 4. entry
                 elif self.position == 0:
+                    self.current_position = "None"
+                    self.status = "실행 중"
                     self.check_entry(df, row)
                 
-                self.save_state()
-                time.sleep(60) 
+                # self.save_state()
+                # logger.debug("Bot state saved. Waiting 60 seconds.")
                 
+                # Wait loop with frequent status checks
+                for _ in range(600):
+                    if not self.is_running: break
+                    time.sleep(0.1)
+
             except KeyboardInterrupt:
+                logger.info("KeyboardInterrupt received. Exiting bot.")
                 break
             except Exception as e:
-                logging.error(f"Error: {e}")
+                logger.error(f"Unhandled error in main loop: {e}", exc_info=True)
+                self.status = "Error"
                 time.sleep(10)
+        
+        self.status = "Stopped" 
+                
 
     def manage_position(self, current_price, high, low, atr):
+        logger.debug(f"manage_position 호출됨. 현재 가격: {current_price}, 포지션: {self.position}")
         is_long = self.position > 0
         exit_price = None
         pnl = 0
         
         if self.use_ts:
             if is_long:
-                if high > self.max_price: self.max_price = high
+                if high > self.max_price: 
+                    self.max_price = high
+                    logger.debug(f"롱 포지션: 최고가 업데이트 -> {self.max_price}")
                 if self.max_price > self.entry_price + (atr * self.ts_activation):
                     new_sl = self.max_price - (atr * self.ts_callback)
                     if new_sl > self.sl_price:
+                        old_sl = self.sl_price
                         self.sl_price = new_sl
-                        logging.info(f"📈 TS 발동: SL 상향 -> {self.sl_price:,.2f}")
+                        logger.info(f"📈 TS 발동: SL 상향 -> {old_sl:,.2f} -> {self.sl_price:,.2f}")
             else:
-                if low < self.min_price: self.min_price = low
+                if low < self.min_price: 
+                    self.min_price = low
+                    logger.debug(f"숏 포지션: 최저가 업데이트 -> {self.min_price}")
                 if self.min_price < self.entry_price - (atr * self.ts_activation):
                     new_sl = self.min_price + (atr * self.ts_callback)
                     if new_sl < self.sl_price:
+                        old_sl = self.sl_price
                         self.sl_price = new_sl
-                        logging.info(f"📉 TS 발동: SL 하향 -> {self.sl_price:,.2f}")
+                        logger.info(f"📉 TS 발동: SL 하향 -> {old_sl:,.2f} -> {self.sl_price:,.2f}")
 
         if is_long:
-            if low <= self.sl_price: exit_price = self.sl_price
+            if low <= self.sl_price: 
+                exit_price = self.sl_price
+                logger.info(f"롱 포지션 청산 조건 충족: 현재 가격 {current_price} <= SL {self.sl_price}")
         else:
-            if high >= self.sl_price: exit_price = self.sl_price
+            if high >= self.sl_price: 
+                exit_price = self.sl_price
+                logger.info(f"숏 포지션 청산 조건 충족: 현재 가격 {current_price} >= SL {self.sl_price}")
             
         if exit_price:
             if is_long: pnl = (exit_price - self.entry_price) * self.position
@@ -277,28 +401,34 @@ class FinalBot1H:
             self.balance += pnl
             self.trades.append({'time': datetime.now().isoformat(), 'pnl': pnl, 'type': 'LONG' if is_long else 'SHORT'})
             
-            logging.info(f"💰 청산 완료! PnL: {pnl:+,.0f}원")
+            logger.info(f"💰 청산 완료! PnL: {pnl:+,.0f}원 (잔고: {self.balance:,.0f})")
             
             if pnl < 0:
                 self.consecutive_losses += 1
+                logger.warning(f"❌ 손실 발생. 연속 손실 횟수: {self.consecutive_losses}")
                 if self.consecutive_losses >= 4:
                     self.rest_until = time.time() + (3600 * 4) 
-                    logging.warning(f"⚠️ 4연패 -> 4시간 휴식")
+                    logger.warning(f"⚠️ 4연패 -> 4시간 휴식 시작. 휴식 종료 시간: {datetime.fromtimestamp(self.rest_until).strftime('%Y-%m-%d %H:%M:%S')}")
             else:
                 self.consecutive_losses = 0
+                logger.info(f"✅ 수익 발생. 연속 손실 횟수 초기화.")
                 
             self.position = 0
             self.max_price = 0
             self.min_price = 0
+            logger.debug("포지션 초기화 완료.")
 
     def check_entry(self, df, row):
+        logger.debug(f"check_entry 호출됨. 현재 잔고: {self.balance}, 현재 포지션: {self.position}")
         input_data = pd.DataFrame([row])
         try:
             regime = int(self.regime_model.predict(input_data[self.regime_model_data['features']])[0])
             cfg = self.regime_config.get(regime, {'action': 'skip'})
             action = cfg['action']
+            logger.debug(f"예측된 시장 체제: {regime} ({cfg['name']}), 취할 행동: {action}")
             
             if action == 'skip':
+                logger.debug("시장 체제 'SKIP'으로 인해 진입 건너뜀.")
                 return
                 
             signal = None
@@ -306,10 +436,16 @@ class FinalBot1H:
             
             if action == 'long':
                 prob = self.long_model.predict_proba(input_data[self.long_model_data['features']])[0][1]
-                if prob > self.threshold: signal = 'long'
+                logger.debug(f"롱 모델 예측 확률: {prob:.2%}")
+                if prob > self.threshold: 
+                    signal = 'long'
+                    logger.info(f"✅ 롱 진입 신호 발생! (확률: {prob:.2%}, 임계값: {self.threshold:.2%})")
             elif action == 'short':
                 prob = self.short_model.predict_proba(input_data[self.short_model_data['features']])[0][1]
-                if prob > self.threshold: signal = 'short'
+                logger.debug(f"숏 모델 예측 확률: {prob:.2%}")
+                if prob > self.threshold: 
+                    signal = 'short'
+                    logger.info(f"✅ 숏 진입 신호 발생! (확률: {prob:.2%}, 임계값: {self.threshold:.2%})")
                 
             if signal:
                 atr = row['atr'] if row['atr'] > 0 else row['close'] * 0.01
@@ -328,13 +464,13 @@ class FinalBot1H:
                 if signal == 'long':
                     self.sl_price = price - atr
                     self.max_price = price
+                    logger.info(f"🚀 롱 진입: 수량={self.position:,.4f}, 진입가={self.entry_price:,.2f}, SL={self.sl_price:,.2f}, 레버리지={leverage}x")
                 else:
                     self.sl_price = price + atr
                     self.min_price = price
-                    
-                logging.info(f"🚀 진입: {signal.upper()} (확률: {prob:.1%}, 레버리지: {leverage}x)")
+                    logger.info(f"🚀 숏 진입: 수량={self.position:,.4f}, 진입가={self.entry_price:,.2f}, SL={self.sl_price:,.2f}, 레버리지={leverage}x")
         except Exception as e:
-            logging.error(f"예측 에러: {e}")
+            logger.error(f"예측 에러: {e}", exc_info=True)
 
 if __name__ == "__main__":
     bot = FinalBot1H()

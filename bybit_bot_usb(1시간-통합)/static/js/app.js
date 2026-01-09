@@ -15,8 +15,8 @@ function init() {
     if (isInitialized) return;
     isInitialized = true;
     
-    displaySampleData();
     setupButtons();
+    initChart(); // 차트 초기화 추가
     loadData();
     loadSettings();
     startAutoUpdate();
@@ -33,24 +33,25 @@ function setupButtons() {
 function initChart() {
     const container = document.getElementById('chartContainer');
     if (!container) {
-        /* chartContainer 없음 */
+        console.error('❌ 차트 컨테이너 (chartContainer)를 찾을 수 없습니다.');
         return;
     }
     
     if (typeof LightweightCharts === 'undefined') {
-        /* LightweightCharts 라이브러리 없음 */
+        console.error('❌ LightweightCharts 라이브러리가 로드되지 않았습니다.');
         container.innerHTML = '<div style="padding:50px;text-align:center;color:#da3633;">차트 라이브러리 로드 실패</div>';
         return;
     }
     
     try {
-        console.log('📊 LightweightCharts:', typeof LightweightCharts);
+        console.log('📊 LightweightCharts 초기화 시도...');
         
         // 기존 차트 제거
         if (chart) {
             chart.remove();
             chart = null;
             candleSeries = null;
+            console.log('✅ 기존 차트 제거 완료.');
         }
         
         container.innerHTML = '';
@@ -89,8 +90,9 @@ function initChart() {
                 wickUpColor: '#238636', 
                 wickDownColor: '#da3633'
             });
+            console.log('✅ CandlestickSeries 추가 완료.');
         } else {
-            console.error('❌ addCandlestickSeries method not found. Available methods:', Object.keys(newChart));
+            console.error('❌ addCandlestickSeries 메서드를 찾을 수 없습니다. 사용 가능한 메서드:', Object.keys(newChart));
             throw new Error('addCandlestickSeries not found');
         }
         
@@ -103,6 +105,7 @@ function initChart() {
         // 10초마다 자동 업데이트
         if (updateIntervals.chart) clearInterval(updateIntervals.chart);
         updateIntervals.chart = setInterval(function() {
+            console.log('🔄 차트 데이터 자동 업데이트 시도...');
             loadRealTimeChart(currentTimeframe);
         }, 10000);
         
@@ -115,7 +118,7 @@ function initChart() {
         
         console.log('✅ 차트 초기화 완료');
     } catch (e) { 
-        /* 차트 오류: */ 
+        console.error('❌ 차트 초기화 실패:', e); 
         container.innerHTML = '<div style="padding:50px;text-align:center;color:#da3633;">차트 초기화 실패: ' + e.message + '</div>';
     }
 }
@@ -178,59 +181,35 @@ function refreshChart() {
 
 // 실시간 Bybit 차트 데이터 로드
 function loadRealTimeChart(timeframe) {
-    if (!candleSeries) return;
+    if (!candleSeries) {
+        console.warn('⚠️ candleSeries가 초기화되지 않아 차트 데이터를 로드할 수 없습니다.');
+        return;
+    }
     
-    // Bybit Public API (인증 불필요)
-    var intervalMap = {
-        '1m': '1', '5m': '5', '15m': '15', 
-        '1h': '60', '4h': '240', '1d': 'D'
-    };
-    var interval = intervalMap[timeframe] || '15';
-    var symbol = 'BTCUSDT';
-    
-    var url = 'https://api.bybit.com/v5/market/kline?category=linear&symbol=' + symbol + '&interval=' + interval + '&limit=200';
+    console.log(`📡 백엔드 API 호출 시도: /api/history?timeframe=${timeframe}&limit=200`);
+    var url = '/api/history?timeframe=' + timeframe + '&limit=200';
     
     fetch(url)
-        .then(function(res) { return res.json(); })
-        .then(function(result) {
-            if (result.retCode === 0 && result.result && result.result.list) {
-                var klines = result.result.list;
-                var data = [];
-                
-                // 한국 시간대 오프셋 (UTC+9)
-                var koreaOffset = 9 * 60 * 60;
-                
-                // Bybit 데이터는 최신순이므로 역순으로 변환
-                for (var i = klines.length - 1; i >= 0; i--) {
-                    var k = klines[i];
-                    // UTC timestamp를 한국 시간으로 변환
-                    var utcTime = parseInt(k[0]) / 1000;
-                    
-                    data.push({
-                        time: utcTime + koreaOffset,  // 한국 시간으로 변환
-                        open: parseFloat(k[1]),
-                        high: parseFloat(k[2]),
-                        low: parseFloat(k[3]),
-                        close: parseFloat(k[4])
-                    });
-                }
-                
+        .then(function(res) { 
+            console.log('✅ API 응답 수신:', res.status);
+            return res.json(); 
+        })
+        .then(function(data) {
+            if (data && data.length > 0) {
+                console.log('✅ 백엔드 API를 통한 실시간 데이터 로드 성공:', data.length + '개 캔들');
                 candleSeries.setData(data);
                 if (chart) chart.timeScale().fitContent();
                 
-                // 현재 가격 업데이트
-                if (data.length > 0) {
-                    var lastPrice = data[data.length - 1].close;
-                    setElement('currentPrice', lastPrice.toLocaleString() + ' USDT');
-                }
+                var lastPrice = data[data.length - 1].close;
+                setElement('currentPrice', lastPrice.toLocaleString() + ' USDT');
                 
-                console.log('✅ Bybit 실시간 데이터 로드:', data.length + '개 캔들');
             } else {
-                /* Bybit API 오류 */
+                console.warn('⚠️ 백엔드 API에서 데이터가 없거나 오류 발생:', data);
                 useSampleData(timeframe);
             }
         })
         .catch(function(e) {
+            console.error('❌ 백엔드 API 호출 오류:', e);
             useSampleData(timeframe);
         });
 }
