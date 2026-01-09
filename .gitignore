@@ -75,3 +75,8 @@ htmlcov/
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Data files
+*.csv
+*.tar.gz
+data/
