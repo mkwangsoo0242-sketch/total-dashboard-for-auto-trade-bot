@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>봇 통합 관리 플랫폼 [DASHBOARD FINAL]</title>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #0b1120;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: #1a2236;
+            border-radius: 8px;
+            padding: 16px;
+            border: 1px solid #2d3748;
+        }
+
+        .table-row {
+            border-top: 1px solid #2d3748;
+            height: 52px;
+        }
+
+        * {
+            transition: none !important;
+            animation: none !important;
+        }
+
+        .apexcharts-canvas *,
+        .apexcharts-canvas {
+            transition: none !important;
+            animation: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-wrapper">
+        <header class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold tracking-tight">봇 통합 관리 플랫폼</h1>
+            <div class="text-right">
+                <span class="text-xs text-slate-400 block mb-1">전체 합산 자산</span>
+                <div class="flex items-baseline justify-end gap-1">
+                    <span class="text-2xl font-bold text-green-400" id="total-balance">0</span>
+                    <span class="text-sm font-bold text-green-400">USDT</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="card mb-6">
+            <h2 class="text-lg font-bold mb-4">봇별 상세 상태</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="text-slate-400 text-xs border-b border-slate-700">
+                        <tr>
+                            <th class="pb-3 px-3">봇 이름</th>
+                            <th class="pb-3 px-3">봉 간격</th>
+                            <th class="pb-3 px-3">상태</th>
+                            <th class="pb-3 px-3">현재잔고</th>
+                            <th class="pb-3 px-3">현재포지션</th>
+                            <th class="pb-3 px-3 text-right">진입가격</th>
+                            <th class="pb-3 px-3 text-right">청산가격</th>
+                            <th class="pb-3 px-3 text-right">청산수익</th>
+                            <th class="pb-3 px-3 text-right">총수익률</th>
+                            <th class="pb-3 text-center">업데이트</th>
+                            <th class="pb-3 text-center">제어</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bot-table-body" class="text-[14px] text-slate-200"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- 5분봉 카드 -->
+            <div class="card">
+                <div class="flex justify-between items-end mb-2">
+                    <div>
+                        <h3 class="text-cyan-400 font-bold text-lg">5분봉 (Bot_5M)</h3>
+                        <p class="text-slate-500 text-xs">5M Regime Strategy</p>
+                    </div>
+                </div>
+                <div id="Bot_5M-chart"></div>
+            </div>
+
+            <!-- 15분봉 카드 -->
+            <div class="card">
+                <div class="flex justify-between items-end mb-2">
+                    <div>
+                        <h3 class="text-cyan-400 font-bold text-lg">15분봉 (Bot_15M)</h3>
+                        <p class="text-slate-500 text-xs">15M Hybrid Strategy</p>
+                    </div>
+                </div>
+                <div id="Bot_15M-chart"></div>
+            </div>
+
+            <!-- 30분봉 카드 -->
+            <div class="card">
+                <div class="flex justify-between items-end mb-2">
+                    <div>
+                        <h3 class="text-cyan-400 font-bold text-lg">30분봉 (Bot_30M)</h3>
+                        <p class="text-slate-500 text-xs">30M Trend Follow</p>
+                    </div>
+                </div>
+                <div id="Bot_30M-chart"></div>
+            </div>
+
+            <!-- 1시간봉 카드 -->
+            <div class="card">
+                <div class="flex justify-between items-end mb-2">
+                    <div>
+                        <h3 class="text-cyan-400 font-bold text-lg">1시간봉 (Bot_1H)</h3>
+                        <p class="text-slate-500 text-xs">1H Multi-Model ML</p>
+                    </div>
+                </div>
+                <div id="Bot_1H-chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.Apex = { chart: { animations: { enabled: false }, toolbar: { show: false } }, stroke: { curve: 'straight', width: 1 } };
+        const charts = {};
+
+        function initChart(id) {
+            const chart = new ApexCharts(document.querySelector("#" + id), {
+                chart: { type: 'candlestick', height: 300, animations: { enabled: false }, background: 'transparent' },
+                series: [], xaxis: { type: 'datetime' }, yaxis: { opposite: true, labels: { formatter: (val) => val.toFixed(1) } },
+                theme: { mode: 'dark' }, grid: { borderColor: '#334155', strokeDashArray: 2 },
+                plotOptions: { candlestick: { colors: { upward: '#22c55e', downward: '#ef4444' } } },
+                annotations: { yaxis: [] } // Init annotations
+            });
+            chart.render(); return chart;
+        }
+
+        ['Bot_5M', 'Bot_15M', 'Bot_30M', 'Bot_1H'].forEach(name => charts[name] = initChart(name + '-chart'));
+
+        async function controlBot(action, name) {
+            try {
+                const res = await fetch(`/api/bot/${action}/${name}`, { method: 'POST' });
+                const result = await res.json();
+                if (result.success) update(); // 즉시 갱신
+            } catch (e) { console.error("Control Failed:", e); }
+        }
+
+        async function update() {
+            try {
+                const res = await fetch('/api/data?t=' + Date.now()); const data = await res.json();
+                document.getElementById('total-balance').innerText = data.total_balance.toLocaleString();
+                const tbody = document.getElementById('bot-table-body');
+                tbody.innerHTML = '';
+
+                data.bots.forEach(bot => {
+                    const statusColor = bot.status === 'Running' ? 'text-cyan-400' : 'text-red-400';
+
+                    let currentPrice = 0;
+                    if (bot.candles && bot.candles.length > 0) {
+                        currentPrice = bot.candles[bot.candles.length - 1].y[3];
+                    }
+
+                    const tr = document.createElement('tr');
+                    tr.className = 'table-row';
+                    tr.innerHTML = `
+                        <td class="px-3 font-bold text-slate-100">${bot.name}</td>
+                        <td class="px-3 text-slate-400 text-xs">${bot.interval}</td>
+                        <td class="px-3 font-bold ${statusColor}">${bot.status}</td>
+                        <td class="px-3 font-bold text-green-400">${bot.current_balance.toLocaleString()} USDT</td>
+                        <td class="px-3">${bot.current_position}</td>
+                        <td class="px-3 text-right font-mono text-slate-300 font-bold">${bot.entry_price > 0 ? bot.entry_price.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) : '-'}</td>
+                        <td class="px-3 text-right text-slate-500 font-mono text-xs">-</td>
+                        <td class="px-3 text-right text-green-400 font-bold">0 USDT</td>
+                        <td class="px-3 text-right font-bold text-slate-100">${bot.total_roi.toFixed(2)}%</td>
+                        <td class="px-3 text-center text-xs text-slate-500">${bot.last_update}</td>
+                        <td class="px-3 text-center">
+                            <button onclick="controlBot('start', '${bot.name}')" class="bg-green-600/20 text-green-400 px-3 py-1 rounded text-xs font-bold mr-1">Start</button>
+                            <button onclick="controlBot('stop', '${bot.name}')" class="bg-red-600/20 text-red-400 px-3 py-1 rounded text-xs font-bold">Stop</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+
+                    if (charts[bot.name] && bot.candles && bot.candles.length > 0) {
+                        const last = bot.candles[bot.candles.length - 1];
+                        const price = last.y[3];
+
+                        const annotations = [];
+
+                        // Current Price (Blue)
+                        annotations.push({ y: price, borderColor: '#3b82f6', label: { style: { color: '#fff', background: '#3b82f6', fontWeight: 700 }, text: 'Now: ' + price.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) } });
+
+                        // Entry Price (Green, Dashed)
+                        if (bot.entry_price > 0 && bot.current_position !== 'None') {
+                            annotations.push({ y: bot.entry_price, borderColor: '#22c55e', strokeDashArray: 4, label: { style: { color: '#ffffff', background: '#22c55e' }, text: 'Entry: ' + bot.entry_price.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) } });
+                        }
+
+                        // Stop Loss (Red, Dashed)
+                        if (bot.sl_price > 0 && bot.current_position !== 'None') {
+                            annotations.push({ y: bot.sl_price, borderColor: '#ef4444', strokeDashArray: 4, label: { style: { color: '#ffffff', background: '#ef4444' }, text: 'SL: ' + bot.sl_price.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) } });
+                        }
+
+                        // Liquidation Price (Orange, Dashed)
+                        if (bot.liq_price > 0 && bot.current_position !== 'None') {
+                            annotations.push({ y: bot.liq_price, borderColor: '#f97316', strokeDashArray: 4, label: { style: { color: '#ffffff', background: '#f97316' }, text: 'Liq: ' + bot.liq_price.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) } });
+                        }
+
+                        charts[bot.name].updateOptions({
+                            series: [{ data: bot.candles }],
+                            annotations: { yaxis: annotations }
+                        }, false, false);
+                    }
+                });
+            } catch (e) { }
+        }
+        setInterval(update, 2000); update(); // 주기 2초로 단축하여 반응성 향상
+    </script>
+</body>
+
+</html>

@@ -748,3 +748,439 @@
 [36m2026-01-09 19:37:57,394[0m - 숏 모델 예측 확률: 11.87%
 [36m2026-01-09 19:37:58,631[0m - [33m[1mPrice:[0m 90496.00 | [35mRSI2:[0m 91.32 | Trend: [31m[1mDOWN[0m | [0mNo signal
 [36m2026-01-09 19:38:08,880[0m - [33m[1mPrice:[0m 90496.00 | [35mRSI2:[0m 91.32 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:38:19,074[0m - [33m[1mPrice:[0m 90496.00 | [35mRSI2:[0m 91.32 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:38:29,243[0m - [33m[1mPrice:[0m 90496.00 | [35mRSI2:[0m 91.32 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:38:39,402[0m - [33m[1mPrice:[0m 90496.00 | [35mRSI2:[0m 91.32 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:38:49,557[0m - [33m[1mPrice:[0m 90496.10 | [35mRSI2:[0m 91.32 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:38:59,012[0m - Fetching data...
+[36m2026-01-09 19:38:59,012[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:38:59,810[0m - [33m[1mPrice:[0m 90491.00 | [35mRSI2:[0m 90.90 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:39:00,900[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:39:00,904[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:39:00,906[0m - 숏 모델 예측 확률: 11.87%
+[36m2026-01-09 19:39:09,968[0m - [33m[1mPrice:[0m 90517.50 | [35mRSI2:[0m 92.75 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:39:20,114[0m - [33m[1mPrice:[0m 90528.90 | [35mRSI2:[0m 93.33 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:39:30,292[0m - [33m[1mPrice:[0m 90528.90 | [35mRSI2:[0m 93.33 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:39:40,444[0m - [33m[1mPrice:[0m 90528.90 | [35mRSI2:[0m 93.33 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:39:50,591[0m - [33m[1mPrice:[0m 90528.90 | [35mRSI2:[0m 93.33 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:40:00,748[0m - [33m[1mPrice:[0m 90529.00 | [35mRSI2:[0m 93.34 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:40:02,203[0m - Fetching data...
+[36m2026-01-09 19:40:02,204[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:40:04,978[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:40:04,987[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:40:05,001[0m - 숏 모델 예측 확률: 12.14%
+[36m2026-01-09 19:40:10,909[0m - [33m[1mPrice:[0m 90526.40 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:40:21,062[0m - [33m[1mPrice:[0m 90522.60 | [35mRSI2:[0m 93.02 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:40:31,382[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 92.78 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:40:41,549[0m - [33m[1mPrice:[0m 90516.10 | [35mRSI2:[0m 92.67 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:40:51,749[0m - [33m[1mPrice:[0m 90516.00 | [35mRSI2:[0m 92.67 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:41:01,966[0m - [33m[1mPrice:[0m 90516.00 | [35mRSI2:[0m 92.67 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:41:06,763[0m - Fetching data...
+[36m2026-01-09 19:41:06,763[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:41:08,229[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:41:08,241[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:41:08,244[0m - 숏 모델 예측 확률: 12.01%
+[36m2026-01-09 19:41:12,120[0m - [33m[1mPrice:[0m 90514.50 | [35mRSI2:[0m 92.58 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:41:22,293[0m - [33m[1mPrice:[0m 90514.40 | [35mRSI2:[0m 92.57 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:41:32,470[0m - [33m[1mPrice:[0m 90514.50 | [35mRSI2:[0m 92.58 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:41:42,821[0m - [33m[1mPrice:[0m 90514.50 | [35mRSI2:[0m 92.58 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:41:53,003[0m - [33m[1mPrice:[0m 90512.00 | [35mRSI2:[0m 92.43 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:42:03,173[0m - [33m[1mPrice:[0m 90510.80 | [35mRSI2:[0m 92.36 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:42:09,801[0m - Fetching data...
+[36m2026-01-09 19:42:09,801[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:42:11,303[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:42:11,328[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:42:11,342[0m - 숏 모델 예측 확률: 12.01%
+[36m2026-01-09 19:42:13,348[0m - [33m[1mPrice:[0m 90516.10 | [35mRSI2:[0m 92.67 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:42:23,509[0m - [33m[1mPrice:[0m 90516.00 | [35mRSI2:[0m 92.67 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:42:33,760[0m - [33m[1mPrice:[0m 90516.00 | [35mRSI2:[0m 92.67 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:42:36,864[0m - Bot_30M is already stopped.
+[36m2026-01-09 19:42:36,865[0m - Stopped Bot_30M
+[36m2026-01-09 19:42:38,991[0m - Bot_30M is already stopped.
+[36m2026-01-09 19:42:38,992[0m - Stopped Bot_30M
+[36m2026-01-09 19:42:40,640[0m - Started Bot_30M
+[36m2026-01-09 19:42:43,918[0m - [33m[1mPrice:[0m 90516.00 | [35mRSI2:[0m 92.67 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:42:54,248[0m - [33m[1mPrice:[0m 90529.00 | [35mRSI2:[0m 93.34 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:43:04,407[0m - [33m[1mPrice:[0m 90542.90 | [35mRSI2:[0m 93.93 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:43:12,674[0m - Fetching data...
+[36m2026-01-09 19:43:12,674[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:43:14,073[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:43:14,082[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:43:14,106[0m - 숏 모델 예측 확률: 11.45%
+[36m2026-01-09 19:43:14,562[0m - [33m[1mPrice:[0m 90542.90 | [35mRSI2:[0m 93.93 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:43:24,728[0m - [33m[1mPrice:[0m 90533.20 | [35mRSI2:[0m 93.53 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:43:34,890[0m - [33m[1mPrice:[0m 90524.80 | [35mRSI2:[0m 93.14 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:43:45,148[0m - [33m[1mPrice:[0m 90523.10 | [35mRSI2:[0m 93.05 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:43:55,304[0m - [33m[1mPrice:[0m 90517.00 | [35mRSI2:[0m 92.72 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:44:05,532[0m - [33m[1mPrice:[0m 90517.10 | [35mRSI2:[0m 92.73 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:44:15,691[0m - [33m[1mPrice:[0m 90516.00 | [35mRSI2:[0m 92.67 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:44:15,709[0m - Fetching data...
+[36m2026-01-09 19:44:15,717[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:44:17,184[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:44:17,189[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:44:17,192[0m - 숏 모델 예측 확률: 12.01%
+[36m2026-01-09 19:44:25,895[0m - [33m[1mPrice:[0m 90516.10 | [35mRSI2:[0m 92.67 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:44:36,151[0m - [33m[1mPrice:[0m 90514.30 | [35mRSI2:[0m 92.57 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:44:46,301[0m - [33m[1mPrice:[0m 90514.30 | [35mRSI2:[0m 92.57 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:44:56,499[0m - [33m[1mPrice:[0m 90510.00 | [35mRSI2:[0m 92.31 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:45:06,658[0m - [33m[1mPrice:[0m 90509.60 | [35mRSI2:[0m 92.28 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:45:16,880[0m - [33m[1mPrice:[0m 90509.60 | [35mRSI2:[0m 92.28 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:45:18,800[0m - Fetching data...
+[36m2026-01-09 19:45:18,800[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:45:20,564[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:45:20,600[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:45:20,608[0m - 숏 모델 예측 확률: 12.01%
+[36m2026-01-09 19:45:27,039[0m - [33m[1mPrice:[0m 90509.60 | [35mRSI2:[0m 92.28 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:45:37,184[0m - [33m[1mPrice:[0m 90509.50 | [35mRSI2:[0m 92.13 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:45:47,363[0m - [33m[1mPrice:[0m 90509.50 | [35mRSI2:[0m 92.13 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:45:57,538[0m - [33m[1mPrice:[0m 90509.50 | [35mRSI2:[0m 92.13 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:46:07,700[0m - [33m[1mPrice:[0m 90509.50 | [35mRSI2:[0m 92.13 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:46:17,859[0m - [33m[1mPrice:[0m 90509.60 | [35mRSI2:[0m 92.28 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:46:22,209[0m - Fetching data...
+[36m2026-01-09 19:46:22,210[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:46:25,471[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:46:25,474[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:46:25,477[0m - 숏 모델 예측 확률: 12.01%
+[36m2026-01-09 19:46:28,015[0m - [33m[1mPrice:[0m 90509.50 | [35mRSI2:[0m 92.13 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:46:38,225[0m - [33m[1mPrice:[0m 90509.50 | [35mRSI2:[0m 92.13 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:46:48,383[0m - [33m[1mPrice:[0m 90508.70 | [35mRSI2:[0m 90.94 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:46:58,564[0m - [33m[1mPrice:[0m 90513.90 | [35mRSI2:[0m 92.79 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:47:08,913[0m - [33m[1mPrice:[0m 90519.00 | [35mRSI2:[0m 93.31 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:47:19,083[0m - [33m[1mPrice:[0m 90518.90 | [35mRSI2:[0m 93.30 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:47:27,008[0m - Fetching data...
+[36m2026-01-09 19:47:27,008[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:47:28,496[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:47:28,710[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:47:28,713[0m - 숏 모델 예측 확률: 12.01%
+[36m2026-01-09 19:47:29,266[0m - [33m[1mPrice:[0m 90510.00 | [35mRSI2:[0m 92.33 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:47:39,451[0m - [33m[1mPrice:[0m 90510.00 | [35mRSI2:[0m 92.33 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:47:49,603[0m - [33m[1mPrice:[0m 90508.00 | [35mRSI2:[0m 89.93 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:47:59,973[0m - [33m[1mPrice:[0m 90508.00 | [35mRSI2:[0m 89.93 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:48:10,230[0m - [33m[1mPrice:[0m 90512.90 | [35mRSI2:[0m 92.68 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:48:20,395[0m - [33m[1mPrice:[0m 90508.10 | [35mRSI2:[0m 90.07 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:48:30,291[0m - Fetching data...
+[36m2026-01-09 19:48:30,291[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:48:30,684[0m - [33m[1mPrice:[0m 90510.90 | [35mRSI2:[0m 92.44 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:48:32,040[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:48:32,044[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:48:32,047[0m - 숏 모델 예측 확률: 12.01%
+[36m2026-01-09 19:48:41,016[0m - [33m[1mPrice:[0m 90514.20 | [35mRSI2:[0m 92.82 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:48:50,664[0m - Bot_30M is already stopped.
+[36m2026-01-09 19:48:50,664[0m - Stopped Bot_30M
+[36m2026-01-09 19:48:51,182[0m - [33m[1mPrice:[0m 90514.10 | [35mRSI2:[0m 92.81 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:48:58,567[0m - Bot_30M is already stopped.
+[36m2026-01-09 19:48:58,567[0m - Stopped Bot_30M
+[36m2026-01-09 19:49:01,346[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:49:01,448[0m - Started Bot_30M
+[36m2026-01-09 19:49:09,520[0m - Bot_30M is already stopped.
+[36m2026-01-09 19:49:09,520[0m - Stopped Bot_30M
+[36m2026-01-09 19:49:11,510[0m - [33m[1mPrice:[0m 90518.10 | [35mRSI2:[0m 93.22 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:49:21,655[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:49:31,858[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:49:32,879[0m - Fetching data...
+[36m2026-01-09 19:49:32,879[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:49:35,585[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:49:35,588[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:49:35,591[0m - 숏 모델 예측 확률: 12.01%
+[36m2026-01-09 19:49:42,016[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:49:52,165[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:50:02,325[0m - [33m[1mPrice:[0m 90518.10 | [35mRSI2:[0m 93.22 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:50:12,472[0m - [33m[1mPrice:[0m 90518.10 | [35mRSI2:[0m 93.22 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:50:22,624[0m - [33m[1mPrice:[0m 90528.90 | [35mRSI2:[0m 94.13 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:50:32,769[0m - [33m[1mPrice:[0m 90529.00 | [35mRSI2:[0m 94.14 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:50:35,741[0m - Fetching data...
+[36m2026-01-09 19:50:35,741[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:50:37,658[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:50:37,664[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:50:37,666[0m - 숏 모델 예측 확률: 11.04%
+[36m2026-01-09 19:50:42,931[0m - [33m[1mPrice:[0m 90529.00 | [35mRSI2:[0m 94.14 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:50:53,092[0m - [33m[1mPrice:[0m 90528.90 | [35mRSI2:[0m 94.13 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:51:00,279[0m - Started Bot_30M
+[36m2026-01-09 19:51:03,247[0m - [33m[1mPrice:[0m 90529.00 | [35mRSI2:[0m 94.14 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:51:13,494[0m - [33m[1mPrice:[0m 90528.90 | [35mRSI2:[0m 94.13 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:51:23,645[0m - [33m[1mPrice:[0m 90528.90 | [35mRSI2:[0m 94.13 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:51:33,829[0m - [33m[1mPrice:[0m 90528.90 | [35mRSI2:[0m 94.13 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:51:38,496[0m - Fetching data...
+[36m2026-01-09 19:51:38,496[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:51:42,021[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:51:42,025[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:51:42,027[0m - 숏 모델 예측 확률: 11.04%
+[36m2026-01-09 19:51:44,001[0m - [33m[1mPrice:[0m 90528.90 | [35mRSI2:[0m 94.13 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:51:54,316[0m - [33m[1mPrice:[0m 90521.20 | [35mRSI2:[0m 93.51 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:52:04,633[0m - [33m[1mPrice:[0m 90514.60 | [35mRSI2:[0m 92.87 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:52:14,803[0m - [33m[1mPrice:[0m 90518.80 | [35mRSI2:[0m 93.29 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:52:24,966[0m - [33m[1mPrice:[0m 90518.80 | [35mRSI2:[0m 93.29 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:52:35,111[0m - [33m[1mPrice:[0m 90520.20 | [35mRSI2:[0m 93.42 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:52:43,357[0m - Fetching data...
+[36m2026-01-09 19:52:43,357[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:52:44,953[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:52:44,957[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:52:44,960[0m - 숏 모델 예측 확률: 10.92%
+[36m2026-01-09 19:52:45,268[0m - [33m[1mPrice:[0m 90523.00 | [35mRSI2:[0m 93.67 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:52:55,458[0m - [33m[1mPrice:[0m 90523.00 | [35mRSI2:[0m 93.67 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:53:05,820[0m - [33m[1mPrice:[0m 90525.10 | [35mRSI2:[0m 93.84 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:53:17,530[0m - Auto-starting all bots...
+[36m2026-01-09 19:53:17,537[0m - Started Bot_30M
+[36m2026-01-09 19:53:17,543[0m - Started Bot_5M
+[36m2026-01-09 19:53:17,558[0m - Started Bot_1H
+[36m2026-01-09 19:53:17,557[0m - 🚀 Bot started... Waiting for next candle.
+[36m2026-01-09 19:53:17,559[0m - Fetching data...
+[36m2026-01-09 19:53:17,561[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:53:17,571[0m - .env file not found
+[36m2026-01-09 19:53:17,637[0m - Multi-Models Loaded Successfully (XGBoost)
+[36m2026-01-09 19:53:17,637[0m - Initializing Paper Trader...
+[36m2026-01-09 19:53:17,637[0m - Loaded Configuration:
+[36m2026-01-09 19:53:17,637[0m - Leverage: 25x
+[36m2026-01-09 19:53:17,637[0m - Risk: 12.0%
+[36m2026-01-09 19:53:17,637[0m - Strategy: RSI2_Trend_MeanReversion_MaxROI (RSI2 + Trend Filter)
+[36m2026-01-09 19:53:17,637[0m - --------------------------------------------------
+[36m2026-01-09 19:53:19,529[0m - Initializing bot data...
+[36m2026-01-09 19:53:19,530[0m - Triggering Bot_30M logic for initial data...
+[36m2026-01-09 19:53:21,499[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:53:21,524[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:53:21,531[0m - 숏 모델 예측 확률: 11.04%
+[36m2026-01-09 19:53:21,848[0m - [33m[1mPrice:[0m 90526.90 | [35mRSI2:[0m 93.99 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:53:21,848[0m - Failed to fetch real balance: bybit requires "apiKey" credential
+[36m2026-01-09 19:53:22,468[0m - Triggering Bot_1H fetch for initial data...
+[36m2026-01-09 19:53:22,468[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:53:23,950[0m - Data initialization complete.
+[36m2026-01-09 19:53:28,177[0m - [33m[1mPrice:[0m 90526.90 | [35mRSI2:[0m 93.99 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:53:38,316[0m - [33m[1mPrice:[0m 90526.90 | [35mRSI2:[0m 93.99 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:53:48,468[0m - [33m[1mPrice:[0m 90520.00 | [35mRSI2:[0m 93.40 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:53:55,072[0m - Bot_30M is already stopped.
+[36m2026-01-09 19:53:55,074[0m - Stopped Bot_30M
+[36m2026-01-09 19:53:58,627[0m - [33m[1mPrice:[0m 90520.10 | [35mRSI2:[0m 93.41 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:54:08,782[0m - [33m[1mPrice:[0m 90522.40 | [35mRSI2:[0m 93.62 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:54:18,936[0m - [33m[1mPrice:[0m 90522.40 | [35mRSI2:[0m 93.62 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:54:22,483[0m - Fetching data...
+[36m2026-01-09 19:54:22,483[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:54:23,865[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:54:23,869[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:54:23,871[0m - 숏 모델 예측 확률: 10.92%
+[36m2026-01-09 19:54:29,098[0m - [33m[1mPrice:[0m 90522.30 | [35mRSI2:[0m 93.61 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:54:39,348[0m - [33m[1mPrice:[0m 90522.30 | [35mRSI2:[0m 93.61 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:54:49,566[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:54:59,724[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:55:09,882[0m - [33m[1mPrice:[0m 90518.10 | [35mRSI2:[0m 93.22 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:55:20,468[0m - Auto-starting all bots...
+[36m2026-01-09 19:55:20,479[0m - Started Bot_30M
+[36m2026-01-09 19:55:20,488[0m - Started Bot_5M
+[36m2026-01-09 19:55:20,496[0m - Started Bot_1H
+[36m2026-01-09 19:55:20,495[0m - 🚀 Bot started... Waiting for next candle.
+[36m2026-01-09 19:55:20,496[0m - Fetching data...
+[36m2026-01-09 19:55:20,497[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:55:20,505[0m - .env file not found
+[36m2026-01-09 19:55:20,536[0m - Multi-Models Loaded Successfully (XGBoost)
+[36m2026-01-09 19:55:20,536[0m - Initializing Paper Trader...
+[36m2026-01-09 19:55:20,536[0m - Loaded Configuration:
+[36m2026-01-09 19:55:20,536[0m - Leverage: 25x
+[36m2026-01-09 19:55:20,536[0m - Risk: 12.0%
+[36m2026-01-09 19:55:20,536[0m - Strategy: RSI2_Trend_MeanReversion_MaxROI (RSI2 + Trend Filter)
+[36m2026-01-09 19:55:20,537[0m - --------------------------------------------------
+[36m2026-01-09 19:55:22,481[0m - Initializing bot data...
+[36m2026-01-09 19:55:22,481[0m - Triggering Bot_30M logic for initial data...
+[36m2026-01-09 19:55:23,881[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:55:23,952[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:55:23,974[0m - 숏 모델 예측 확률: 10.92%
+[36m2026-01-09 19:55:24,474[0m - [33m[1mPrice:[0m 90518.10 | [35mRSI2:[0m 93.22 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:55:24,474[0m - Failed to fetch real balance: bybit requires "apiKey" credential
+[36m2026-01-09 19:55:25,985[0m - Triggering Bot_1H fetch for initial data...
+[36m2026-01-09 19:55:25,991[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:55:28,471[0m - Data initialization complete.
+[36m2026-01-09 19:55:31,659[0m - [33m[1mPrice:[0m 90518.10 | [35mRSI2:[0m 93.22 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:55:41,898[0m - [33m[1mPrice:[0m 90518.10 | [35mRSI2:[0m 93.22 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:55:52,192[0m - [33m[1mPrice:[0m 90518.10 | [35mRSI2:[0m 93.22 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:56:02,340[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:56:12,488[0m - [33m[1mPrice:[0m 90518.10 | [35mRSI2:[0m 93.22 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:56:22,911[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:56:25,647[0m - Fetching data...
+[36m2026-01-09 19:56:25,648[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:56:26,264[0m - Bot_30M is already stopped.
+[36m2026-01-09 19:56:26,265[0m - Stopped Bot_30M
+[36m2026-01-09 19:56:27,059[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:56:27,062[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:56:27,065[0m - 숏 모델 예측 확률: 10.92%
+[36m2026-01-09 19:56:32,297[0m - Started Bot_30M
+[36m2026-01-09 19:56:33,069[0m - [33m[1mPrice:[0m 90518.10 | [35mRSI2:[0m 93.22 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:56:43,244[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:56:53,400[0m - [33m[1mPrice:[0m 90518.10 | [35mRSI2:[0m 93.22 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:57:03,569[0m - [33m[1mPrice:[0m 90518.10 | [35mRSI2:[0m 93.22 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:57:11,484[0m - Stopped Bot_1H
+[36m2026-01-09 19:57:13,727[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:57:24,137[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:57:31,513[0m - Started Bot_1H
+[36m2026-01-09 19:57:31,513[0m - 🚀 Bot started... Waiting for next candle.
+[36m2026-01-09 19:57:31,513[0m - Fetching data...
+[36m2026-01-09 19:57:31,514[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:57:33,994[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:57:34,009[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:57:34,017[0m - 숏 모델 예측 확률: 10.92%
+[36m2026-01-09 19:57:34,352[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:57:44,707[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:57:54,860[0m - [33m[1mPrice:[0m 90518.00 | [35mRSI2:[0m 93.21 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:58:05,225[0m - [33m[1mPrice:[0m 90527.00 | [35mRSI2:[0m 93.99 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:58:15,376[0m - [33m[1mPrice:[0m 90519.20 | [35mRSI2:[0m 93.33 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:58:25,548[0m - [33m[1mPrice:[0m 90518.10 | [35mRSI2:[0m 93.22 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:58:35,210[0m - Fetching data...
+[36m2026-01-09 19:58:35,211[0m - Paper trading mode: Fetching REAL OHLCV...
+[36m2026-01-09 19:58:35,711[0m - [33m[1mPrice:[0m 90515.70 | [35mRSI2:[0m 92.98 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:58:43,795[0m - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+[36m2026-01-09 19:58:43,816[0m - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+[36m2026-01-09 19:58:43,825[0m - 숏 모델 예측 확률: 16.14%
+[36m2026-01-09 19:58:45,856[0m - [33m[1mPrice:[0m 90508.00 | [35mRSI2:[0m 89.93 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:58:56,033[0m - [33m[1mPrice:[0m 90506.10 | [35mRSI2:[0m 87.28 | Trend: [31m[1mDOWN[0m | [0mNo signal
+[36m2026-01-09 19:59:06,208[0m - [33m[1mPrice:[0m 90492.00 | [35mRSI2:[0m 71.64 | Trend: [31m[1mDOWN[0m | [0mNo signal
+2026-01-09 19:59:19,284 - Auto-starting all bots...
+2026-01-09 19:59:19,299 - Started Bot_30M
+2026-01-09 19:59:19,305 - Started Bot_5M
+2026-01-09 19:59:19,305 - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:59:19,306 - Started Bot_1H
+2026-01-09 19:59:19,305 - Fetching data...
+2026-01-09 19:59:19,306 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-09 19:59:19,315 - .env file not found
+2026-01-09 19:59:19,380 - Multi-Models Loaded Successfully (XGBoost)
+2026-01-09 19:59:19,381 - Initializing Paper Trader...
+2026-01-09 19:59:19,381 - Loaded Configuration:
+2026-01-09 19:59:19,383 - Leverage: 25x
+2026-01-09 19:59:19,383 - Risk: 12.0%
+2026-01-09 19:59:19,383 - Strategy: RSI2_Trend_MeanReversion_MaxROI (RSI2 + Trend Filter)
+2026-01-09 19:59:19,383 - --------------------------------------------------
+2026-01-09 19:59:21,520 - Initializing bot data...
+2026-01-09 19:59:21,526 - Triggering Bot_30M logic for initial data...
+2026-01-09 19:59:22,165 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-09 19:59:22,485 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-09 19:59:22,612 - 숏 모델 예측 확률: 16.14%
+2026-01-09 19:59:23,486 - Price: 90492.00 | RSI2: 71.64 | Trend: DOWN | No signal
+2026-01-09 19:59:23,486 - Failed to fetch real balance: bybit requires "apiKey" credential
+2026-01-09 19:59:24,031 - Triggering Bot_1H fetch for initial data...
+2026-01-09 19:59:24,031 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-09 19:59:27,442 - Data initialization complete.
+2026-01-09 19:59:29,645 - Price: 90485.80 | RSI2: 66.41 | Trend: DOWN | No signal
+2026-01-09 19:59:39,825 - Price: 90485.80 | RSI2: 66.41 | Trend: DOWN | No signal
+2026-01-09 19:59:49,983 - Price: 90485.80 | RSI2: 66.41 | Trend: DOWN | No signal
+2026-01-09 20:00:00,125 - Price: 90485.80 | RSI2: 66.41 | Trend: DOWN | No signal
+2026-01-09 20:00:10,318 - Price: 90512.40 | RSI2: 79.35 | Trend: DOWN | No signal
+2026-01-09 20:00:20,475 - Price: 90511.50 | RSI2: 79.08 | Trend: DOWN | No signal
+2026-01-09 20:00:24,140 - Fetching data...
+2026-01-09 20:00:24,140 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-09 20:00:26,875 - Bot_15M is already stopped.
+2026-01-09 20:00:26,887 - Stopped Bot_15M
+2026-01-09 20:00:27,655 - 15M Bot Stopped.
+2026-01-09 20:00:30,646 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-09 20:00:30,653 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-09 20:00:30,656 - 숏 모델 예측 확률: 13.05%
+2026-01-09 20:00:48,201 - .env file not found
+2026-01-09 20:00:48,250 - Multi-Models Loaded Successfully (XGBoost)
+2026-01-09 20:00:48,250 - Initializing Paper Trader...
+2026-01-09 20:00:48,250 - Loaded Configuration:
+2026-01-09 20:00:48,250 - Leverage: 25x
+2026-01-09 20:00:48,250 - Risk: 12.0%
+2026-01-09 20:00:48,250 - Strategy: RSI2_Trend_MeanReversion_MaxROI (RSI2 + Trend Filter)
+2026-01-09 20:00:48,250 - --------------------------------------------------
+2026-01-09 20:00:51,218 - Price: 90507.90 | RSI2: 77.91 | Trend: DOWN | No signal
+2026-01-09 20:00:51,224 - Failed to fetch real balance: bybit requires "apiKey" credential
+2026-01-09 20:00:51,442 - Price: 90507.90 | RSI2: 77.91 | Trend: DOWN | No signal
+2026-01-09 20:00:58,607 - Price: 90508.00 | RSI2: 77.95 | Trend: DOWN | No signal
+2026-01-09 20:01:01,966 - Price: 90507.90 | RSI2: 77.91 | Trend: DOWN | No signal
+2026-01-09 20:01:09,234 - Price: 90507.90 | RSI2: 77.91 | Trend: DOWN | No signal
+2026-01-09 20:01:12,367 - Price: 90508.00 | RSI2: 77.95 | Trend: DOWN | No signal
+2026-01-09 20:01:18,296 - Stopped Bot_5M
+2026-01-09 20:01:19,408 - Price: 90508.00 | RSI2: 77.95 | Trend: DOWN | No signal
+2026-01-09 20:01:19,524 - Price: 90508.00 | RSI2: 77.95 | Trend: DOWN | No signal
+2026-01-09 20:01:22,691 - Price: 90507.90 | RSI2: 77.91 | Trend: DOWN | No signal
+2026-01-09 20:01:26,695 - Started Bot_5M
+2026-01-09 20:01:29,836 - Price: 90508.00 | RSI2: 77.95 | Trend: DOWN | No signal
+2026-01-09 20:01:32,039 - Fetching data...
+2026-01-09 20:01:32,040 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-09 20:01:33,049 - Price: 90508.00 | RSI2: 77.95 | Trend: DOWN | No signal
+2026-01-09 20:01:34,767 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-09 20:01:34,771 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-09 20:01:34,773 - 숏 모델 예측 확률: 13.05%
+2026-01-09 20:01:40,311 - Price: 90511.30 | RSI2: 79.02 | Trend: DOWN | No signal
+2026-01-09 20:01:43,556 - Price: 90519.10 | RSI2: 81.18 | Trend: DOWN | No signal
+2026-01-09 20:01:50,868 - Price: 90516.40 | RSI2: 80.48 | Trend: DOWN | No signal
+2026-01-09 20:01:54,002 - Price: 90508.20 | RSI2: 78.01 | Trend: DOWN | No signal
+2026-01-09 20:02:01,167 - Price: 90508.10 | RSI2: 77.98 | Trend: DOWN | No signal
+2026-01-09 20:02:04,429 - Price: 90508.00 | RSI2: 77.95 | Trend: DOWN | No signal
+2026-01-09 20:02:11,941 - Price: 90508.00 | RSI2: 77.95 | Trend: DOWN | No signal
+2026-01-09 20:02:15,112 - Price: 90507.20 | RSI2: 77.67 | Trend: DOWN | No signal
+2026-01-09 20:02:22,286 - Price: 90504.10 | RSI2: 76.53 | Trend: DOWN | No signal
+2026-01-09 20:02:25,448 - Price: 90504.10 | RSI2: 76.53 | Trend: DOWN | No signal
+2026-01-09 20:02:32,602 - Price: 90504.10 | RSI2: 76.53 | Trend: DOWN | No signal
+2026-01-09 20:02:35,886 - Price: 90504.10 | RSI2: 76.53 | Trend: DOWN | No signal
+2026-01-09 20:02:36,127 - Fetching data...
+2026-01-09 20:02:36,127 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-09 20:02:38,287 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-09 20:02:38,291 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-09 20:02:38,294 - 숏 모델 예측 확률: 13.05%
+2026-01-09 20:02:43,312 - Price: 90514.40 | RSI2: 79.93 | Trend: DOWN | No signal
+2026-01-09 20:02:47,501 - Auto-starting all bots...
+2026-01-09 20:02:47,507 - Started Bot_30M
+2026-01-09 20:02:47,554 - Started Bot_5M
+2026-01-09 20:02:47,561 - Started Bot_1H
+2026-01-09 20:02:47,560 - 🚀 Bot started... Waiting for next candle.
+2026-01-09 20:02:47,563 - .env file not found
+2026-01-09 20:02:47,562 - Fetching data...
+2026-01-09 20:02:47,578 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-09 20:02:47,652 - Multi-Models Loaded Successfully (XGBoost)
+2026-01-09 20:02:47,658 - Initializing Paper Trader...
+2026-01-09 20:02:47,658 - Loaded Configuration:
+2026-01-09 20:02:47,658 - Leverage: 25x
+2026-01-09 20:02:47,658 - Risk: 12.0%
+2026-01-09 20:02:47,658 - Strategy: RSI2_Trend_MeanReversion_MaxROI (RSI2 + Trend Filter)
+2026-01-09 20:02:47,659 - --------------------------------------------------
+2026-01-09 20:02:49,496 - Initializing bot data...
+2026-01-09 20:02:49,496 - Triggering Bot_30M logic for initial data...
+2026-01-09 20:02:50,190 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-09 20:02:50,428 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-09 20:02:50,448 - 숏 모델 예측 확률: 15.94%
+2026-01-09 20:02:51,567 - Price: 90521.90 | RSI2: 81.85 | Trend: DOWN | No signal
+2026-01-09 20:02:51,568 - Failed to fetch real balance: bybit requires "apiKey" credential
+2026-01-09 20:02:52,095 - Triggering Bot_1H fetch for initial data...
+2026-01-09 20:02:52,095 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-09 20:02:54,010 - Data initialization complete.
+2026-01-09 20:02:58,741 - Price: 90522.00 | RSI2: 81.87 | Trend: DOWN | No signal
+2026-01-09 20:03:08,915 - Price: 90519.70 | RSI2: 81.33 | Trend: DOWN | No signal
+2026-01-09 20:03:19,099 - Price: 90516.00 | RSI2: 80.37 | Trend: DOWN | No signal
+2026-01-09 20:03:29,270 - Price: 90542.90 | RSI2: 85.68 | Trend: DOWN | No signal
+2026-01-09 20:03:39,414 - Price: 90542.80 | RSI2: 85.66 | Trend: DOWN | No signal
+2026-01-09 20:03:49,552 - Price: 90542.80 | RSI2: 85.66 | Trend: DOWN | No signal
+2026-01-09 20:03:51,939 - Fetching data...
+2026-01-09 20:03:51,939 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-09 20:03:53,602 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-09 20:03:53,606 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-09 20:03:53,609 - 숏 모델 예측 확률: 15.06%
+2026-01-09 20:03:59,719 - Price: 90542.80 | RSI2: 85.66 | Trend: DOWN | No signal
+2026-01-09 20:04:09,908 - Price: 90542.90 | RSI2: 85.68 | Trend: DOWN | No signal
+2026-01-09 20:04:20,116 - Price: 90542.90 | RSI2: 85.68 | Trend: DOWN | No signal
+2026-01-09 20:04:30,279 - Price: 90542.80 | RSI2: 85.66 | Trend: DOWN | No signal
+2026-01-09 20:04:40,633 - Price: 90554.90 | RSI2: 87.22 | Trend: DOWN | No signal
+2026-01-09 20:04:50,800 - Price: 90567.00 | RSI2: 88.47 | Trend: DOWN | No signal
+2026-01-09 20:04:54,788 - Fetching data...
+2026-01-09 20:04:54,789 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-09 20:04:57,398 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-09 20:04:57,402 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-09 20:04:57,404 - 숏 모델 예측 확률: 13.07%
+2026-01-09 20:05:01,048 - Price: 90570.90 | RSI2: 88.82 | Trend: DOWN | No signal
+2026-01-09 20:05:11,215 - Price: 90564.00 | RSI2: 88.18 | Trend: DOWN | No signal
+2026-01-09 20:05:21,388 - Price: 90564.00 | RSI2: 88.18 | Trend: DOWN | No signal
+2026-01-09 20:05:31,552 - Price: 90564.30 | RSI2: 88.21 | Trend: DOWN | No signal
+2026-01-09 20:05:41,708 - Price: 90567.70 | RSI2: 88.53 | Trend: DOWN | No signal
+2026-01-09 20:05:51,885 - Price: 90575.60 | RSI2: 89.22 | Trend: DOWN | No signal
+2026-01-09 20:05:58,722 - Fetching data...
+2026-01-09 20:05:58,722 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-09 20:06:01,428 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-09 20:06:01,438 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-09 20:06:01,451 - 숏 모델 예측 확률: 13.07%
+2026-01-09 20:06:02,046 - Price: 90579.10 | RSI2: 89.50 | Trend: DOWN | No signal
+2026-01-09 20:06:12,210 - Price: 90579.00 | RSI2: 89.49 | Trend: DOWN | No signal
+2026-01-09 20:06:22,447 - Price: 90579.00 | RSI2: 89.49 | Trend: DOWN | No signal
+2026-01-09 20:06:32,603 - Price: 90569.20 | RSI2: 88.67 | Trend: DOWN | No signal
+2026-01-09 20:06:42,804 - Price: 90569.10 | RSI2: 88.66 | Trend: DOWN | No signal
+2026-01-09 20:06:53,000 - Price: 90569.00 | RSI2: 88.65 | Trend: DOWN | No signal
+2026-01-09 20:07:02,979 - Fetching data...
+2026-01-09 20:07:02,980 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-09 20:07:03,280 - Price: 90541.30 | RSI2: 85.44 | Trend: DOWN | No signal
+2026-01-09 20:07:05,365 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-09 20:07:05,369 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-09 20:07:05,372 - 숏 모델 예측 확률: 16.94%

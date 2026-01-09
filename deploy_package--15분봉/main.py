@@ -57,16 +57,14 @@ for handler in logging.root.handlers[:]:
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-# 1. File Handler (Colored Text)
+# 1. File Handler (NO Color - Plain Text)
 file_handler = logging.FileHandler(os.path.join(BASE_DIR, "bot.log"))
-# Apply color to file as well
-file_formatter = ColoredFormatter(f'{Colors.CYAN}%(asctime)s{Colors.RESET} - %(message)s')
+file_formatter = logging.Formatter('%(asctime)s - %(message)s')
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
-# 2. Console Handler (Colored)
+# 2. Console Handler (Colored) - Commented out for now
 # console_handler = logging.StreamHandler()
-# Time in Cyan, Message follows
 # console_formatter = ColoredFormatter(f'{Colors.CYAN}%(asctime)s{Colors.RESET} - %(message)s')
 # console_handler.setFormatter(console_formatter)
 # logger.addHandler(console_handler)

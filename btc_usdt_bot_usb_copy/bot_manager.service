@@ -1,0 +1,16 @@
+[Unit]
+Description=BTC USDT Bot Dashboard Docker Compose Service
+After=docker.service network-online.target
+Requires=docker.service network-online.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/home/ser1/새 폴더/btc/usdt 봇 통합관리/btc_usdt_bot_usb_copy
+ExecStart=/usr/bin/docker compose up --build
+ExecStop=/usr/bin/docker compose down
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

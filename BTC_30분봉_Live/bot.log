@@ -194,3 +194,190 @@
 2026-01-09 19:12:34,794 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
 2026-01-09 19:12:35,143 - INFO - 🚀 Bot started... Waiting for next candle.
 2026-01-09 19:12:35,143 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:42:40,640 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:42:40,640 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:44:43,802 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:44:43,802 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:44:43,802 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:44:43,802 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:44:43,802 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:44:43,802 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:44:43,803 - INFO - TRADING_MODE: paper
+2026-01-09 19:44:43,803 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:44:43,803 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:44:43,803 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:44:43,803 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:44:43,803 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:44:43,804 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:44:43,804 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:45:43,172 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:45:43,172 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:45:43,172 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:45:43,172 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:45:43,173 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:45:43,173 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:45:43,174 - INFO - TRADING_MODE: paper
+2026-01-09 19:45:43,174 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:45:43,174 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:45:43,174 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:45:43,174 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:45:43,174 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:45:43,174 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:45:43,174 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+nohup: ignoring input
+2026-01-09 19:46:41,775 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+Executing live_bot.py module level code.
+2026-01-09 19:46:41,775 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:46:41,775 - BTC_30M_Bot - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:46:41,776 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:46:41,776 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:46:41,776 - BTC_30M_Bot - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:46:41,776 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:46:41,776 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:46:41,776 - BTC_30M_Bot - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:46:41,777 - INFO - TRADING_MODE: paper
+2026-01-09 19:46:41,777 - INFO - TRADING_MODE: paper
+2026-01-09 19:46:41,777 - BTC_30M_Bot - INFO - TRADING_MODE: paper
+2026-01-09 19:46:41,777 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:46:41,777 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:46:41,777 - BTC_30M_Bot - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:46:41,777 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:46:41,777 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:46:41,777 - BTC_30M_Bot - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:46:41,777 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:46:41,777 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:46:41,777 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:46:53,310 - INFO - 📊 Status | Price: 90,508.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:46:53,310 - INFO - 📊 Status | Price: 90,508.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:46:53,310 - BTC_30M_Bot - INFO - 📊 Status | Price: 90,508.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:47:05,885 - INFO - 📊 Status | Price: 90,514.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:47:05,885 - INFO - 📊 Status | Price: 90,514.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:47:05,885 - BTC_30M_Bot - INFO - 📊 Status | Price: 90,514.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:47:16,696 - INFO - 📊 Status | Price: 90,518.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:47:16,696 - INFO - 📊 Status | Price: 90,518.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:47:16,696 - BTC_30M_Bot - INFO - 📊 Status | Price: 90,518.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:47:27,431 - INFO - 📊 Status | Price: 90,510.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:47:27,431 - INFO - 📊 Status | Price: 90,510.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:47:27,431 - BTC_30M_Bot - INFO - 📊 Status | Price: 90,510.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:47:38,785 - INFO - 📊 Status | Price: 90,510.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:47:38,785 - INFO - 📊 Status | Price: 90,510.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:47:38,785 - BTC_30M_Bot - INFO - 📊 Status | Price: 90,510.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:47:51,797 - INFO - 📊 Status | Price: 90,508.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:47:51,797 - INFO - 📊 Status | Price: 90,508.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:47:51,797 - BTC_30M_Bot - INFO - 📊 Status | Price: 90,508.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:48:02,735 - INFO - 📊 Status | Price: 90,508.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:48:02,735 - INFO - 📊 Status | Price: 90,508.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:48:02,735 - BTC_30M_Bot - INFO - 📊 Status | Price: 90,508.0 | Pos: NONE | Balance: 100.00 USDT
+nohup: ignoring input
+2026-01-09 19:48:08,481 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:48:08,482 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:48:08,482 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:48:08,483 - INFO - TRADING_MODE: paper
+2026-01-09 19:48:08,483 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:48:08,483 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:48:08,483 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:48:19,768 - INFO - 📊 Status | Price: 90,508.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:48:29,993 - INFO - 📊 Status | Price: 90,508.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:48:40,909 - INFO - 📊 Status | Price: 90,514.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:48:51,512 - INFO - 📊 Status | Price: 90,517.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:49:01,448 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:49:01,448 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:49:03,277 - INFO - 📊 Status | Price: 90,518.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:49:13,877 - INFO - 📊 Status | Price: 90,518.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:49:24,541 - INFO - 📊 Status | Price: 90,518.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:49:35,051 - INFO - 📊 Status | Price: 90,518.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:49:47,296 - INFO - 📊 Status | Price: 90,518.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:49:58,145 - INFO - 📊 Status | Price: 90,518.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:50:11,310 - INFO - 📊 Status | Price: 90,518.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:50:22,739 - INFO - 📊 Status | Price: 90,528.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:51:00,279 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:51:00,279 - BTC_30M_Bot - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:53:16,251 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:53:16,251 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:53:16,251 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:53:16,253 - INFO - TRADING_MODE: paper
+2026-01-09 19:53:16,253 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:53:16,253 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:53:17,537 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:53:30,315 - INFO - 📊 Status | Price: 90,527.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:53:41,562 - INFO - 📊 Status | Price: 90,525.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:53:52,142 - INFO - 📊 Status | Price: 90,520.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:55:19,732 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:55:19,733 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:55:19,733 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:55:19,734 - INFO - TRADING_MODE: paper
+2026-01-09 19:55:19,734 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:55:19,734 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:55:20,474 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:55:32,301 - INFO - 📊 Status | Price: 90,518.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:55:44,682 - INFO - 📊 Status | Price: 90,518.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:55:56,636 - INFO - 📊 Status | Price: 90,518.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:56:09,564 - INFO - 📊 Status | Price: 90,518.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:56:20,299 - INFO - 📊 Status | Price: 90,518.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:56:26,548 - INFO - ⛔ Bot stopped.
+2026-01-09 19:56:32,297 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:56:44,644 - INFO - 📊 Status | Price: 90,518.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:56:55,653 - INFO - 📊 Status | Price: 90,518.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:57:09,254 - INFO - 📊 Status | Price: 90,518.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:57:21,397 - INFO - 📊 Status | Price: 90,518.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:57:32,718 - INFO - 📊 Status | Price: 90,518.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:57:45,047 - INFO - 📊 Status | Price: 90,518.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:57:57,460 - INFO - 📊 Status | Price: 90,518.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:58:09,878 - INFO - 📊 Status | Price: 90,529.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:58:20,867 - INFO - 📊 Status | Price: 90,519.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:58:33,107 - INFO - 📊 Status | Price: 90,515.7 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:58:44,073 - INFO - 📊 Status | Price: 90,508.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:58:54,268 - INFO - 📊 Status | Price: 90,506.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:59:07,614 - INFO - 📊 Status | Price: 90,492.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:59:18,598 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 19:59:18,599 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 19:59:18,599 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 19:59:18,600 - INFO - TRADING_MODE: paper
+2026-01-09 19:59:18,600 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 19:59:18,600 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 19:59:19,290 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 19:59:31,475 - INFO - 📊 Status | Price: 90,485.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:59:43,618 - INFO - 📊 Status | Price: 90,485.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 19:59:57,041 - INFO - 📊 Status | Price: 90,485.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:00:07,612 - INFO - 📊 Status | Price: 90,511.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:00:19,051 - INFO - 📊 Status | Price: 90,511.5 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:00:29,578 - INFO - 📊 Status | Price: 90,506.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:00:42,195 - INFO - 📊 Status | Price: 90,508.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:00:54,654 - INFO - 📊 Status | Price: 90,508.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:01:05,991 - INFO - 📊 Status | Price: 90,508.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:01:18,258 - INFO - 📊 Status | Price: 90,508.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:01:29,107 - INFO - 📊 Status | Price: 90,507.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:01:40,545 - INFO - 📊 Status | Price: 90,511.3 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:01:50,858 - INFO - 📊 Status | Price: 90,516.4 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:02:03,198 - INFO - 📊 Status | Price: 90,508.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:02:15,847 - INFO - 📊 Status | Price: 90,507.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:02:27,544 - INFO - 📊 Status | Price: 90,504.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:02:38,927 - INFO - 📊 Status | Price: 90,508.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:02:46,733 - INFO - Log file path: /home/ser1/새 폴더/btc/usdt 봇 통합관리/BTC_30분봉_Live/bot.log
+2026-01-09 20:02:46,733 - INFO - Initializing BTC_30M_Bot process...
+2026-01-09 20:02:46,733 - INFO - 30분봉 (30m) 트레이딩 봇 로드 중...
+2026-01-09 20:02:46,734 - INFO - TRADING_MODE: paper
+2026-01-09 20:02:46,734 - INFO - Running in paper mode. API keys are not used for exchange connection.
+2026-01-09 20:02:46,734 - INFO - 봇 초기화 완료: BTC/USDT (30m). Mode: paper, Exchange type: MockExchange (Bybit)
+2026-01-09 20:02:47,507 - INFO - 🚀 Bot started... Waiting for next candle.
+2026-01-09 20:02:57,946 - INFO - 📊 Status | Price: 90,522.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:03:08,866 - INFO - 📊 Status | Price: 90,519.7 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:03:20,780 - INFO - 📊 Status | Price: 90,523.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:03:33,006 - INFO - 📊 Status | Price: 90,542.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:03:45,826 - INFO - 📊 Status | Price: 90,542.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:03:57,918 - INFO - 📊 Status | Price: 90,542.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:04:10,295 - INFO - 📊 Status | Price: 90,542.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:04:20,631 - INFO - 📊 Status | Price: 90,542.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:04:32,276 - INFO - 📊 Status | Price: 90,542.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:04:43,573 - INFO - 📊 Status | Price: 90,554.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:04:57,528 - INFO - 📊 Status | Price: 90,571.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:05:10,297 - INFO - 📊 Status | Price: 90,564.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:05:22,603 - INFO - 📊 Status | Price: 90,564.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:05:35,137 - INFO - 📊 Status | Price: 90,564.3 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:05:46,739 - INFO - 📊 Status | Price: 90,571.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:05:56,839 - INFO - 📊 Status | Price: 90,576.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:06:08,349 - INFO - 📊 Status | Price: 90,579.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:06:18,912 - INFO - 📊 Status | Price: 90,579.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:06:31,632 - INFO - 📊 Status | Price: 90,568.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:06:43,799 - INFO - 📊 Status | Price: 90,569.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-09 20:06:55,935 - INFO - 📊 Status | Price: 90,569.0 | Pos: NONE | Balance: 100.00 USDT
