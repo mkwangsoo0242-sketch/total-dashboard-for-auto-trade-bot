@@ -102,26 +102,121 @@ class BotManager:
                     self.total_balance_history.pop(0)
             time.sleep(2)
 
+    def _extract_bot_data(self, bot):
+        """봇 상태 데이터 안전 추출"""
+        from datetime import datetime
+        
+        data = {
+            "name": getattr(bot, 'name', 'Unknown'),
+            "interval": getattr(bot, 'interval', 'Unknown'),
+            "status": getattr(bot, 'status', 'Stopped'),
+            "current_balance": getattr(bot, 'current_balance', 0.0),
+            "history": getattr(bot, 'balance_history', []),
+            "candles": getattr(bot, 'recent_candles', []),
+            "total_roi": getattr(bot, 'total_roi', 0.0),
+            "liquidation_price": getattr(bot, 'liquidation_price', 0.0),
+            "liquidation_profit": getattr(bot, 'liquidation_profit', 0.0),
+            "last_update": getattr(bot, 'last_run', None).strftime('%H:%M:%S') if getattr(bot, 'last_run', None) else '-',
+        }
+
+        # 포지션 정보 정규화
+        raw_pos = getattr(bot, 'current_position', None)
+        entry = 0.0
+        sl = 0.0
+        pos_str = "None"
+        
+        # 1. 속성으로 존재하는 경우 (30m 등)
+        entry = getattr(bot, 'entry_price', 0.0)
+        sl = getattr(bot, 'stop_loss', getattr(bot, 'stop_price', 0.0))
+
+        # 2. 딕셔너리로 존재하는 경우 (5m, 1h 등)
+        if isinstance(raw_pos, dict):
+            # Entry
+            if entry == 0:
+                entry = float(raw_pos.get('entry', raw_pos.get('entry_price', 0)))
+            
+            # SL
+            if sl == 0:
+                sl = float(raw_pos.get('sl', raw_pos.get('stop_loss', 0)))
+                
+            # String Formatting
+            type_side = raw_pos.get('type', raw_pos.get('side', ''))
+            amt = raw_pos.get('amount', raw_pos.get('qty', raw_pos.get('contracts', 0)))
+            if type_side:
+                pos_str = f"{type_side.upper()} ({amt})"
+            else:
+                pos_str = "None"
+        
+        # 3. 문자열인 경우
+        elif isinstance(raw_pos, str):
+            pos_str = raw_pos
+            
+        data['entry_price'] = entry
+        data['stop_loss'] = sl
+        data['current_position'] = pos_str
+        
+        return data
+
     def setup_routes(self):
         @self.app.get("/", response_class=HTMLResponse)
         async def index(request: Request):
             return self.templates.TemplateResponse("index.html", {"request": request})
 
+        @self.app.post("/api/bot/{bot_name}/start")
+        async def start_bot(bot_name: str):
+            if bot_name not in self.bots:
+                return {"status": "error", "message": "Bot not found"}
+            
+            bot = self.bots[bot_name]
+            
+            try:
+                # Thread checking is tricky, assume boolean flag is source of truth
+                is_running = getattr(bot, 'is_running', False)
+                if is_running:
+                     return {"status": "error", "message": "Already running"}
+
+                target = None
+                if bot_name == "Bot_15M":
+                    target = self.run_15m_bot
+                else:
+                    target = bot.run
+                    
+                t = threading.Thread(target=target, daemon=True)
+                t.start()
+                
+                # Flag set
+                bot.is_running = True
+                # Optional: Update status text immediately
+                bot.status = "Starting..."
+                    
+                return {"status": "success", "message": f"{bot_name} started"}
+            except Exception as e:
+                 return {"status": "error", "message": str(e)}
+
+        @self.app.post("/api/bot/{bot_name}/stop")
+        async def stop_bot(bot_name: str):
+            if bot_name not in self.bots:
+                return {"status": "error", "message": "Bot not found"}
+            
+            bot = self.bots[bot_name]
+            try:
+                if hasattr(bot, 'stop'):
+                    bot.stop()
+                else:
+                    bot.is_running = False
+                    bot.status = "Stopping..."
+                    
+                return {"status": "success", "message": f"{bot_name} stopped"}
+            except Exception as e:
+                return {"status": "error", "message": str(e)}
+
         @self.app.get("/api/data")
         async def get_data():
             bot_data = []
             for name, bot in self.bots.items():
-                bot_data.append({
-                    "name": name,
-                    "interval": bot.interval,
-                    "status": bot.status,
-                    "current_balance": bot.current_balance,
-                    "current_position": bot.current_position,
-                    "liquidation_price": bot.liquidation_price,
-                    "liquidation_profit": bot.liquidation_profit,
-                    "total_roi": bot.total_roi,
-                    "history": bot.balance_history
-                })
+                b_data = self._extract_bot_data(bot)
+                b_data['name'] = name # Override name key with dict key just in case
+                bot_data.append(b_data)
             
             return {
                 "total_balance": sum(bot.current_balance for bot in self.bots.values()),

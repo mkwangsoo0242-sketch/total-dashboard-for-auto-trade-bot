@@ -1,99 +1,110 @@
 version: '3.8'
 
 services:
+  # ============================================
+  # 통합 대시보드 (메인 관리 인터페이스)
+  # ============================================
+  dashboard_api:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+    container_name: trading_dashboard
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./dashboard:/app
+      - ./Real_5m:/app/Real_5m
+      - ./Deploy_15m:/app/Deploy_15m
+      - ./BTC_30m:/app/BTC_30m
+      - ./Bybit_1h:/app/Bybit_1h
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Seoul
+    command: python -u bot_manager.py
+    networks:
+      - trading_network
+
+  # ============================================
   # 1. BTC 30분봉 봇
-  bot_btc_30m:
+  # ============================================
+  btc_30m_bot:
     build:
       context: ./BTC_30m
       dockerfile: Dockerfile
-    container_name: bot_btc_30m
-    restart: always # 전원이 켜지거나 실패시 자동 재시작
-    environment:
-      - PYTHONUNBUFFERED=1
+    container_name: btc_30m_bot
+    restart: always
     volumes:
       - ./BTC_30m:/app
-    # 필요시 네트워크 모드 설정 (host 모드는 포트 포워딩 없이 호스트 네트워크 사용)
-    # network_mode: host 
-
-    # 2. Bybit 1시간봉 봇 (통합)
-  bot_bybit_1h:
-    build:
-      context: ./Bybit_1h
-      dockerfile: Dockerfile
-    container_name: bot_bybit_1h
-    restart: always
     environment:
       - PYTHONUNBUFFERED=1
-    ports:
-      - "5000:5000" # 대시보드 포트 (필요한 경우)
-    volumes:
-      - ./Bybit_1h:/app
+      - TZ=Asia/Seoul
+    env_file:
+      - .env
+    command: python -u live_bot.py
+    networks:
+      - trading_network
 
-  # 3. 배포 패키지 15분봉 봇
-  bot_deploy_15m:
-    build:
-      context: ./Deploy_15m
-      dockerfile: Dockerfile
-    container_name: bot_deploy_15m
-    restart: always
-    environment:
-      - PYTHONUNBUFFERED=1
-    volumes:
-      - ./Deploy_15m:/app
-
-  # 4. 실거래 5분봉 봇
-  bot_real_5m:
+  # ============================================
+  # 2. Real Trading Bot 5분봉
+  # ============================================
+  real_5m_bot:
     build:
       context: ./Real_5m
       dockerfile: Dockerfile
-    container_name: bot_real_5m
+    container_name: real_5m_bot
     restart: always
-    environment:
-      - PYTHONUNBUFFERED=1
-    ports:
-      - "5001:5000" # 대시보드 포트 (충돌 방지를 위해 5001로 매핑)
     volumes:
       - ./Real_5m:/app
-
-  # 5. 1억 목표 최종 전략 봇 (100m Ultimate)
-  bot_ultimate_100m:
-    build:
-      context: ./Ultimate_100m
-      dockerfile: Dockerfile
-    container_name: bot_ultimate_100m
-    restart: always
     environment:
       - PYTHONUNBUFFERED=1
-    volumes:
-      - ./Ultimate_100m:/app
-  # 대시보드 API 서비스 (봇 제어)
-  dashboard_api:
-    build:
-      context: ./dashboard/api
-    container_name: dashboard_api
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - TZ=Asia/Seoul
+    env_file:
+      - .env
+    command: python -u live_trading_bot.py
     networks:
-      - botnet
+      - trading_network
 
-  # 대시보드 웹 서비스 (정적 파일 제공)
-  dashboard_web:
-    image: nginx:alpine
-    container_name: dashboard_web
-    restart: unless-stopped
+  # ============================================
+  # 3. Deploy 15분봉 봇
+  # ============================================
+  deploy_15m_bot:
+    build:
+      context: ./Deploy_15m
+      dockerfile: Dockerfile
+    container_name: deploy_15m_bot
+    restart: always
     volumes:
-      - ./dashboard/web:/usr/share/nginx/html:ro
-      - ./dashboard/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-    ports:
-      - "8080:80"
-    depends_on:
-      - dashboard_api
+      - ./Deploy_15m:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Seoul
+    env_file:
+      - .env
+    command: python -u main.py
     networks:
-      - botnet
+      - trading_network
+
+  # ============================================
+  # 4. Bybit 1시간봉 봇
+  # ============================================
+  bybit_1h_bot:
+    build:
+      context: ./Bybit_1h
+      dockerfile: Dockerfile
+    container_name: bybit_1h_bot
+    restart: always
+    volumes:
+      - ./Bybit_1h:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Seoul
+    env_file:
+      - .env
+    command: python -u live_trader_bybit.py
+    networks:
+      - trading_network
 
 networks:
-  botnet:
+  trading_network:
     driver: bridge

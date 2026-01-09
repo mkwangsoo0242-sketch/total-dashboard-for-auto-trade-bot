@@ -13,7 +13,7 @@ if current_dir not in sys.path:
     sys.path.append(current_dir)
 
 try:
-    from strategy import AdaptiveStrategy, AdaptiveConfig, fetch_klines
+    from strategy_1h import AdaptiveStrategy, AdaptiveConfig, fetch_klines
     from bybit_client import BybitClient
     import config as cfg
 except ImportError as e:

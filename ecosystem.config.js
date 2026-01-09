@@ -15,7 +15,10 @@ module.exports = {
         PYTHONUNBUFFERED: "1",
         PYTHONPATH: "."
       }
-    },
+    }
+    // Standalone bots are commented out because bot_manager.py runs them internally.
+    // If you want to run them separately, disable bot_manager.py run logic and uncomment these.
+    /*
     {
       name: "bot-30m-standalone",
       cwd: "./BTC_30분봉_Live",
@@ -48,5 +51,6 @@ module.exports = {
       args: "-u",
       env: { PYTHONPATH: ".." }
     }
+    */
   ]
 };

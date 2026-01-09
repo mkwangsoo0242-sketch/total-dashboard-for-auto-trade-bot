@@ -1,9 +1,9 @@
 {
-    "updated_at": "2026-01-02 19:24:35",
-    "last_optimized_date": "2026-01-02",
+    "updated_at": "2026-01-09 10:41:49",
+    "last_optimized_date": "2026-01-09",
     "parameters": {
         "leverage": 1.0,
-        "adx_trending_min": 25,
+        "adx_trending_min": 30,
         "adx_ranging_max": 15,
         "trend_sl_atr": 1.5,
         "range_sl_atr": 1.0,
@@ -11,9 +11,9 @@
         "session_end_hour": 23
     },
     "performance": {
-        "recent_return": -0.0744946357130641,
-        "recent_mdd": 0.0744946357130641,
-        "win_rate": 0.0,
-        "score": -0.4269164803184079
+        "recent_return": -0.11896840067597594,
+        "recent_mdd": 0.16495987801742548,
+        "win_rate": 0.3076923076923077,
+        "score": -0.4490053421150496
     }
 }

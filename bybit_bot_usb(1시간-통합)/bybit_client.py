@@ -36,10 +36,13 @@ class BybitClient:
             self.base_url = "https://api.bybit.com"
         
         self.session = requests.Session()
-        self.session.headers.update({
-            'X-BAPI-API-KEY': self.api_key,
+        headers = {
             'Content-Type': 'application/json'
-        })
+        }
+        if self.api_key:
+            headers['X-BAPI-API-KEY'] = self.api_key
+            
+        self.session.headers.update(headers)
     
     def _generate_signature(self, payload: str, timestamp: str, recv_window: str) -> str:
         """Bybit V5 서명 생성"""

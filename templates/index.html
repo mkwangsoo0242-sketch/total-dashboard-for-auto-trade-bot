@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,20 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #0f172a; color: #f8fafc; }
-        .card { background-color: #1e293b; border-radius: 0.75rem; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+
+        .card {
+            background-color: #1e293b;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
     </style>
 </head>
+
 <body class="p-6">
     <div class="max-w-7xl mx-auto">
         <header class="mb-8 flex justify-between items-center">
@@ -35,6 +46,8 @@
                         <th class="pb-3 px-2">청산가격</th>
                         <th class="pb-3 px-2">청산수익</th>
                         <th class="pb-3 px-2">총수익률</th>
+                        <th class="pb-3 px-2">마지막 업데이트</th>
+                        <th class="pb-3 px-2">제어</th>
                     </tr>
                 </thead>
                 <tbody id="bot-table-body">
@@ -45,30 +58,30 @@
 
         <!-- Graphs Section -->
         <div class="grid grid-cols-1 gap-8">
+            <!-- Individual Asset Graphs Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h2 class="text-xl font-semibold mb-4 text-cyan-400">5분봉 (Bot_5M)</h2>
+                    <div id="chart-Bot_5M"></div>
+                </div>
+                <div class="card">
+                    <h2 class="text-xl font-semibold mb-4 text-cyan-400">15분봉 (Bot_15M)</h2>
+                    <div id="chart-Bot_15M"></div>
+                </div>
+                <div class="card">
+                    <h2 class="text-xl font-semibold mb-4 text-cyan-400">30분봉 (Bot_30M)</h2>
+                    <div id="chart-Bot_30M"></div>
+                </div>
+                <div class="card">
+                    <h2 class="text-xl font-semibold mb-4 text-cyan-400">1시간봉 (Bot_1H)</h2>
+                    <div id="chart-Bot_1H"></div>
+                </div>
+            </div>
+
             <!-- Total Asset Graph -->
             <div class="card">
                 <h2 class="text-xl font-semibold mb-4 text-yellow-400">전체 자산 수익률 추이 (Total Balance)</h2>
                 <div id="total-chart"></div>
-            </div>
-
-            <!-- Individual Asset Graphs Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="card">
-                    <h2 class="text-xl font-semibold mb-4 text-cyan-400">5분봉 봇 자산 추이 (Bot_5M)</h2>
-                    <div id="chart-Bot_5M"></div>
-                </div>
-                <div class="card">
-                    <h2 class="text-xl font-semibold mb-4 text-cyan-400">15분봉 봇 자산 추이 (Bot_15M)</h2>
-                    <div id="chart-Bot_15M"></div>
-                </div>
-                <div class="card">
-                    <h2 class="text-xl font-semibold mb-4 text-cyan-400">30분봉 봇 자산 추이 (Bot_30M)</h2>
-                    <div id="chart-Bot_30M"></div>
-                </div>
-                <div class="card">
-                    <h2 class="text-xl font-semibold mb-4 text-cyan-400">1시간봉 봇 자산 추이 (Bot_1H)</h2>
-                    <div id="chart-Bot_1H"></div>
-                </div>
             </div>
         </div>
     </div>
@@ -76,27 +89,48 @@
     <script>
         const charts = {};
 
-        function initChart(elementId, title, color, height = 300) {
+        function initChart(elementId, title, color, type = 'area', height = 300) {
             const options = {
-                series: [{ name: 'Balance', data: [] }],
+                series: [],
                 chart: {
-                    type: 'area',
+                    type: type,
                     height: height,
-                    animations: { enabled: true, easing: 'linear', dynamicAnimation: { speed: 1000 } },
+                    animations: {
+                        enabled: false,
+                        dynamicAnimation: { enabled: false },
+                        animateGradually: { enabled: false }
+                    },
                     toolbar: { show: false },
                     background: 'transparent'
                 },
-                stroke: { curve: 'smooth', width: 3 },
+                stroke: { curve: 'smooth', width: type === 'area' ? 3 : 1 },
                 fill: {
-                    type: 'gradient',
+                    type: type === 'area' ? 'gradient' : 'solid',
                     gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.0, stops: [0, 90, 100] }
+                },
+                plotOptions: {
+                    candlestick: {
+                        colors: {
+                            upward: '#22c55e',
+                            downward: '#ef4444'
+                        }
+                    }
                 },
                 colors: [color],
                 dataLabels: { enabled: false },
-                xaxis: { labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
-                yaxis: { labels: { style: { colors: '#94a3b8' } } },
+                xaxis: {
+                    type: type === 'candlestick' ? 'datetime' : 'numeric',
+                    labels: { style: { colors: '#94a3b8' } },
+                    axisBorder: { show: false },
+                    axisTicks: { show: false }
+                },
+                yaxis: {
+                    labels: { style: { colors: '#94a3b8' } },
+                    tooltip: { enabled: true }
+                },
                 grid: { borderColor: '#334155', strokeDashArray: 4 },
-                theme: { mode: 'dark' }
+                theme: { mode: 'dark' },
+                title: { text: title, style: { color: color } }
             };
             const element = document.querySelector(`#${elementId}`);
             if (!element) return null;
@@ -106,11 +140,46 @@
         }
 
         // Initialize predefined charts
-        const totalChart = initChart('total-chart', 'Total Asset', '#fbbf24', 350);
-        charts['Bot_5M'] = initChart('chart-Bot_5M', '5M Bot', '#22d3ee');
-        charts['Bot_15M'] = initChart('chart-Bot_15M', '15M Bot', '#22d3ee');
-        charts['Bot_30M'] = initChart('chart-Bot_30M', '30M Bot', '#22d3ee');
-        charts['Bot_1H'] = initChart('chart-Bot_1H', '1H Bot', '#22d3ee');
+        // Total Chart: Area (Balance)
+        const totalChart = initChart('total-chart', 'Total Asset', '#fbbf24', 'area', 350);
+
+        // Individual Charts: Candlestick (Price)
+        charts['Bot_5M'] = initChart('chart-Bot_5M', '5M Bot (Price)', '#22d3ee', 'candlestick');
+        charts['Bot_15M'] = initChart('chart-Bot_15M', '15M Bot (Price)', '#22d3ee', 'candlestick');
+        charts['Bot_30M'] = initChart('chart-Bot_30M', '30M Bot (Price)', '#22d3ee', 'candlestick');
+        charts['Bot_1H'] = initChart('chart-Bot_1H', '1H Bot (Price)', '#22d3ee', 'candlestick');
+
+        async function startBot(botName) {
+            if (!confirm(`${botName}을(를) 시작하시겠습니까?`)) return;
+            try {
+                const res = await fetch(`/api/bot/${botName}/start`, { method: 'POST' });
+                const json = await res.json();
+                if (json.status === 'success') {
+                    alert(`${botName} 시작 완료`);
+                    updateDashboard();
+                } else {
+                    alert(`오류: ${json.message}`);
+                }
+            } catch (e) {
+                alert('통신 오류: ' + e);
+            }
+        }
+
+        async function stopBot(botName) {
+            if (!confirm(`${botName}을(를) 정지하시겠습니까?`)) return;
+            try {
+                const res = await fetch(`/api/bot/${botName}/stop`, { method: 'POST' });
+                const json = await res.json();
+                if (json.status === 'success') {
+                    alert(`${botName} 정지 완료`);
+                    updateDashboard();
+                } else {
+                    alert(`오류: ${json.message}`);
+                }
+            } catch (e) {
+                alert('통신 오류: ' + e);
+            }
+        }
 
         async function updateDashboard() {
             try {
@@ -124,9 +193,27 @@
                 const tbody = document.getElementById('bot-table-body');
                 tbody.innerHTML = '';
                 data.bots.forEach(bot => {
-                    const statusColor = bot.status === 'Running' ? 'text-green-400' : 'text-red-400';
-                    const posColor = bot.current_position === 'Long' ? 'text-green-400' : (bot.current_position === 'Short' ? 'text-red-400' : 'text-slate-400');
-                    
+                    // 상태별 색상 지정 (Stopped 상태 명시적 처리)
+                    let statusColor = 'text-gray-400';
+                    if (bot.status.includes('Stopped') || bot.status.includes('정지')) {
+                        statusColor = 'text-gray-500';
+                    } else if (bot.status.includes('Selling') || bot.status.includes('Short')) {
+                        statusColor = 'text-red-400';
+                    } else if (bot.status.includes('Buying') || bot.status.includes('Long')) {
+                        statusColor = 'text-green-400';
+                    } else if (bot.status.includes('Running') || bot.status.includes('대기') || bot.status.includes('보유')) {
+                        statusColor = 'text-blue-400';
+                    } else if (bot.status.includes('오류') || bot.status.includes('Error')) {
+                        statusColor = 'text-orange-400';
+                    }
+
+                    const posColor = bot.current_position !== 'None' ? 'text-yellow-400' : 'text-slate-400';
+                    const pnlClass = bot.liquidation_profit >= 0 ? 'text-green-400' : 'text-red-400';
+                    const roiClass = bot.total_roi >= 0 ? 'text-magenta-400' : 'text-red-400';
+
+                    // 버튼 활성화/비활성화 로직
+                    const isStopped = bot.status.includes('Stopped') || bot.status.includes('정지');
+
                     const row = `
                         <tr class="border-b border-slate-800 hover:bg-slate-800/50 transition-colors">
                             <td class="py-3 px-2 font-medium text-blue-300">${bot.name}</td>
@@ -134,21 +221,101 @@
                             <td class="py-3 px-2 ${statusColor} font-bold">${bot.status}</td>
                             <td class="py-3 px-2 text-green-300 font-mono">${bot.current_balance.toLocaleString()} USDT</td>
                             <td class="py-3 px-2 ${posColor}">${bot.current_position}</td>
-                            <td class="py-3 px-2 text-red-300 font-mono">${bot.liquidation_price.toLocaleString()}</td>
-                            <td class="py-3 px-2 text-blue-300 font-mono">${bot.liquidation_profit > 0 ? '+' : ''}${bot.liquidation_profit.toLocaleString()} USDT</td>
-                            <td class="py-3 px-2 font-bold ${bot.total_roi >= 0 ? 'text-magenta-400' : 'text-red-400'}">${bot.total_roi > 0 ? '+' : ''}${bot.total_roi.toFixed(2)}%</td>
+                            <td class="py-3 px-2 text-red-300 font-mono">${bot.liquidation_price > 0 ? bot.liquidation_price.toLocaleString() : '-'}</td>
+                            <td class="py-3 px-2 font-mono ${pnlClass}">${bot.liquidation_profit > 0 ? '+' : ''}${bot.liquidation_profit.toLocaleString()} USDT</td>
+                            <td class="py-3 px-2 font-bold ${roiClass}">${bot.total_roi > 0 ? '+' : ''}${bot.total_roi.toFixed(2)}%</td>
+                            <td class="py-3 px-2 text-slate-400 font-mono text-sm">${bot.last_update || '-'}</td>
+                            <td class="py-3 px-2">
+                                <div class="flex space-x-2">
+                                    <button onclick="startBot('${bot.name}')" class="px-2 py-1 bg-green-600 hover:bg-green-700 text-white text-xs rounded transition-colors ${isStopped ? '' : 'opacity-50 cursor-not-allowed'}" ${isStopped ? '' : 'disabled'}>Start</button>
+                                    <button onclick="stopBot('${bot.name}')" class="px-2 py-1 bg-red-600 hover:bg-red-700 text-white text-xs rounded transition-colors ${isStopped ? 'opacity-50 cursor-not-allowed' : ''}" ${isStopped ? 'disabled' : ''}>Stop</button>
+                                </div>
+                            </td>
                         </tr>
                     `;
                     tbody.innerHTML += row;
 
-                    // Update Individual Charts if they exist
-                    if (charts[bot.name]) {
-                        charts[bot.name].updateSeries([{ data: bot.history }]);
+                    // Update Individual Charts (Candlestick)
+                    if (charts[bot.name] && bot.candles && bot.candles.length > 0) {
+                        charts[bot.name].updateSeries([{
+                            data: bot.candles
+                        }]);
+
+                        // Add Annotations (Entry, SL, Liq)
+                        const annotations = [];
+
+                        // Entry Price (Green)
+                        if (bot.entry_price > 0) {
+                            annotations.push({
+                                y: bot.entry_price,
+                                borderColor: '#00E396',
+                                label: {
+                                    borderColor: '#00E396',
+                                    style: { color: '#fff', background: '#00E396' },
+                                    text: 'Entry'
+                                }
+                            });
+                        }
+
+                        // Stop Loss (Orange) - Assuming bot data has 'stop_loss'
+                        if (bot.stop_loss > 0) {
+                            annotations.push({
+                                y: bot.stop_loss,
+                                borderColor: '#FEB019',
+                                label: {
+                                    borderColor: '#FEB019',
+                                    style: { color: '#fff', background: '#FEB019' },
+                                    text: 'SL'
+                                }
+                            });
+                        }
+
+                        // Current Price Line (Blue Dashed)
+                        if (bot.candles.length > 0) {
+                            const lastCandle = bot.candles[bot.candles.length - 1];
+                            const currentPrice = lastCandle.y[3]; // Close price
+                            annotations.push({
+                                y: currentPrice,
+                                borderColor: '#3B82F6',
+                                strokeDashArray: 4,
+                                label: {
+                                    borderColor: '#3B82F6',
+                                    style: { color: '#fff', background: '#3B82F6' },
+                                    text: 'Now: ' + currentPrice.toLocaleString()
+                                }
+                            });
+                        }
+
+                        // Liquidation Price (Red)
+                        if (bot.liquidation_price > 0) {
+                            annotations.push({
+                                y: bot.liquidation_price,
+                                borderColor: '#FF4560',
+                                label: {
+                                    borderColor: '#FF4560',
+                                    style: { color: '#fff', background: '#FF4560' },
+                                    text: 'Liq'
+                                }
+                            });
+                        }
+
+                        charts[bot.name].updateOptions({
+                            annotations: { yaxis: annotations }
+                        });
                     }
                 });
 
-                // Update Total Chart
+                // Update Total Chart (Area - Balance)
+                // For Total Chart, we just map values to simple indices if no timestamps, 
+                // or we need to update bot_manager to send timestamps.
+                // Assuming simple array for now, we might need to disable datetime xbox for total chart.
                 if (totalChart) {
+                    // Map simple values to x,y if needed, or just values. 
+                    // ApexCharts with datetime axis needs timestamps. 
+                    // Let's assume we generated timestamped data for total history on server?
+                    // Currently server sends [val, val, ...]. 
+                    // We will map it to current time descending or just use category axis for Total.
+                    // To fix this easily: we will use a dummy timestamp or just revert axis type for Total.
                     totalChart.updateSeries([{ data: data.total_history }]);
                 }
 
@@ -161,4 +328,5 @@
         updateDashboard();
     </script>
 </body>
+
 </html>

@@ -8,15 +8,20 @@ from pathlib import Path
 # .env 파일 로드 (선택사항)
 try:
     from dotenv import load_dotenv
-    load_dotenv()
+    env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env')
+    load_dotenv(dotenv_path=env_path)
+    
+    # TRADING_MODE가 paper이면 True, 아니면 False
+    TRADING_MODE = os.getenv('TRADING_MODE', 'paper').lower()
 except ImportError:
-    pass
+    TRADING_MODE = 'paper' # 기본값
+
 
 # ============================================================================
 # 바이비트 API 설정
 # ============================================================================
-BYBIT_API_KEY = os.getenv('BYBIT_API_KEY', '')
-BYBIT_API_SECRET = os.getenv('BYBIT_API_SECRET', '')
+BYBIT_API_KEY = os.getenv('BYBIT_API_KEY_1H') or os.getenv('BYBIT_API_KEY', '')
+BYBIT_API_SECRET = os.getenv('BYBIT_API_SECRET_1H') or os.getenv('BYBIT_API_SECRET', '')
 
 # 테스트넷 사용 여부 (True: 테스트넷, False: 실거래)
 USE_TESTNET = False
@@ -27,7 +32,8 @@ USE_TESTNET = False
 SYMBOL = 'BTCUSDT'  # 거래 심볼
 TIMEFRAME = '60'    # 1시간봉 (그리드 서치 최적화 결과)
 LEVERAGE = 3.0      # 최적화 레버리지 (복리 효과 극대화)
-PAPER_TRADING = True  # 페이퍼 트레이딩 모드 (가상 거래)
+LEVERAGE = 3.0      # 최적화 레버리지 (복리 효과 극대화)
+PAPER_TRADING = (TRADING_MODE == 'paper')  # 페이퍼 트레이딩 모드 (가상 거래)
 
 # ============================================================================
 # Adaptive 전략 최적화 파라미터 (2023-2025 백테스트 결과)

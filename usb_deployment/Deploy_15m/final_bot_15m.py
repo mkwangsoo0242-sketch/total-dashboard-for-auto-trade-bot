@@ -32,7 +32,9 @@ logging.basicConfig(
     ]
 )
 
-load_dotenv()
+# .env 파일 로드
+env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env')
+load_dotenv(dotenv_path=env_path)
 
 import schedule
 import subprocess
@@ -51,8 +53,8 @@ class FinalBot15m:
         self.load_models()
         
         # 거래소 초기화
-        self.api_key = os.getenv('BINANCE_API_KEY')
-        self.secret = os.getenv('BINANCE_SECRET')
+        self.api_key = os.getenv('BINANCE_API_KEY_15M') or os.getenv('BINANCE_API_KEY')
+        self.secret = os.getenv('BINANCE_SECRET_15M') or os.getenv('BINANCE_SECRET')
         self.exchange = ccxt.binance({
             'apiKey': self.api_key,
             'secret': self.secret,
@@ -201,6 +203,7 @@ class FinalBot15m:
 
     def run(self):
         logging.info(f"🚀 봇 시작 (잔고: {self.balance:,.0f}원)")
+        logging.info("ℹ️ 본 봇은 현재 시뮬레이션(Paper Trading) 모드로 동작하도록 설정되어 있습니다.")
         
         while True:
             try:

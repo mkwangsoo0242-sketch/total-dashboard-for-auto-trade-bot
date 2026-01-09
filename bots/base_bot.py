@@ -21,6 +21,7 @@ class BaseBot(ABC):
         self.total_roi = 0.0 # Total Return on Investment (%)
         self.balance_history = [] # Historical balance for graphing
         self.max_history = 50 # Maximum data points to keep
+        self.recent_candles = [] # OHLCV data for charting: [{'t': timestamp, 'o': open, 'h': high, 'l': low, 'c': close}, ...]
         
         # Setup logging
         self.logger = logging.getLogger(self.name)

@@ -15,7 +15,7 @@ from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Tuple
 from bybit_client import BybitClient
 import config as cfg
-from strategy import add_indicators, AdaptiveStrategy, AdaptiveConfig
+from strategy_1h import add_indicators, AdaptiveStrategy, AdaptiveConfig
 
 # BaseBot 임포트를 위한 경로 추가
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -110,10 +110,31 @@ def print_startup():
     print()
 
 class LiveTrader(BaseBot):
+    def execute_logic(self):
+        pass
+
     def __init__(self):
         super().__init__(name="Bot_1H", interval="1h")
+        # Manager Attributes
+        self.current_balance = 0.0
+        self.status = "Initializing"
+        self.balance_history = []
+        self.current_position = None
+        self.liquidation_price = 0
+        self.liquidation_profit = 0
+        self.total_roi = 0
+        self.max_history = 50
+        
         print_startup()
-        self.client = BybitClient(cfg.BYBIT_API_KEY, cfg.BYBIT_API_SECRET, testnet=cfg.USE_TESTNET)
+        
+        # Paper Mode key handling
+        api_key = cfg.BYBIT_API_KEY
+        api_secret = cfg.BYBIT_API_SECRET
+        if getattr(cfg, 'PAPER_TRADING', False):
+             api_key = "" # Empty key for public access only
+             api_secret = ""
+             
+        self.client = BybitClient(api_key, api_secret, testnet=cfg.USE_TESTNET)
         
         # Initialize strategy with default config
         self.config = AdaptiveConfig(
@@ -164,10 +185,10 @@ class LiveTrader(BaseBot):
             try:
                 with open(PAPER_BALANCE_PATH, 'r', encoding='utf-8') as f:
                     data = json.load(f)
-                    return float(data.get('balance', 10000.0))
+                    return float(data.get('balance', 100.0))
             except:
                 pass
-        return 10000.0
+        return 100.0
 
     def save_paper_balance(self, balance):
         """가상 잔고 저장"""
@@ -347,10 +368,29 @@ class LiveTrader(BaseBot):
         except Exception as e:
             logger.error(f"Sync position error: {e}")
 
+    def stop(self):
+        self.is_running = False
+        self.status = "Stopped"
+        logger.info("Stopping 1H Bot...")
+    
+    def wait_while_running(self, seconds):
+        if not hasattr(self, 'is_running'):
+             time.sleep(seconds)
+             return
+        for _ in range(seconds):
+            if not self.is_running:
+                break
+            time.sleep(1)
+
     def run(self):
         logger.info("Bot starting main loop...")
-        while True:
+        self.is_running = True
+        
+        while self.is_running:
             try:
+                from datetime import datetime
+                self.last_run = datetime.now()
+                
                 self.check_and_optimize()
                 
                 # 1. Fetch Data
@@ -372,6 +412,12 @@ class LiveTrader(BaseBot):
                 
                 # Bybit returns newest first, so we reverse it
                 df = df.iloc[::-1].reset_index(drop=True)
+                
+                # 차트용 데이터 저장 (최근 100개만)
+                self.recent_candles = [
+                    {'x': int(row['timestamp']), 'y': [row['open'], row['high'], row['low'], row['close']]}
+                    for index, row in df.tail(100).iterrows()
+                ]
                 
                 # Add indicators
                 df = add_indicators(df)
@@ -396,7 +442,12 @@ class LiveTrader(BaseBot):
                     pos_str = f"{self.current_position['side'].upper()} ({self.current_position['qty']})"
                 
                 mode_str = "PAPER" if getattr(cfg, 'PAPER_TRADING', False) else "REAL"
-                status_msg = f"정상 작동 중 ({pos_str})"
+                
+                if pos_str == "None":
+                    status_msg = "신호 대기 중"
+                else:
+                    status_msg = f"포지션 보유 중 ({pos_str})"
+                
                 logger.info(f"[{mode_str}] Price: {curr_price:,.1f} | Balance: {balance:,.2f} USDT | Pos: {pos_str} | ATR: {curr_row['atr']:.2f}")
                 
                 # 대시보드 업데이트
@@ -513,12 +564,15 @@ class LiveTrader(BaseBot):
                             else:
                                 logger.error("Failed to place order.")
                 
-                time.sleep(10) # 10초 대기
+                self.wait_while_running(10) # 10초 대기
             except Exception as e:
                 logger.error(f"Main loop error: {e}")
-                time.sleep(10) # 에러 발생 시에도 10초 대기 후 재시도
+                self.wait_while_running(10) # 에러 발생 시에도 10초 대기 후 재시도
                 logger.info(f"Entered {signal['side']} at {curr_row['close']}, Qty: {qty}, SL: {sl_price:.2f}")
                 self.save_trading_status(curr_price, f"{signal['side']} 포지션 진입")
+        
+        self.status = "Stopped"
+        logger.info("1H Bot Stopped Loop.")
 
 if __name__ == "__main__":
     create_pid_file()

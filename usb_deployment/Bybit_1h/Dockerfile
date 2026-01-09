@@ -1,13 +1,18 @@
-FROM python:3.9-slim
+FROM python:3.12-slim
 
 WORKDIR /app
+# Copy the shared bots module
+COPY bots /app/bots
 
-ENV TZ=Asia/Seoul
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# Copy the project files
+COPY "bybit_bot_usb(1시간-통합)" /app/project
 
-COPY requirements.txt .
+WORKDIR /app/project
+
+# Install dependencies
+# System deps for potential build needs
+RUN apt-get update && apt-get install -y build-essential && rm -rf /var/lib/apt/lists/*
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
-
-CMD ["python", "final_bot_1h.py"]
+# Default command (can be overridden in compose)
+CMD ["python", "-u", "live_trader_bybit.py"]

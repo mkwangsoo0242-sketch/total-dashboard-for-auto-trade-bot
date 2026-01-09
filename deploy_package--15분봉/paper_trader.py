@@ -7,7 +7,7 @@ class PaperTrader:
     def __init__(self, config, state_file='paper_trade_state.json'):
         self.config = config
         self.state_file = state_file
-        self.balance = 1000.0 # Default starting balance
+        self.balance = 100.0 # Default starting balance
         self.position = None
         self.trade_history = []
         self.load_state()
@@ -17,7 +17,7 @@ class PaperTrader:
             try:
                 with open(self.state_file, 'r') as f:
                     data = json.load(f)
-                    self.balance = data.get('balance', 1000.0)
+                    self.balance = data.get('balance', 100.0)
                     self.position = data.get('position', None)
                     self.trade_history = data.get('trade_history', [])
                 print(f"Paper Trader Loaded: Balance=${self.balance:.2f}, Position={self.position}")

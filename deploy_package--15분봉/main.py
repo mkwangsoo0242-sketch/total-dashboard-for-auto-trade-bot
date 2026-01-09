@@ -16,7 +16,7 @@ from bots.base_bot import BaseBot
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 from market_analyzer import MarketAnalyzer
-from strategy import Strategy
+from strategy_15m import Strategy
 from paper_trader import PaperTrader
 
 # Setup Logging
@@ -87,9 +87,13 @@ def load_env(filepath=None):
         logging.error(".env file not found")
 
 def run_bot(exchange, analyzer, strategy, config, paper_trader=None, dashboard=None):
-    # logging.info("Scanning market...") # Reduced log noise
+    # logging.info("Scanning market...\") # Reduced log noise
     
     try:
+        from datetime import datetime
+        if dashboard:
+            dashboard.last_run = datetime.now()
+        
         # 1. Fetch Data
         df = analyzer.fetch_ohlcv(limit=300) # Enough for EMA200
         if df is None:
@@ -99,6 +103,23 @@ def run_bot(exchange, analyzer, strategy, config, paper_trader=None, dashboard=N
         # 2. Analyze Indicators
         df = analyzer.analyze(df)
         curr_price = df.iloc[-1]['close']
+        
+        # update dashboard candles
+        if dashboard:
+             # Assuming index is timestamp or there is a 'timestamp' column. 
+             # If `analyzer` returns df with 'timestamp' column or index, we need to adapt.
+             # Checking `main.py` alone is hard, but usually index.
+             # Let's try to infer from typical usage. 
+             # I'll iterate last 100 rows.
+             candles = []
+             # If index is datetime, convert to int timestamp
+             for idx, row in df.tail(100).iterrows():
+                 ts = idx.timestamp() * 1000 if isinstance(idx, pd.Timestamp) else idx
+                 candles.append({
+                     'x': int(ts), 
+                     'y': [row['open'], row['high'], row['low'], row['close']]
+                 })
+             dashboard.recent_candles = candles
         
         # Update Paper Trader Positions (Check SL/TP)
         if paper_trader:
@@ -213,6 +234,7 @@ def main():
 
     global dashboard
     dashboard.status = "초기화 중"
+    dashboard.is_running = True
 
     # Schedule Job
     # Run every 10 seconds
@@ -224,9 +246,12 @@ def main():
     # Initial Real Balance Fetch
     fetch_and_save_real_balance(exchange)
 
-    while True:
+    while dashboard.is_running:
         schedule.run_pending()
         time.sleep(1)
+        
+    logging.info("15M Bot Stopped.")
+    dashboard.status = "Stopped"
 
 def fetch_and_save_real_balance(exchange):
     try:

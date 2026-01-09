@@ -1,89 +1,201 @@
 import schedule
 import subprocess
 import threading
-import ccxt
-import pandas as pd
-import numpy as np
-import joblib
-import logging
-import time
 import os
 import sys
+import time
+import ccxt
+import joblib
+import pandas as pd
+import logging
 from dotenv import load_dotenv
-from strategy import add_indicators
 
-# 로깅 설정
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler("bot.log"),
-        logging.StreamHandler(sys.stdout)
-    ]
-)
+# .env 파일 로드
+env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env')
+load_dotenv(dotenv_path=env_path)
 
-# 환경 변수 로드
-load_dotenv()
+from strategy_5m import add_indicators
 
-TRADING_COSTS = {
-    'taker_fee': 0.0004,
-    'slippage': 0.0003,
-}
-
-# 레짐별 설정 (Crazy Bull Mode)
+# Define Regime Settings (Default)
 REGIME_SETTINGS = {
-    0: {  # SIDEWAYS
-        'name': 'SIDEWAYS',
-        'skip': True,
-    },
-    1: {  # BULL
-        'name': 'BULL',
-        'direction': 'long',
-        'leverage': 30, # 상승장 올인 (Crazy Bull Mode)
-        'risk': 0.15,   # 인생 배팅
-        'sl_mult': 1.0, 
-        'tp_mult': 10.0, # TS 사용하므로 TP는 넓게
-        'threshold': 0.50,
-    },
-    2: {  # BEAR
-        'name': 'BEAR',
-        'direction': 'short',
-        'leverage': 10, # 하락장 생존 모드 (보수적)
-        'risk': 0.05,
-        'sl_mult': 1.0,
-        'tp_mult': 10.0,
-        'threshold': 0.50,
-    },
+    0: {'name': 'SIDEWAYS', 'skip': True},
+    1: {'name': 'BULLISH', 'direction': 'long', 'threshold': 0.6, 'risk': 0.1, 'leverage': 5, 'sl_mult': 2.0},
+    2: {'name': 'BEARISH', 'direction': 'short', 'threshold': 0.6, 'risk': 0.1, 'leverage': 5, 'sl_mult': 2.0}
 }
+
+# ... (기존 로깅 설정 등)
+# ... (기존 로깅 설정 등)
 
 class LiveTradingBot:
+    def execute_logic(self):
+        # BaseBot compatibility
+        pass
+
+    def stop(self):
+        self.is_running = False
+        self.status = "Stopped"
+        logging.info("Stopping 5M Bot...")
+
     def __init__(self):
-        self.api_key = os.getenv('BINANCE_API_KEY')
-        self.secret = os.getenv('BINANCE_SECRET')
+        # 5분봉 전용 키 우선 적용
+        self.api_key = os.getenv('BYBIT_API_KEY_5M') or os.getenv('BYBIT_API_KEY')
+        self.secret = os.getenv('BYBIT_API_SECRET_5M') or os.getenv('BYBIT_API_SECRET')
         self.mode = os.getenv('TRADING_MODE', 'paper').lower()
         self.symbol = os.getenv('SYMBOL', 'BTC/USDT')
-        self.timeframe = '5m' 
+        self.timeframe = '5m'
         
+        # 가상 거래 상태 변수
+        self.paper_balance = 100.0
+        self.paper_position = None # {'amount': 0.0, 'entry': 0.0, 'type': 'long'/'short'}
+
+        # Manager Compatibility Attributes
+        self.interval = '5m'
+        self.current_balance = self.paper_balance if self.mode == 'paper' else 0.0
+        self.status = "신호 대기 중 (초기화)"
+        self.balance_history = []
+        self.current_position = None
+        self.liquidation_price = 0
+        self.liquidation_profit = 0
+        self.total_roi = 0
+        self.max_history = 50
+
         # 모델 로드
         self.model_ts = 0
         self.load_models()
         self.start_scheduler()
         
         # 거래소 초기화
-        self.exchange = ccxt.binance({
+        exchange_config = {
             'apiKey': self.api_key,
             'secret': self.secret,
             'enableRateLimit': True,
             'options': {'defaultType': 'future'}
-        })
+        }
+        if self.mode == 'paper':
+            exchange_config['apiKey'] = None
+            exchange_config['secret'] = None
+            
+        self.exchange = ccxt.bybit(exchange_config)
         
-        if self.mode == 'live':
-            self.exchange.set_sandbox_mode(False)
-            logging.info("⚠️ LIVE TRADING MODE - REAL MONEY WILL BE USED")
-        else:
-            logging.info("🧪 PAPER TRADING MODE")
+        # ... (기존 모드 체크)
         
-        logging.info(f"봇 초기화 완료: {self.symbol} ({self.timeframe}) - Crazy Bull Mode 🐂")
+        logging.info(f"봇 초기화 완료: {self.symbol} ({self.timeframe})")
+
+    # ... (start_scheduler, check_model_reload, load_models, fetch_data, get_features, predict_regime, predict_probs omitted - keep existing)
+
+    def get_position(self):
+        """현재 포지션 조회"""
+        if self.mode == 'paper':
+            return self.paper_position
+
+        try:
+            balance = self.exchange.fetch_balance()
+            positions = balance['info']['positions']
+            for pos in positions:
+                if pos['symbol'] == self.symbol.replace('/', ''):
+                    amt = float(pos['positionAmt'])
+                    if amt != 0:
+                        return {'amount': amt, 'entry': float(pos['entryPrice']), 'type': 'long' if amt > 0 else 'short'}
+            return None
+        except Exception as e:
+            logging.error(f"포지션 조회 실패: {e}")
+            return None
+
+    def execute_trade(self, signal, amount, leverage):
+        """주문 실행"""
+        if self.mode == 'paper':
+            # 1. 현재가 조회 (실제 데이터)
+            try:
+                ticker = self.exchange.fetch_ticker(self.symbol)
+                price = float(ticker['last'])
+            except:
+                price = 0 # should handle error, but simplified
+            
+            if price == 0:
+                # fetch_data 호출해서라도 가져옴
+                df = self.fetch_data(limit=1)
+                if df is not None:
+                     price = df.iloc[-1]['close']
+
+            fee_rate = 0.0005
+            trade_val = price * amount
+            fee = trade_val * fee_rate
+            self.paper_balance -= fee
+            
+            # 포지션 진입 시뮬레이션
+            if self.paper_position is None:
+                self.paper_position = {
+                    'amount': amount if signal == 'long' else -amount,
+                    'entry': price,
+                    'type': signal
+                }
+            else:
+                 # 추가 진입 (단순화: 가중평균)
+                 prev_amt = self.paper_position['amount']
+                 prev_entry = self.paper_position['entry']
+                 new_amt = amount if signal == 'long' else -amount
+                 
+                 total_amt = prev_amt + new_amt
+                 # 평단가
+                 new_entry = ((abs(prev_amt) * prev_entry) + (amount * price)) / (abs(prev_amt) + amount)
+                 
+                 self.paper_position['amount'] = total_amt
+                 self.paper_position['entry'] = new_entry
+                 self.paper_position['type'] = 'long' if total_amt > 0 else 'short'
+
+            self.current_balance = self.paper_balance
+            logging.info(f"🧪 [PAPER] 체결: {signal.upper()} {amount} @ {price} | 잔고: {self.paper_balance:.2f}")
+            return True
+        
+        try:
+            # 레버리지 설정
+            self.exchange.set_leverage(leverage, self.symbol)
+            
+            side = 'buy' if signal == 'long' else 'sell'
+            order = self.exchange.create_market_order(self.symbol, side, amount)
+            logging.info(f"✅ 주문 체결: {side} {amount} {self.symbol}")
+            return order
+        except Exception as e:
+            logging.error(f"주문 실패: {e}")
+            return None
+
+    def close_position(self):
+        """포지션 종료"""
+        pos = self.get_position()
+        if pos:
+            amount = abs(pos['amount'])
+            
+            # Paper Mode Simulation
+            if self.mode == 'paper':
+                try:
+                    ticker = self.exchange.fetch_ticker(self.symbol)
+                    price = float(ticker['last'])
+                except:
+                     return # Can't close
+
+                entry = pos['entry']
+                pnl = 0
+                if pos['type'] == 'long':
+                    pnl = (price - entry) * amount
+                else:
+                    pnl = (entry - price) * amount
+                
+                fee = (price * amount) * 0.0005
+                self.paper_balance += pnl
+                self.paper_balance -= fee
+                
+                self.paper_position = None
+                self.current_balance = self.paper_balance
+                
+                logging.info(f"🧪 [PAPER] 포지션 종료: PnL {pnl:.2f}, Fee {fee:.2f} | 잔고: {self.paper_balance:.2f}")
+                return
+
+            side = 'sell' if pos['type'] == 'long' else 'buy'
+            try:
+                self.exchange.create_market_order(self.symbol, side, amount)
+                logging.info("✅ 포지션 종료 완료")
+            except Exception as e:
+                logging.error(f"포지션 종료 실패: {e}")
 
     def start_scheduler(self):
         def job():
@@ -106,7 +218,8 @@ class LiveTradingBot:
 
     def check_model_reload(self):
         try:
-            path = 'short_model.pkl' 
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+            path = os.path.join(base_dir, 'short_model.pkl')
             if os.path.exists(path):
                 mtime = os.path.getmtime(path)
                 if mtime > self.model_ts:
@@ -115,38 +228,58 @@ class LiveTradingBot:
         except: pass
 
     def load_models(self):
+        """다중 모델 로드"""
         try:
             logging.info("🤖 ML 모델 로딩...")
-            path = 'short_model.pkl'
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+            
+            path = os.path.join(base_dir, 'short_model.pkl')
             if os.path.exists(path):
                 self.model_ts = os.path.getmtime(path)
                 
-            self.short_model_data = joblib.load('short_model.pkl')
-            self.long_model_data = joblib.load('long_model.pkl')
-            self.regime_model_data = joblib.load('regime_model.pkl')
+            self.short_model_data = joblib.load(os.path.join(base_dir, 'short_model.pkl'))
+            self.long_model_data = joblib.load(os.path.join(base_dir, 'long_model.pkl'))
+            self.regime_model_data = joblib.load(os.path.join(base_dir, 'regime_model.pkl'))
             
             self.short_model = self.short_model_data['model']
             self.long_model = self.long_model_data['model']
             self.regime_model = self.regime_model_data['model']
             
-            logging.info("✅ 모델 로드 성공")
+            logging.info(f"   Short 모델 정확도: {self.short_model_data.get('accuracy', 0)*100:.1f}%")
+            logging.info(f"   Long 모델 정확도: {self.long_model_data.get('accuracy', 0)*100:.1f}%")
+            logging.info(f"   Regime 모델 정확도: {self.regime_model_data.get('accuracy', 0)*100:.1f}%")
         except Exception as e:
             logging.error(f"모델 로드 실패: {e}")
             if not hasattr(self, 'short_model'):
                 sys.exit(1)
 
     def fetch_data(self, limit=250):
+        """데이터 수집 및 전처리"""
         try:
             ohlcv = self.exchange.fetch_ohlcv(self.symbol, timeframe=self.timeframe, limit=limit)
+            
+            # 차트용 데이터 저장 (최근 100개만)
+            self.recent_candles = [
+                {'x': item[0], 'y': [item[1], item[2], item[3], item[4]]}
+                for item in ohlcv[-100:]
+            ]
+
             df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
             df['datetime'] = pd.to_datetime(df['timestamp'], unit='ms')
             
+            # 지표 추가 (strategy.py 사용)
             df = add_indicators(df)
             
+            # 추가 피처 (훈련 시와 동일하게)
             df['dist_ema20'] = (df['close'] - df['ema_20']) / df['ema_20']
             df['dist_ema60'] = (df['close'] - df['ema_60']) / df['ema_60']
             df['rsi_change'] = df['rsi'].diff()
+            df['adx_change'] = df['adx'].diff()
             df['vol_change'] = df['volume'].pct_change()
+            df['stoch_diff'] = df['stoch_k'] - df['stoch_d']
+            df['bb_width'] = (df['bb_upper'] - df['bb_lower']) / df['bb_middle']
+            df['vol_ratio'] = df['volume'] / df['vol_ma20']
+            df['ema_slope'] = df['ema_20'].pct_change() * 100
             df['ema_200'] = df['close'].ewm(span=200).mean()
             df['dist_ema200'] = (df['close'] - df['ema_200']) / df['ema_200']
             
@@ -156,6 +289,7 @@ class LiveTradingBot:
             return None
 
     def get_features(self, row, feature_list):
+        """모델 입력 피처 추출"""
         features = {}
         for f in feature_list:
             val = row.get(f, 0)
@@ -163,21 +297,28 @@ class LiveTradingBot:
         return pd.DataFrame([features])
 
     def predict_regime(self, row):
+        """시장 레짐 예측"""
         try:
             features = self.get_features(row, self.regime_model_data['features'])
             return int(self.regime_model.predict(features)[0])
         except:
-            return 0 
+            return 0 # 기본값 SIDEWAYS
 
     def predict_probs(self, row):
+        """Long/Short 확률 예측"""
         try:
             l_feat = self.get_features(row, self.long_model_data['features'])
             s_feat = self.get_features(row, self.short_model_data['features'])
-            return self.long_model.predict_proba(l_feat)[0][1], self.short_model.predict_proba(s_feat)[0][1]
+            
+            l_prob = self.long_model.predict_proba(l_feat)[0][1]
+            s_prob = self.short_model.predict_proba(s_feat)[0][1]
+            
+            return l_prob, s_prob
         except:
             return 0.5, 0.5
 
     def get_position(self):
+        """현재 포지션 조회"""
         try:
             balance = self.exchange.fetch_balance()
             positions = balance['info']['positions']
@@ -192,11 +333,15 @@ class LiveTradingBot:
             return None
 
     def execute_trade(self, signal, amount, leverage):
+        """주문 실행"""
         if self.mode == 'paper':
             logging.info(f"🧪 [PAPER] {signal} 주문 시뮬레이션: 수량 {amount}, 레버리지 {leverage}")
             return True
+        
         try:
+            # 레버리지 설정
             self.exchange.set_leverage(leverage, self.symbol)
+            
             side = 'buy' if signal == 'long' else 'sell'
             order = self.exchange.create_market_order(self.symbol, side, amount)
             logging.info(f"✅ 주문 체결: {side} {amount} {self.symbol}")
@@ -205,28 +350,69 @@ class LiveTradingBot:
             logging.error(f"주문 실패: {e}")
             return None
 
+    def close_position(self):
+        """포지션 종료"""
+        pos = self.get_position()
+        if pos:
+            amount = abs(pos['amount'])
+            side = 'sell' if pos['type'] == 'long' else 'buy'
+            if self.mode == 'paper':
+                logging.info(f"🧪 [PAPER] 포지션 종료 시뮬레이션: {side} {amount}")
+            else:
+                try:
+                    self.exchange.create_market_order(self.symbol, side, amount)
+                    logging.info("✅ 포지션 종료 완료")
+                except Exception as e:
+                    logging.error(f"포지션 종료 실패: {e}")
+
+    def wait_while_running(self, seconds):
+        for _ in range(seconds):
+            if not self.is_running:
+                return
+            time.sleep(1)
+
     def run(self):
-        logging.info("🚀 라이브 트레이딩 봇 시작 (Crazy Bull Mode)")
+        logging.info("🚀 라이브 트레이딩 봇 시작 (다중 ML 모델)")
+        self.status = "신호 대기 중 (시작)"
+        self.is_running = True
         
-        while True:
+        while self.is_running:
             try:
+                from datetime import datetime
+                self.last_run = datetime.now()
+                
+                self.status = "신호 대기 중 (데이터 수집)"
+                # 1. 데이터 수집
                 df = self.fetch_data()
                 if df is None:
-                    time.sleep(60)
+                    self.status = "오류 (데이터 수집 실패)"
+                    self.wait_while_running(60)
                     continue
                 
                 current = df.iloc[-1]
                 price = current['close']
+                
+                # 2. 포지션 확인
                 position = self.get_position()
                 
+                # 3. 신호 생성
                 regime = self.predict_regime(current)
                 settings = REGIME_SETTINGS.get(regime, {'skip': True})
                 
                 settings_name = settings.get('name', 'UNKNOWN')
-                logging.info(f"📊 레짐: {settings_name} (가격: {price:,.2f})")
+                logging.info(f"📊 현재 시장 레짐: {settings_name} (가격: {price:,.2f})")
+                
+                # Update Status for Manager
+                if position:
+                     self.status = f"포지션 보유 중 ({position.get('type','').upper()})"
+                else:
+                     self.status = f"신호 대기 중 ({settings_name})"
                 
                 if position:
                     logging.info(f"🔥 포지션 보유 중: {position['type']} {position['amount']}")
+                    # 여기서 청산 로직 추가 가능 (SL/TP 등)
+                    # 현재는 전략에 맡김
+                
                 elif not settings.get('skip'):
                     l_prob, s_prob = self.predict_probs(current)
                     direction = settings['direction']
@@ -241,10 +427,12 @@ class LiveTradingBot:
                         logging.info(f"🔍 Short 신호 감지! (확률: {s_prob:.2%})")
                     
                     if signal:
+                        # 자금 관리
                         balance = self.exchange.fetch_balance()['USDT']['free']
                         risk = settings['risk']
                         leverage = settings['leverage']
                         
+                        # ATR 기반 포지션 사이징
                         atr = current['atr'] if not pd.isna(current['atr']) else price * 0.01
                         sl_pct = (atr * settings['sl_mult']) / price
                         
@@ -255,21 +443,28 @@ class LiveTradingBot:
                         final_size_usd = min(target_size, max_size)
                         amount = final_size_usd / price
                         
-                        logging.info(f"🚀 진입: {signal} | 크기: ${final_size_usd:.2f} (Lev {leverage}x)")
+                        logging.info(f"🚀 진입 결정: {signal} | 크기: ${final_size_usd:.2f} ({amount:.4f} BTC)")
                         self.execute_trade(signal, amount, leverage)
                 else:
-                    logging.info("⏸️ 관망 (Sideways)")
+                    logging.info("⏸️ 횡보장 또는 스킵 구간 - 관망")
                 
-                logging.info("💤 대기 (5분)...")
+                logging.info("💤 다음 캔들 대기 (5분)...")
+                
+                # 모델 업데이트 체크
                 self.check_model_reload()
-                time.sleep(300)
+                
+                self.wait_while_running(300)  # 5분 대기
                 
             except KeyboardInterrupt:
                 logging.info("⏹️ 봇 중지")
                 break
             except Exception as e:
-                logging.error(f"오류: {e}")
-                time.sleep(60)
+                logging.error(f"예기치 않은 오류: {e}")
+                self.status = f"오류 ({str(e)[:20]}...)"
+                self.wait_while_running(60)
+        
+        self.status = "Stopped"
+        logging.info("5M Bot Stopped Loop.")
 
 if __name__ == "__main__":
     bot = LiveTradingBot()

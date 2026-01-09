@@ -5,30 +5,50 @@ import os
 import sys
 from datetime import datetime
 from dotenv import load_dotenv
-from strategy import Strategy30m
+from strategy_30m import Strategy30m
 
 # BaseBot 임포트를 위한 경로 추가
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from bots.base_bot import BaseBot
 
-# .env 파일에서 설정 로드
-load_dotenv()
+# .env 파일에서 설정 로드 (중앙 집중식)
+env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env')
+load_dotenv(dotenv_path=env_path)
 
 class BinanceLiveBot(BaseBot):
+    def execute_logic(self):
+        # BaseBot requires this, but we use run() loop.
+        pass
+
     def __init__(self):
         super().__init__(name="Bot_30M", interval="30m")
-        self.api_key = os.getenv('BINANCE_API_KEY')
-        self.api_secret = os.getenv('BINANCE_SECRET_KEY')
+        
+        # 모드 설정 (paper/live) - 가장 먼저 설정
+        self.mode = os.getenv('TRADING_MODE', 'paper').lower()
+
+        # 가상 거래 상태 변수 (Real-time Simulation)
+        self.paper_balance = 100.0  # 초기 자본 100 USDT
+        self.paper_pos_size = 0.0     # 코인 수량 (양수: 롱, 음수: 숏)
+        self.paper_entry_price = 0.0  # 평단가
+        
+        # 30분봉 전용 키 우선 적용, 없으면 공용 키 사용
+        self.api_key = os.getenv('BINANCE_API_KEY_30M') or os.getenv('BINANCE_API_KEY')
+        self.api_secret = os.getenv('BINANCE_SECRET_30M') or os.getenv('BINANCE_SECRET_KEY') or os.getenv('BINANCE_SECRET')
         self.symbol = 'BTC/USDT'
         self.timeframe = '30m'
         
         # 바이낸스 선물 거래소 초기화
-        self.exchange = ccxt.binance({
+        exchange_config = {
             'apiKey': self.api_key,
             'secret': self.api_secret,
             'options': {'defaultType': 'future'},
             'enableRateLimit': True,
-        })
+        }
+        if self.mode == 'paper':
+            exchange_config['apiKey'] = None
+            exchange_config['secret'] = None
+            
+        self.exchange = ccxt.binance(exchange_config)
         
         # 전략 인스턴스 초기화 (실거래 모드)
         self.strat = Strategy30m(initial_leverage=10, mode='extreme_growth')
@@ -44,23 +64,104 @@ class BinanceLiveBot(BaseBot):
 
     def log(self, message):
         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        print(f"[{now}] {message}")
+        print(f"[{now}] [{self.mode.upper()}] {message}")
 
     def fetch_ohlcv(self, limit=1500):
         """실시간 OHLCV 데이터를 가져와 데이터프레임으로 변환"""
         ohlcv = self.exchange.fetch_ohlcv(self.symbol, self.timeframe, limit=limit)
+        
+        # 차트용 데이터 저장 (최근 100개만)
+        self.recent_candles = [
+            {'x': item[0], 'y': [item[1], item[2], item[3], item[4]]}
+            for item in ohlcv[-100:]
+        ]
+        
         df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
         df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
         df.set_index('timestamp', inplace=True)
         return df
 
     def get_balance(self):
-        """계좌 잔고 조회"""
+        """계좌 잔고 조회 (Paper 모드 시 시뮬레이션 잔고)"""
+        if self.mode == 'paper':
+            return self.paper_balance
+        
         balance = self.exchange.fetch_balance()
         return float(balance['total']['USDT'])
 
     def execute_order(self, side, amount, order_type='market', price=None):
-        """주문 실행 (시장가 기본)"""
+        """주문 실행 (Paper 모드: 실제 가격 기반 시뮬레이션)"""
+        if self.mode == 'paper':
+            try:
+                # 1. 현재가 조회 (실제 시장 데이터)
+                ticker = self.exchange.fetch_ticker(self.symbol)
+                current_price = float(ticker['last'])
+                if price: current_price = float(price)
+            except:
+                current_price = float(self.fetch_ohlcv(limit=1).iloc[-1]['close'])
+
+            # 수수료 가정 (0.05%)
+            fee_rate = 0.0005
+            trade_value = current_price * amount
+            fee = trade_value * fee_rate
+            
+            self.paper_balance -= fee
+            
+            # 포지션 업데이트 로직
+            if side == 'buy':
+                # 숏 포지션 청산 or 롱 진입
+                if self.paper_pos_size < 0: # 숏 청산
+                    cover_amt = min(amount, abs(self.paper_pos_size))
+                    # 숏 수익 = (진입가 - 현재가) * 수량
+                    pnl = (self.paper_entry_price - current_price) * cover_amt
+                    self.paper_balance += pnl
+                    self.paper_pos_size += cover_amt
+                    if abs(self.paper_pos_size) < 1e-8: 
+                        self.paper_pos_size = 0.0
+                        self.paper_entry_price = 0.0
+                    
+                    if amount > cover_amt: # 청산 후 남은 물량 롱 진입
+                        rem_amt = amount - cover_amt
+                        self.paper_pos_size += rem_amt
+                        self.paper_entry_price = current_price
+                        
+                else: # 롱 진입/추가
+                    if self.paper_pos_size == 0:
+                        self.paper_entry_price = current_price
+                        self.paper_pos_size += amount
+                    else:
+                        total_val = (self.paper_pos_size * self.paper_entry_price) + (amount * current_price)
+                        self.paper_pos_size += amount
+                        self.paper_entry_price = total_val / self.paper_pos_size
+                    
+            elif side == 'sell':
+                # 롱 포지션 청산 or 숏 진입
+                if self.paper_pos_size > 0: # 롱 청산
+                    sell_amt = min(amount, self.paper_pos_size)
+                    # 롱 수익 = (현재가 - 진입가) * 수량
+                    pnl = (current_price - self.paper_entry_price) * sell_amt
+                    self.paper_balance += pnl
+                    self.paper_pos_size -= sell_amt
+                    if abs(self.paper_pos_size) < 1e-8:
+                        self.paper_pos_size = 0.0
+                        self.paper_entry_price = 0.0
+                    
+                    if amount > sell_amt: # 청산 후 남은 물량 숏 진입
+                        rem_amt = amount - sell_amt
+                        self.paper_pos_size -= rem_amt
+                        self.paper_entry_price = current_price
+                else: # 숏 진입/추가
+                    if self.paper_pos_size == 0:
+                        self.paper_entry_price = current_price
+                        self.paper_pos_size -= amount
+                    else:
+                        total_val = (abs(self.paper_pos_size) * self.paper_entry_price) + (amount * current_price)
+                        self.paper_pos_size -= amount
+                        self.paper_entry_price = total_val / abs(self.paper_pos_size)
+
+            self.log(f"🧪 [Paper] 시뮬레이션 체결: {side.upper()} {amount} @ {current_price} | 잔고: {self.paper_balance:.2f} | 포지션: {self.paper_pos_size:.4f}")
+            return {'id': 'paper_order', 'status': 'closed', 'filled': amount, 'average': current_price}
+
         try:
             params = {}
             if order_type == 'market':
@@ -74,6 +175,23 @@ class BinanceLiveBot(BaseBot):
 
     def sync_position(self):
         """거래소의 실제 포지션과 로컬 상태 동기화"""
+        if self.mode == 'paper':
+            if self.paper_pos_size > 1e-8:
+                self.current_position = 'long'
+                self.total_position_size = self.paper_pos_size
+                self.entry_price = self.paper_entry_price
+            elif self.paper_pos_size < -1e-8:
+                self.current_position = 'short'
+                self.total_position_size = abs(self.paper_pos_size)
+                self.entry_price = self.paper_entry_price
+            else:
+                self.current_position = None
+                self.total_position_size = 0
+                self.entry_price = 0
+            
+            # self.log(f"포지션 동기화 (Paper): {self.current_position} (Size: {self.total_position_size:.4f}, Entry: {self.entry_price:.2f})")
+            return
+
         positions = self.exchange.fetch_positions([self.symbol])
         for pos in positions:
             if pos['symbol'] == 'BTCUSDT':
@@ -94,6 +212,9 @@ class BinanceLiveBot(BaseBot):
 
     def set_leverage(self, leverage):
         """레버리지 설정"""
+        if self.mode == 'paper':
+            return
+
         try:
             self.exchange.set_leverage(leverage, self.symbol)
             self.log(f"레버리지 {leverage}x 설정 완료")
@@ -101,14 +222,18 @@ class BinanceLiveBot(BaseBot):
             self.log(f"레버리지 설정 오류: {e}")
 
     def run(self):
+        self.is_running = True
         self.log("BTC 30M 자동매매 봇 시작 (Adaptive Strategy)")
         self.sync_position()
         
         # 초기 레버리지 설정
         self.set_leverage(self.trade_leverage)
         
-        while True:
+        while self.is_running:
             try:
+                from datetime import datetime
+                self.last_run = datetime.now()
+                
                 # 1. 데이터 업데이트
                 df = self.fetch_ohlcv()
                 df_with_ind = self.strat.populate_indicators(df)
@@ -288,16 +413,21 @@ class BinanceLiveBot(BaseBot):
                                     self.sync_position()
 
                 # 4. 대기 (30분봉 전략이므로 1분마다 체크)
-                time.sleep(60)
+                self.wait_while_running(60)
                 
             except Exception as e:
                 self.log(f"루프 실행 중 오류 발생: {e}")
-                time.sleep(30)
+                self.wait_while_running(30)
                 
-            except Exception as e:
-                self.log(f"루프 실행 중 오류 발생: {e}")
-                time.sleep(30)
+        self.status = "Stopped"
+        self.log("30M Bot Stopped Loop.")
 
+    def wait_while_running(self, seconds):
+        for _ in range(seconds):
+            if not self.is_running:
+                return
+            time.sleep(1)
+                
 if __name__ == "__main__":
     bot = BinanceLiveBot()
     bot.run()

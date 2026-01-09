@@ -1,13 +1,19 @@
-FROM python:3.9-slim
+FROM python:3.10-slim
+
+# Install procps for pgrep (used by app.py)
+RUN apt-get update && apt-get install -y procps && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
+# Copy the shared bots module
+COPY bots /app/bots
 
-ENV TZ=Asia/Seoul
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# Copy the project files
+COPY "RealTradingBot_Deployment(5분봉)" /app/project
 
-COPY requirements.txt .
+WORKDIR /app/project
+
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
-
-CMD ["python", "live_trading_bot.py"]
+# Run the application
+CMD ["python", "-u", "app.py"]

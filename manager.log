@@ -1,0 +1,76 @@
+============================================================
+🏆 바이비트 실거래 봇 시작 (Integrated Adaptive + ML Filter)
+============================================================
+📊 심볼: BTCUSDT
+⏱️ 타임프레임: 60m
+🚀 기본 레버리지: 3.0x
+🕒 거래 시간: 8:00 - 22:00 (KST)
+🌐 테스트넷: False
+📝 페이퍼 트레이딩: ON (가상 거래)
+✨ 동적 파라미터 적용 중: /home/ser1/새 폴더/btc/usdt 봇 통합관리/bybit_bot_usb(1시간-통합)/dynamic_config.json
+------------------------------------------------------------
+📝 로그 파일: bot.log
+============================================================
+
+[13:01:00] INFO: Dynamic config loaded into strategy: {'leverage': 1.0, 'adx_trending_min': 30, 'adx_ranging_max': 15, 'trend_sl_atr': 1.5, 'range_sl_atr': 1.0, 'session_start_hour': 0, 'session_end_hour': 23}
+INFO:live_trader:Dynamic config loaded into strategy: {'leverage': 1.0, 'adx_trending_min': 30, 'adx_ranging_max': 15, 'trend_sl_atr': 1.5, 'range_sl_atr': 1.0, 'session_start_hour': 0, 'session_end_hour': 23}
+모든 봇을 시작합니다...
+[2026-01-09 13:01:01] [PAPER] BTC 30M 자동매매 봇 시작 (Adaptive Strategy)Bot_30M 시작됨.
+
+Bot_5M 시작됨.
+[13:01:01] INFO: Bot starting main loop...
+Bot_1H 시작됨.
+Bot_15M 시작됨.
+Starting High Profit Bot (Survival Mode 163x)...
+INFO:     Started server process [3041]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+[13:01:02] INFO: [PAPER] Price: 91,196.8 | Balance: 100.00 USDT | Pos: None | ATR: 496.62
+[2026-01-09 13:01:04] [PAPER] 현재가: 91187.70 | 포지션: None | 잔고: 100.00 USDT
+[13:01:12] INFO: [PAPER] Price: 91,196.8 | Balance: 100.00 USDT | Pos: None | ATR: 496.62
+[13:01:22] INFO: [PAPER] Price: 91,199.3 | Balance: 100.00 USDT | Pos: None | ATR: 496.62
+[13:01:32] INFO: [PAPER] Price: 91,212.2 | Balance: 100.00 USDT | Pos: None | ATR: 497.25
+[13:01:43] INFO: [PAPER] Price: 91,212.1 | Balance: 100.00 USDT | Pos: None | ATR: 497.25
+[13:01:53] INFO: [PAPER] Price: 91,177.6 | Balance: 100.00 USDT | Pos: None | ATR: 497.65
+[13:02:03] INFO: [PAPER] Price: 91,137.7 | Balance: 100.00 USDT | Pos: None | ATR: 500.51
+[2026-01-09 13:02:05] [PAPER] 현재가: 91137.30 | 포지션: None | 잔고: 100.00 USDT
+[13:02:13] INFO: [PAPER] Price: 91,140.8 | Balance: 100.00 USDT | Pos: None | ATR: 500.51
+[13:02:23] INFO: [PAPER] Price: 91,140.8 | Balance: 100.00 USDT | Pos: None | ATR: 500.51
+[13:02:33] INFO: [PAPER] Price: 91,144.7 | Balance: 100.00 USDT | Pos: None | ATR: 500.51
+[13:02:43] INFO: [PAPER] Price: 91,149.5 | Balance: 100.00 USDT | Pos: None | ATR: 500.51
+[13:02:54] INFO: [PAPER] Price: 91,155.3 | Balance: 100.00 USDT | Pos: None | ATR: 500.51
+[13:03:04] INFO: [PAPER] Price: 91,163.1 | Balance: 100.00 USDT | Pos: None | ATR: 500.51
+[2026-01-09 13:03:05] [PAPER] 현재가: 91158.10 | 포지션: None | 잔고: 100.00 USDT
+[13:03:14] INFO: [PAPER] Price: 91,163.0 | Balance: 100.00 USDT | Pos: None | ATR: 500.51
+[13:03:24] INFO: [PAPER] Price: 91,133.4 | Balance: 100.00 USDT | Pos: None | ATR: 500.81
+INFO:     127.0.0.1:53789 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+[13:03:34] INFO: [PAPER] Price: 91,142.8 | Balance: 100.00 USDT | Pos: None | ATR: 500.81
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+[13:03:44] INFO: [PAPER] Price: 91,139.6 | Balance: 100.00 USDT | Pos: None | ATR: 500.81
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+[13:03:55] INFO: [PAPER] Price: 91,139.6 | Balance: 100.00 USDT | Pos: None | ATR: 500.81
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+[13:04:05] INFO: [PAPER] Price: 91,148.3 | Balance: 100.00 USDT | Pos: None | ATR: 500.81
+[2026-01-09 13:04:05] [PAPER] 현재가: 91141.30 | 포지션: None | 잔고: 100.00 USDT
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53789 - "GET /api/data HTTP/1.1" 200 OK
+[13:04:15] INFO: [PAPER] Price: 91,140.0 | Balance: 100.00 USDT | Pos: None | ATR: 500.81

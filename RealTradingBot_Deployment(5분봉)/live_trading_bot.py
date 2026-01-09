@@ -1,33 +1,201 @@
 import schedule
 import subprocess
 import threading
+import os
+import sys
+import time
+import ccxt
+import joblib
+import pandas as pd
+import logging
+from dotenv import load_dotenv
 
+# .env 파일 로드
+env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env')
+load_dotenv(dotenv_path=env_path)
+
+from strategy_5m import add_indicators
+
+# Define Regime Settings (Default)
+REGIME_SETTINGS = {
+    0: {'name': 'SIDEWAYS', 'skip': True},
+    1: {'name': 'BULLISH', 'direction': 'long', 'threshold': 0.6, 'risk': 0.1, 'leverage': 5, 'sl_mult': 2.0},
+    2: {'name': 'BEARISH', 'direction': 'short', 'threshold': 0.6, 'risk': 0.1, 'leverage': 5, 'sl_mult': 2.0}
+}
+
+# ... (기존 로깅 설정 등)
 # ... (기존 로깅 설정 등)
 
 class LiveTradingBot:
+    def execute_logic(self):
+        # BaseBot compatibility
+        pass
+
+    def stop(self):
+        self.is_running = False
+        self.status = "Stopped"
+        logging.info("Stopping 5M Bot...")
+
     def __init__(self):
-        self.api_key = os.getenv('BINANCE_API_KEY')
-        self.secret = os.getenv('BINANCE_SECRET')
+        # 5분봉 전용 키 우선 적용
+        self.api_key = os.getenv('BINANCE_API_KEY_5M') or os.getenv('BINANCE_API_KEY')
+        self.secret = os.getenv('BINANCE_SECRET_5M') or os.getenv('BINANCE_SECRET')
         self.mode = os.getenv('TRADING_MODE', 'paper').lower()
         self.symbol = os.getenv('SYMBOL', 'BTC/USDT')
-        self.timeframe = '5m'  # 1h -> 5m 수정
+        self.timeframe = '5m'
         
+        # 가상 거래 상태 변수
+        self.paper_balance = 100.0
+        self.paper_position = None # {'amount': 0.0, 'entry': 0.0, 'type': 'long'/'short'}
+
+        # Manager Compatibility Attributes
+        self.interval = '5m'
+        self.current_balance = self.paper_balance if self.mode == 'paper' else 0.0
+        self.status = "신호 대기 중 (초기화)"
+        self.balance_history = []
+        self.current_position = None
+        self.liquidation_price = 0
+        self.liquidation_profit = 0
+        self.total_roi = 0
+        self.max_history = 50
+
         # 모델 로드
         self.model_ts = 0
         self.load_models()
         self.start_scheduler()
         
         # 거래소 초기화
-        self.exchange = ccxt.binance({
+        exchange_config = {
             'apiKey': self.api_key,
             'secret': self.secret,
             'enableRateLimit': True,
             'options': {'defaultType': 'future'}
-        })
+        }
+        if self.mode == 'paper':
+            exchange_config['apiKey'] = None
+            exchange_config['secret'] = None
+            
+        self.exchange = ccxt.binance(exchange_config)
         
         # ... (기존 모드 체크)
         
         logging.info(f"봇 초기화 완료: {self.symbol} ({self.timeframe})")
+
+    # ... (start_scheduler, check_model_reload, load_models, fetch_data, get_features, predict_regime, predict_probs omitted - keep existing)
+
+    def get_position(self):
+        """현재 포지션 조회"""
+        if self.mode == 'paper':
+            return self.paper_position
+
+        try:
+            balance = self.exchange.fetch_balance()
+            positions = balance['info']['positions']
+            for pos in positions:
+                if pos['symbol'] == self.symbol.replace('/', ''):
+                    amt = float(pos['positionAmt'])
+                    if amt != 0:
+                        return {'amount': amt, 'entry': float(pos['entryPrice']), 'type': 'long' if amt > 0 else 'short'}
+            return None
+        except Exception as e:
+            logging.error(f"포지션 조회 실패: {e}")
+            return None
+
+    def execute_trade(self, signal, amount, leverage):
+        """주문 실행"""
+        if self.mode == 'paper':
+            # 1. 현재가 조회 (실제 데이터)
+            try:
+                ticker = self.exchange.fetch_ticker(self.symbol)
+                price = float(ticker['last'])
+            except:
+                price = 0 # should handle error, but simplified
+            
+            if price == 0:
+                # fetch_data 호출해서라도 가져옴
+                df = self.fetch_data(limit=1)
+                if df is not None:
+                     price = df.iloc[-1]['close']
+
+            fee_rate = 0.0005
+            trade_val = price * amount
+            fee = trade_val * fee_rate
+            self.paper_balance -= fee
+            
+            # 포지션 진입 시뮬레이션
+            if self.paper_position is None:
+                self.paper_position = {
+                    'amount': amount if signal == 'long' else -amount,
+                    'entry': price,
+                    'type': signal
+                }
+            else:
+                 # 추가 진입 (단순화: 가중평균)
+                 prev_amt = self.paper_position['amount']
+                 prev_entry = self.paper_position['entry']
+                 new_amt = amount if signal == 'long' else -amount
+                 
+                 total_amt = prev_amt + new_amt
+                 # 평단가
+                 new_entry = ((abs(prev_amt) * prev_entry) + (amount * price)) / (abs(prev_amt) + amount)
+                 
+                 self.paper_position['amount'] = total_amt
+                 self.paper_position['entry'] = new_entry
+                 self.paper_position['type'] = 'long' if total_amt > 0 else 'short'
+
+            self.current_balance = self.paper_balance
+            logging.info(f"🧪 [PAPER] 체결: {signal.upper()} {amount} @ {price} | 잔고: {self.paper_balance:.2f}")
+            return True
+        
+        try:
+            # 레버리지 설정
+            self.exchange.set_leverage(leverage, self.symbol)
+            
+            side = 'buy' if signal == 'long' else 'sell'
+            order = self.exchange.create_market_order(self.symbol, side, amount)
+            logging.info(f"✅ 주문 체결: {side} {amount} {self.symbol}")
+            return order
+        except Exception as e:
+            logging.error(f"주문 실패: {e}")
+            return None
+
+    def close_position(self):
+        """포지션 종료"""
+        pos = self.get_position()
+        if pos:
+            amount = abs(pos['amount'])
+            
+            # Paper Mode Simulation
+            if self.mode == 'paper':
+                try:
+                    ticker = self.exchange.fetch_ticker(self.symbol)
+                    price = float(ticker['last'])
+                except:
+                     return # Can't close
+
+                entry = pos['entry']
+                pnl = 0
+                if pos['type'] == 'long':
+                    pnl = (price - entry) * amount
+                else:
+                    pnl = (entry - price) * amount
+                
+                fee = (price * amount) * 0.0005
+                self.paper_balance += pnl
+                self.paper_balance -= fee
+                
+                self.paper_position = None
+                self.current_balance = self.paper_balance
+                
+                logging.info(f"🧪 [PAPER] 포지션 종료: PnL {pnl:.2f}, Fee {fee:.2f} | 잔고: {self.paper_balance:.2f}")
+                return
+
+            side = 'sell' if pos['type'] == 'long' else 'buy'
+            try:
+                self.exchange.create_market_order(self.symbol, side, amount)
+                logging.info("✅ 포지션 종료 완료")
+            except Exception as e:
+                logging.error(f"포지션 종료 실패: {e}")
 
     def start_scheduler(self):
         def job():
@@ -50,8 +218,8 @@ class LiveTradingBot:
 
     def check_model_reload(self):
         try:
-            # 5분봉 봇은 short_model.pkl (이름 주의)
-            path = 'short_model.pkl' 
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+            path = os.path.join(base_dir, 'short_model.pkl')
             if os.path.exists(path):
                 mtime = os.path.getmtime(path)
                 if mtime > self.model_ts:
@@ -63,20 +231,21 @@ class LiveTradingBot:
         """다중 모델 로드"""
         try:
             logging.info("🤖 ML 모델 로딩...")
+            base_dir = os.path.dirname(os.path.abspath(__file__))
             
-            path = 'short_model.pkl'
+            path = os.path.join(base_dir, 'short_model.pkl')
             if os.path.exists(path):
                 self.model_ts = os.path.getmtime(path)
                 
-            self.short_model_data = joblib.load('short_model.pkl')
-            self.long_model_data = joblib.load('long_model.pkl')
-            self.regime_model_data = joblib.load('regime_model.pkl')
+            self.short_model_data = joblib.load(os.path.join(base_dir, 'short_model.pkl'))
+            self.long_model_data = joblib.load(os.path.join(base_dir, 'long_model.pkl'))
+            self.regime_model_data = joblib.load(os.path.join(base_dir, 'regime_model.pkl'))
             
             self.short_model = self.short_model_data['model']
             self.long_model = self.long_model_data['model']
             self.regime_model = self.regime_model_data['model']
             
-            logging.info(f"   Short 모델 정확도: {self.short_model_data.get('accuracy', 0)*100:.1f}%") # get 처리
+            logging.info(f"   Short 모델 정확도: {self.short_model_data.get('accuracy', 0)*100:.1f}%")
             logging.info(f"   Long 모델 정확도: {self.long_model_data.get('accuracy', 0)*100:.1f}%")
             logging.info(f"   Regime 모델 정확도: {self.regime_model_data.get('accuracy', 0)*100:.1f}%")
         except Exception as e:
@@ -88,6 +257,13 @@ class LiveTradingBot:
         """데이터 수집 및 전처리"""
         try:
             ohlcv = self.exchange.fetch_ohlcv(self.symbol, timeframe=self.timeframe, limit=limit)
+            
+            # 차트용 데이터 저장 (최근 100개만)
+            self.recent_candles = [
+                {'x': item[0], 'y': [item[1], item[2], item[3], item[4]]}
+                for item in ohlcv[-100:]
+            ]
+
             df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
             df['datetime'] = pd.to_datetime(df['timestamp'], unit='ms')
             
@@ -189,15 +365,28 @@ class LiveTradingBot:
                 except Exception as e:
                     logging.error(f"포지션 종료 실패: {e}")
 
+    def wait_while_running(self, seconds):
+        for _ in range(seconds):
+            if not self.is_running:
+                return
+            time.sleep(1)
+
     def run(self):
         logging.info("🚀 라이브 트레이딩 봇 시작 (다중 ML 모델)")
+        self.status = "신호 대기 중 (시작)"
+        self.is_running = True
         
-        while True:
+        while self.is_running:
             try:
+                from datetime import datetime
+                self.last_run = datetime.now()
+                
+                self.status = "신호 대기 중 (데이터 수집)"
                 # 1. 데이터 수집
                 df = self.fetch_data()
                 if df is None:
-                    time.sleep(60)
+                    self.status = "오류 (데이터 수집 실패)"
+                    self.wait_while_running(60)
                     continue
                 
                 current = df.iloc[-1]
@@ -212,6 +401,12 @@ class LiveTradingBot:
                 
                 settings_name = settings.get('name', 'UNKNOWN')
                 logging.info(f"📊 현재 시장 레짐: {settings_name} (가격: {price:,.2f})")
+                
+                # Update Status for Manager
+                if position:
+                     self.status = f"포지션 보유 중 ({position.get('type','').upper()})"
+                else:
+                     self.status = "신호 대기 중"
                 
                 if position:
                     logging.info(f"🔥 포지션 보유 중: {position['type']} {position['amount']}")
@@ -258,14 +453,18 @@ class LiveTradingBot:
                 # 모델 업데이트 체크
                 self.check_model_reload()
                 
-                time.sleep(300)  # 5분 대기
+                self.wait_while_running(300)  # 5분 대기
                 
             except KeyboardInterrupt:
                 logging.info("⏹️ 봇 중지")
                 break
             except Exception as e:
                 logging.error(f"예기치 않은 오류: {e}")
-                time.sleep(60)
+                self.status = f"오류 ({str(e)[:20]}...)"
+                self.wait_while_running(60)
+        
+        self.status = "Stopped"
+        logging.info("5M Bot Stopped Loop.")
 
 if __name__ == "__main__":
     bot = LiveTradingBot()
