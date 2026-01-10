@@ -14150,3 +14150,487 @@
 2026-01-10 10:08:33,727 - 📊 Status | Price: 90,614.0 | Pos: NONE | Balance: 100.00 USDT
 2026-01-10 10:08:43,820 - Price: 90614.00 | RSI2: 57.17 | Trend: DOWN | No signal
 2026-01-10 10:08:46,628 - 📊 Status | Price: 90,625.5 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:08:54,104 - Price: 90625.50 | RSI2: 69.20 | Trend: DOWN | No signal
+2026-01-10 10:08:56,897 - 📊 Status | Price: 90,625.5 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:09:04,347 - Price: 90625.50 | RSI2: 69.20 | Trend: DOWN | No signal
+2026-01-10 10:09:08,228 - 📊 Status | Price: 90,628.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:09:14,536 - Price: 90632.90 | RSI2: 73.92 | Trend: DOWN | No signal
+2026-01-10 10:09:17,616 - Fetching data...
+2026-01-10 10:09:17,622 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:09:19,429 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:09:19,440 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:09:19,442 - 숏 모델 예측 확률: 14.65%
+2026-01-10 10:09:21,038 - 📊 Status | Price: 90,631.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:09:24,686 - Price: 90631.80 | RSI2: 73.31 | Trend: DOWN | No signal
+2026-01-10 10:09:33,097 - 📊 Status | Price: 90,632.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:09:34,826 - Price: 90632.80 | RSI2: 73.86 | Trend: DOWN | No signal
+2026-01-10 10:09:44,877 - 📊 Status | Price: 90,632.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:09:44,970 - Price: 90632.80 | RSI2: 73.86 | Trend: DOWN | No signal
+2026-01-10 10:09:55,128 - Price: 90624.20 | RSI2: 68.19 | Trend: DOWN | No signal
+2026-01-10 10:09:57,447 - 📊 Status | Price: 90,624.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:10:05,304 - Price: 90622.20 | RSI2: 66.50 | Trend: DOWN | No signal
+2026-01-10 10:10:08,956 - 📊 Status | Price: 90,622.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:10:15,531 - Price: 90622.20 | RSI2: 66.50 | Trend: DOWN | No signal
+2026-01-10 10:10:20,140 - 📊 Status | Price: 90,622.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:10:20,716 - Fetching data...
+2026-01-10 10:10:20,717 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:10:22,719 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:10:22,723 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:10:22,725 - 숏 모델 예측 확률: 14.54%
+2026-01-10 10:10:25,810 - Price: 90622.10 | RSI2: 66.41 | Trend: DOWN | No signal
+2026-01-10 10:10:31,715 - 📊 Status | Price: 90,622.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:10:36,143 - Price: 90622.10 | RSI2: 66.41 | Trend: DOWN | No signal
+2026-01-10 10:10:43,783 - 📊 Status | Price: 90,622.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:10:46,276 - Price: 90622.20 | RSI2: 66.50 | Trend: DOWN | No signal
+2026-01-10 10:10:54,717 - 📊 Status | Price: 90,622.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:10:56,433 - Price: 90622.20 | RSI2: 66.50 | Trend: DOWN | No signal
+2026-01-10 10:11:05,864 - 📊 Status | Price: 90,622.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:11:06,636 - Price: 90622.20 | RSI2: 66.50 | Trend: DOWN | No signal
+2026-01-10 10:11:16,813 - Price: 90622.20 | RSI2: 66.50 | Trend: DOWN | No signal
+2026-01-10 10:11:17,491 - 📊 Status | Price: 90,622.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:11:24,178 - Fetching data...
+2026-01-10 10:11:24,178 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:11:25,542 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:11:25,547 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:11:25,551 - 숏 모델 예측 확률: 15.67%
+2026-01-10 10:11:27,000 - Price: 90600.10 | RSI2: 27.33 | Trend: DOWN | No signal
+2026-01-10 10:11:29,371 - 📊 Status | Price: 90,600.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:11:37,389 - Price: 90598.00 | RSI2: 24.88 | Trend: DOWN | No signal
+2026-01-10 10:11:40,566 - 📊 Status | Price: 90,594.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:11:47,538 - Price: 90594.00 | RSI2: 21.25 | Trend: DOWN | No signal
+2026-01-10 10:11:51,928 - 📊 Status | Price: 90,594.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:11:57,877 - Price: 90585.80 | RSI2: 16.36 | Trend: DOWN | No signal
+2026-01-10 10:12:03,735 - 📊 Status | Price: 90,585.7 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:12:08,013 - Price: 90585.70 | RSI2: 16.32 | Trend: DOWN | No signal
+2026-01-10 10:12:15,275 - 📊 Status | Price: 90,585.7 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:12:18,192 - Price: 90585.80 | RSI2: 16.36 | Trend: DOWN | No signal
+2026-01-10 10:12:26,773 - Fetching data...
+2026-01-10 10:12:26,774 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:12:26,815 - 📊 Status | Price: 90,602.6 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:12:28,606 - Price: 90602.60 | RSI2: 30.96 | Trend: DOWN | No signal
+2026-01-10 10:12:29,233 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:12:29,236 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:12:29,239 - 숏 모델 예측 확률: 15.67%
+2026-01-10 10:12:37,713 - 📊 Status | Price: 90,606.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:12:38,837 - Price: 90606.10 | RSI2: 41.47 | Trend: DOWN | No signal
+2026-01-10 10:12:49,142 - Price: 90612.00 | RSI2: 54.05 | Trend: DOWN | No signal
+2026-01-10 10:12:49,363 - 📊 Status | Price: 90,612.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:12:59,295 - Price: 90612.00 | RSI2: 54.05 | Trend: DOWN | No signal
+2026-01-10 10:13:01,309 - 📊 Status | Price: 90,612.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:13:09,439 - Price: 90611.90 | RSI2: 53.88 | Trend: DOWN | No signal
+2026-01-10 10:13:13,300 - 📊 Status | Price: 90,612.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:13:19,591 - Price: 90613.30 | RSI2: 56.13 | Trend: DOWN | No signal
+2026-01-10 10:13:24,089 - 📊 Status | Price: 90,613.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:13:29,878 - Price: 90613.20 | RSI2: 55.98 | Trend: DOWN | No signal
+2026-01-10 10:13:30,471 - Fetching data...
+2026-01-10 10:13:30,471 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:13:32,581 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:13:32,585 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:13:32,587 - 숏 모델 예측 확률: 15.44%
+2026-01-10 10:13:35,810 - 📊 Status | Price: 90,613.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:13:40,232 - Price: 90613.20 | RSI2: 55.98 | Trend: DOWN | No signal
+2026-01-10 10:13:46,366 - 📊 Status | Price: 90,613.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:13:50,439 - Price: 90613.20 | RSI2: 55.98 | Trend: DOWN | No signal
+2026-01-10 10:13:57,174 - 📊 Status | Price: 90,626.4 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:14:00,744 - Price: 90626.40 | RSI2: 69.86 | Trend: DOWN | No signal
+2026-01-10 10:14:07,750 - 📊 Status | Price: 90,639.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:14:10,887 - Price: 90639.00 | RSI2: 76.84 | Trend: DOWN | No signal
+2026-01-10 10:14:18,881 - 📊 Status | Price: 90,639.4 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:14:21,073 - Price: 90639.50 | RSI2: 77.05 | Trend: DOWN | No signal
+2026-01-10 10:14:30,782 - 📊 Status | Price: 90,639.5 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:14:31,284 - Price: 90639.50 | RSI2: 77.05 | Trend: DOWN | No signal
+2026-01-10 10:14:33,914 - Fetching data...
+2026-01-10 10:14:33,914 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:14:35,783 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:14:35,798 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:14:35,817 - 숏 모델 예측 확률: 15.16%
+2026-01-10 10:14:41,642 - Price: 90644.90 | RSI2: 79.10 | Trend: DOWN | No signal
+2026-01-10 10:14:41,755 - 📊 Status | Price: 90,644.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:14:51,940 - Price: 90645.00 | RSI2: 79.14 | Trend: DOWN | No signal
+2026-01-10 10:14:54,625 - 📊 Status | Price: 90,647.7 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:15:02,128 - Price: 90647.70 | RSI2: 80.03 | Trend: DOWN | No signal
+2026-01-10 10:15:06,367 - 📊 Status | Price: 90,653.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:15:12,285 - Price: 90653.00 | RSI2: 82.90 | Trend: DOWN | No signal
+2026-01-10 10:15:16,429 - 📊 Status | Price: 90,652.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:15:22,484 - Price: 90652.90 | RSI2: 82.85 | Trend: DOWN | No signal
+2026-01-10 10:15:26,797 - 📊 Status | Price: 90,652.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:15:32,704 - Price: 90652.90 | RSI2: 82.85 | Trend: DOWN | No signal
+2026-01-10 10:15:37,181 - Fetching data...
+2026-01-10 10:15:37,181 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:15:37,872 - 📊 Status | Price: 90,652.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:15:38,918 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:15:38,927 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:15:38,930 - 숏 모델 예측 확률: 15.05%
+2026-01-10 10:15:42,866 - Price: 90652.90 | RSI2: 82.85 | Trend: DOWN | No signal
+2026-01-10 10:15:48,984 - 📊 Status | Price: 90,652.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:15:53,049 - Price: 90658.90 | RSI2: 85.26 | Trend: DOWN | No signal
+2026-01-10 10:16:00,106 - 📊 Status | Price: 90,659.7 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:16:03,184 - Price: 90669.70 | RSI2: 88.23 | Trend: DOWN | No signal
+2026-01-10 10:16:11,388 - 📊 Status | Price: 90,674.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:16:13,340 - Price: 90674.90 | RSI2: 89.27 | Trend: DOWN | No signal
+2026-01-10 10:16:22,057 - 📊 Status | Price: 90,679.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:16:23,566 - Price: 90679.00 | RSI2: 89.97 | Trend: DOWN | No signal
+2026-01-10 10:16:33,197 - 📊 Status | Price: 90,679.6 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:16:33,706 - Price: 90679.70 | RSI2: 90.08 | Trend: DOWN | No signal
+2026-01-10 10:16:40,419 - Fetching data...
+2026-01-10 10:16:40,419 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:16:42,626 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:16:42,630 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:16:42,633 - 숏 모델 예측 확률: 13.89%
+2026-01-10 10:16:43,873 - Price: 90679.60 | RSI2: 90.07 | Trend: DOWN | No signal
+2026-01-10 10:16:44,755 - 📊 Status | Price: 90,679.6 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:16:54,080 - Price: 90669.50 | RSI2: 88.19 | Trend: DOWN | No signal
+2026-01-10 10:16:57,401 - 📊 Status | Price: 90,669.5 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:17:04,566 - Price: 90670.20 | RSI2: 88.34 | Trend: DOWN | No signal
+2026-01-10 10:17:08,570 - 📊 Status | Price: 90,670.3 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:17:14,705 - Price: 90674.10 | RSI2: 89.12 | Trend: DOWN | No signal
+2026-01-10 10:17:19,330 - 📊 Status | Price: 90,674.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:17:24,884 - Price: 90674.20 | RSI2: 89.14 | Trend: DOWN | No signal
+2026-01-10 10:17:29,671 - 📊 Status | Price: 90,677.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:17:35,260 - Price: 90677.40 | RSI2: 89.71 | Trend: DOWN | No signal
+2026-01-10 10:17:40,132 - 📊 Status | Price: 90,681.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:17:44,356 - Fetching data...
+2026-01-10 10:17:44,356 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:17:45,483 - Price: 90681.00 | RSI2: 90.28 | Trend: DOWN | No signal
+2026-01-10 10:17:46,451 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:17:46,455 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:17:46,457 - 숏 모델 예측 확률: 13.86%
+2026-01-10 10:17:53,376 - 📊 Status | Price: 90,687.7 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:17:55,631 - Price: 90687.70 | RSI2: 91.19 | Trend: DOWN | No signal
+2026-01-10 10:18:05,813 - 📊 Status | Price: 90,687.7 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:18:05,862 - Price: 90687.70 | RSI2: 91.19 | Trend: DOWN | No signal
+2026-01-10 10:18:16,223 - Price: 90687.60 | RSI2: 91.18 | Trend: DOWN | No signal
+2026-01-10 10:18:18,303 - 📊 Status | Price: 90,687.7 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:18:26,481 - Price: 90689.20 | RSI2: 91.37 | Trend: DOWN | No signal
+2026-01-10 10:18:29,179 - 📊 Status | Price: 90,689.3 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:18:36,803 - Price: 90700.20 | RSI2: 92.50 | Trend: DOWN | No signal
+2026-01-10 10:18:40,347 - 📊 Status | Price: 90,669.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:18:47,034 - Price: 90664.00 | RSI2: 86.83 | Trend: DOWN | No signal
+2026-01-10 10:18:47,900 - Fetching data...
+2026-01-10 10:18:47,901 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:18:49,691 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:18:49,717 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:18:49,720 - 숏 모델 예측 확률: 15.05%
+2026-01-10 10:18:52,208 - 📊 Status | Price: 90,655.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:18:57,173 - Price: 90655.00 | RSI2: 83.78 | Trend: DOWN | No signal
+2026-01-10 10:19:04,171 - 📊 Status | Price: 90,655.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:19:07,429 - Price: 90655.00 | RSI2: 83.78 | Trend: DOWN | No signal
+2026-01-10 10:19:16,385 - 📊 Status | Price: 90,655.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:19:17,660 - Price: 90655.10 | RSI2: 83.82 | Trend: DOWN | No signal
+2026-01-10 10:19:26,645 - 📊 Status | Price: 90,655.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:19:27,797 - Price: 90655.00 | RSI2: 83.78 | Trend: DOWN | No signal
+2026-01-10 10:19:37,944 - Price: 90648.00 | RSI2: 80.22 | Trend: DOWN | No signal
+2026-01-10 10:19:38,379 - 📊 Status | Price: 90,648.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:19:48,097 - Price: 90651.00 | RSI2: 81.92 | Trend: DOWN | No signal
+2026-01-10 10:19:50,329 - 📊 Status | Price: 90,651.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:19:51,053 - Fetching data...
+2026-01-10 10:19:51,054 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:19:53,058 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:19:53,073 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:19:53,083 - 숏 모델 예측 확률: 15.19%
+2026-01-10 10:19:58,376 - Price: 90651.10 | RSI2: 81.97 | Trend: DOWN | No signal
+2026-01-10 10:20:01,671 - 📊 Status | Price: 90,651.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:20:08,519 - Price: 90645.30 | RSI2: 74.38 | Trend: DOWN | No signal
+2026-01-10 10:20:14,016 - 📊 Status | Price: 90,645.3 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:20:18,741 - Price: 90645.30 | RSI2: 74.38 | Trend: DOWN | No signal
+2026-01-10 10:20:24,854 - 📊 Status | Price: 90,645.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:20:28,960 - Price: 90645.20 | RSI2: 74.16 | Trend: DOWN | No signal
+2026-01-10 10:20:37,015 - 📊 Status | Price: 90,645.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:20:39,257 - Price: 90645.90 | RSI2: 75.71 | Trend: DOWN | No signal
+2026-01-10 10:20:47,667 - 📊 Status | Price: 90,647.4 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:20:49,489 - Price: 90647.40 | RSI2: 79.28 | Trend: DOWN | No signal
+2026-01-10 10:20:54,396 - Fetching data...
+2026-01-10 10:20:54,397 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:20:56,059 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:20:56,062 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:20:56,065 - 숏 모델 예측 확률: 15.03%
+2026-01-10 10:20:59,780 - Price: 90651.00 | RSI2: 81.92 | Trend: DOWN | No signal
+2026-01-10 10:21:00,039 - 📊 Status | Price: 90,651.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:21:09,935 - Price: 90665.00 | RSI2: 87.10 | Trend: DOWN | No signal
+2026-01-10 10:21:11,727 - 📊 Status | Price: 90,665.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:21:20,083 - Price: 90665.10 | RSI2: 87.13 | Trend: DOWN | No signal
+2026-01-10 10:21:23,598 - 📊 Status | Price: 90,675.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:21:30,219 - Price: 90677.00 | RSI2: 89.64 | Trend: DOWN | No signal
+2026-01-10 10:21:33,838 - 📊 Status | Price: 90,683.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:21:40,365 - Price: 90683.00 | RSI2: 90.57 | Trend: DOWN | No signal
+2026-01-10 10:21:45,826 - 📊 Status | Price: 90,683.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:21:50,709 - Price: 90683.00 | RSI2: 90.57 | Trend: DOWN | No signal
+2026-01-10 10:21:56,189 - 📊 Status | Price: 90,683.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:21:57,403 - Fetching data...
+2026-01-10 10:21:57,403 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:21:59,138 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:21:59,143 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:21:59,146 - 숏 모델 예측 확률: 13.74%
+2026-01-10 10:22:00,861 - Price: 90683.10 | RSI2: 90.59 | Trend: DOWN | No signal
+2026-01-10 10:22:08,329 - 📊 Status | Price: 90,683.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:22:11,111 - Price: 90683.00 | RSI2: 90.57 | Trend: DOWN | No signal
+2026-01-10 10:22:18,650 - 📊 Status | Price: 90,683.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:22:21,282 - Price: 90683.10 | RSI2: 90.59 | Trend: DOWN | No signal
+2026-01-10 10:22:28,883 - 📊 Status | Price: 90,691.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:22:31,421 - Price: 90691.00 | RSI2: 91.58 | Trend: DOWN | No signal
+2026-01-10 10:22:40,944 - 📊 Status | Price: 90,676.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:22:41,626 - Price: 90676.00 | RSI2: 89.47 | Trend: DOWN | No signal
+2026-01-10 10:22:51,844 - Price: 90615.10 | RSI2: 39.37 | Trend: DOWN | No signal
+2026-01-10 10:22:53,789 - 📊 Status | Price: 90,614.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:23:00,551 - Fetching data...
+2026-01-10 10:23:00,552 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:23:01,998 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:23:02,006 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:23:02,015 - 숏 모델 예측 확률: 14.24%
+2026-01-10 10:23:02,018 - Price: 90624.20 | RSI2: 45.88 | Trend: DOWN | No signal
+2026-01-10 10:23:05,196 - 📊 Status | Price: 90,624.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:23:12,339 - Price: 90624.20 | RSI2: 45.88 | Trend: DOWN | No signal
+2026-01-10 10:23:16,190 - 📊 Status | Price: 90,624.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:23:22,606 - Price: 90624.30 | RSI2: 45.96 | Trend: DOWN | No signal
+2026-01-10 10:23:28,135 - 📊 Status | Price: 90,626.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:23:32,744 - Price: 90630.20 | RSI2: 51.49 | Trend: DOWN | No signal
+2026-01-10 10:23:39,983 - 📊 Status | Price: 90,630.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:23:42,894 - Price: 90630.20 | RSI2: 51.49 | Trend: DOWN | No signal
+2026-01-10 10:23:50,580 - 📊 Status | Price: 90,630.3 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:23:53,100 - Price: 90630.30 | RSI2: 51.59 | Trend: DOWN | No signal
+2026-01-10 10:24:02,745 - 📊 Status | Price: 90,641.5 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:24:03,446 - Price: 90641.50 | RSI2: 66.89 | Trend: DOWN | No signal
+2026-01-10 10:24:03,533 - Fetching data...
+2026-01-10 10:24:03,534 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:24:05,876 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:24:05,894 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:24:05,903 - 숏 모델 예측 확률: 14.84%
+2026-01-10 10:24:13,593 - Price: 90636.00 | RSI2: 58.39 | Trend: DOWN | No signal
+2026-01-10 10:24:15,360 - 📊 Status | Price: 90,634.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:24:24,021 - Price: 90634.10 | RSI2: 55.93 | Trend: DOWN | No signal
+2026-01-10 10:24:27,024 - 📊 Status | Price: 90,634.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:24:34,188 - Price: 90632.00 | RSI2: 53.45 | Trend: DOWN | No signal
+2026-01-10 10:24:38,440 - 📊 Status | Price: 90,632.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:24:44,428 - Price: 90632.10 | RSI2: 53.56 | Trend: DOWN | No signal
+2026-01-10 10:24:49,172 - 📊 Status | Price: 90,632.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:24:54,766 - Price: 90632.10 | RSI2: 53.56 | Trend: DOWN | No signal
+2026-01-10 10:24:59,872 - 📊 Status | Price: 90,632.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:25:04,983 - Price: 90643.90 | RSI2: 71.43 | Trend: DOWN | No signal
+2026-01-10 10:25:07,089 - Fetching data...
+2026-01-10 10:25:07,089 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:25:08,752 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:25:08,777 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:25:08,791 - 숏 모델 예측 확률: 14.84%
+2026-01-10 10:25:12,052 - 📊 Status | Price: 90,643.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:25:15,241 - Price: 90644.00 | RSI2: 71.63 | Trend: DOWN | No signal
+2026-01-10 10:25:22,512 - 📊 Status | Price: 90,644.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:25:25,460 - Price: 90644.00 | RSI2: 71.63 | Trend: DOWN | No signal
+2026-01-10 10:25:34,145 - 📊 Status | Price: 90,646.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:25:35,642 - Price: 90646.90 | RSI2: 78.05 | Trend: DOWN | No signal
+2026-01-10 10:25:45,796 - Price: 90646.90 | RSI2: 78.05 | Trend: DOWN | No signal
+2026-01-10 10:25:46,510 - 📊 Status | Price: 90,646.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:25:55,977 - Price: 90646.90 | RSI2: 78.05 | Trend: DOWN | No signal
+2026-01-10 10:25:58,659 - 📊 Status | Price: 90,649.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:26:06,114 - Price: 90649.70 | RSI2: 81.22 | Trend: DOWN | No signal
+2026-01-10 10:26:09,968 - Fetching data...
+2026-01-10 10:26:09,968 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:26:10,648 - 📊 Status | Price: 90,649.7 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:26:11,452 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:26:11,456 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:26:11,459 - 숏 모델 예측 확률: 15.00%
+2026-01-10 10:26:16,280 - Price: 90649.70 | RSI2: 81.22 | Trend: DOWN | No signal
+2026-01-10 10:26:21,047 - 📊 Status | Price: 90,649.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:26:26,521 - Price: 90655.00 | RSI2: 83.78 | Trend: DOWN | No signal
+2026-01-10 10:26:32,370 - 📊 Status | Price: 90,661.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:26:36,755 - Price: 90661.00 | RSI2: 85.95 | Trend: DOWN | No signal
+2026-01-10 10:26:44,146 - 📊 Status | Price: 90,661.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:26:46,905 - Price: 90661.10 | RSI2: 85.98 | Trend: DOWN | No signal
+2026-01-10 10:26:54,802 - 📊 Status | Price: 90,661.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:26:57,170 - Price: 90661.10 | RSI2: 85.98 | Trend: DOWN | No signal
+2026-01-10 10:27:06,632 - 📊 Status | Price: 90,661.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:27:07,361 - Price: 90661.00 | RSI2: 85.95 | Trend: DOWN | No signal
+2026-01-10 10:27:12,896 - Fetching data...
+2026-01-10 10:27:12,896 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:27:14,838 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:27:14,842 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:27:14,845 - 숏 모델 예측 확률: 13.27%
+2026-01-10 10:27:17,506 - Price: 90661.10 | RSI2: 85.98 | Trend: DOWN | No signal
+2026-01-10 10:27:17,585 - 📊 Status | Price: 90,661.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:27:27,686 - Price: 90661.10 | RSI2: 85.98 | Trend: DOWN | No signal
+2026-01-10 10:27:28,773 - 📊 Status | Price: 90,661.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:27:37,846 - Price: 90661.00 | RSI2: 85.95 | Trend: DOWN | No signal
+2026-01-10 10:27:42,333 - 📊 Status | Price: 90,661.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:27:48,063 - Price: 90652.00 | RSI2: 82.42 | Trend: DOWN | No signal
+2026-01-10 10:27:53,860 - 📊 Status | Price: 90,650.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:27:58,226 - Price: 90650.80 | RSI2: 81.81 | Trend: DOWN | No signal
+2026-01-10 10:28:04,783 - 📊 Status | Price: 90,650.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:28:08,458 - Price: 90650.80 | RSI2: 81.81 | Trend: DOWN | No signal
+2026-01-10 10:28:16,266 - Fetching data...
+2026-01-10 10:28:16,267 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:28:17,497 - 📊 Status | Price: 90,650.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:28:17,753 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:28:17,757 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:28:17,759 - 숏 모델 예측 확률: 15.00%
+2026-01-10 10:28:18,763 - Price: 90656.80 | RSI2: 84.50 | Trend: DOWN | No signal
+2026-01-10 10:28:29,144 - Price: 90659.00 | RSI2: 85.29 | Trend: DOWN | No signal
+2026-01-10 10:28:29,856 - 📊 Status | Price: 90,659.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:28:39,291 - Price: 90659.00 | RSI2: 85.29 | Trend: DOWN | No signal
+2026-01-10 10:28:40,251 - 📊 Status | Price: 90,659.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:28:49,504 - Price: 90659.00 | RSI2: 85.29 | Trend: DOWN | No signal
+2026-01-10 10:28:52,216 - 📊 Status | Price: 90,659.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:28:59,733 - Price: 90661.20 | RSI2: 86.01 | Trend: DOWN | No signal
+2026-01-10 10:29:05,334 - 📊 Status | Price: 90,661.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:29:09,944 - Price: 90661.20 | RSI2: 86.01 | Trend: DOWN | No signal
+2026-01-10 10:29:16,117 - 📊 Status | Price: 90,668.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:29:18,881 - Fetching data...
+2026-01-10 10:29:18,886 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:29:20,458 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:29:20,463 - Price: 90668.80 | RSI2: 88.03 | Trend: DOWN | No signal
+2026-01-10 10:29:20,464 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:29:20,466 - 숏 모델 예측 확률: 17.10%
+2026-01-10 10:29:26,407 - 📊 Status | Price: 90,668.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:29:30,622 - Price: 90668.90 | RSI2: 88.05 | Trend: DOWN | No signal
+2026-01-10 10:29:37,360 - 📊 Status | Price: 90,668.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:29:40,759 - Price: 90668.80 | RSI2: 88.03 | Trend: DOWN | No signal
+2026-01-10 10:29:50,505 - 📊 Status | Price: 90,668.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:29:50,888 - Price: 90668.80 | RSI2: 88.03 | Trend: DOWN | No signal
+2026-01-10 10:30:01,052 - Price: 90675.00 | RSI2: 89.29 | Trend: DOWN | No signal
+2026-01-10 10:30:02,472 - 📊 Status | Price: 90,675.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:30:11,420 - Price: 90687.00 | RSI2: 92.39 | Trend: DOWN | No signal
+2026-01-10 10:30:13,613 - 📊 Status | Price: 90,686.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:30:21,576 - Price: 90686.90 | RSI2: 92.37 | Trend: DOWN | No signal
+2026-01-10 10:30:21,822 - Fetching data...
+2026-01-10 10:30:21,822 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:30:24,054 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:30:24,058 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:30:24,061 - 숏 모델 예측 확률: 16.63%
+2026-01-10 10:30:25,099 - 📊 Status | Price: 90,686.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:30:31,798 - Price: 90686.90 | RSI2: 92.37 | Trend: DOWN | No signal
+2026-01-10 10:30:35,601 - 📊 Status | Price: 90,686.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:30:41,950 - Price: 90686.90 | RSI2: 92.37 | Trend: DOWN | No signal
+2026-01-10 10:30:46,485 - 📊 Status | Price: 90,686.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:30:52,106 - Price: 90686.90 | RSI2: 92.37 | Trend: DOWN | No signal
+2026-01-10 10:30:56,680 - 📊 Status | Price: 90,686.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:31:02,269 - Price: 90686.90 | RSI2: 92.37 | Trend: DOWN | No signal
+2026-01-10 10:31:07,882 - 📊 Status | Price: 90,678.6 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:31:12,695 - Price: 90676.00 | RSI2: 89.64 | Trend: DOWN | No signal
+2026-01-10 10:31:18,805 - 📊 Status | Price: 90,678.6 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:31:22,857 - Price: 90674.90 | RSI2: 88.99 | Trend: DOWN | No signal
+2026-01-10 10:31:25,443 - Fetching data...
+2026-01-10 10:31:25,444 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:31:27,502 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:31:27,506 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:31:27,508 - 숏 모델 예측 확률: 15.97%
+2026-01-10 10:31:28,879 - 📊 Status | Price: 90,674.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:31:33,221 - Price: 90672.00 | RSI2: 81.03 | Trend: DOWN | No signal
+2026-01-10 10:31:40,070 - 📊 Status | Price: 90,672.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:31:43,484 - Price: 90668.00 | RSI2: 72.14 | Trend: DOWN | No signal
+2026-01-10 10:31:50,917 - 📊 Status | Price: 90,660.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:31:53,701 - Price: 90660.20 | RSI2: 59.42 | Trend: DOWN | No signal
+2026-01-10 10:32:02,917 - 📊 Status | Price: 90,660.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:32:03,977 - Price: 90660.20 | RSI2: 59.42 | Trend: DOWN | No signal
+2026-01-10 10:32:14,370 - 📊 Status | Price: 90,660.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:32:14,379 - Price: 90660.20 | RSI2: 59.42 | Trend: DOWN | No signal
+2026-01-10 10:32:24,535 - Price: 90660.20 | RSI2: 59.42 | Trend: DOWN | No signal
+2026-01-10 10:32:27,119 - 📊 Status | Price: 90,667.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:32:29,028 - Fetching data...
+2026-01-10 10:32:29,029 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:32:31,159 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:32:31,163 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:32:31,166 - 숏 모델 예측 확률: 14.93%
+2026-01-10 10:32:34,773 - Price: 90667.00 | RSI2: 70.21 | Trend: DOWN | No signal
+2026-01-10 10:32:39,007 - 📊 Status | Price: 90,674.5 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:32:44,981 - Price: 90677.00 | RSI2: 89.97 | Trend: DOWN | No signal
+2026-01-10 10:32:49,922 - 📊 Status | Price: 90,677.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:32:55,473 - Price: 90677.00 | RSI2: 89.97 | Trend: DOWN | No signal
+2026-01-10 10:33:02,528 - 📊 Status | Price: 90,690.3 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:33:05,612 - Price: 90690.40 | RSI2: 92.97 | Trend: DOWN | No signal
+2026-01-10 10:33:13,094 - 📊 Status | Price: 90,690.3 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:33:15,994 - Price: 90690.40 | RSI2: 92.97 | Trend: DOWN | No signal
+2026-01-10 10:33:23,739 - 📊 Status | Price: 90,690.3 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:33:26,187 - Price: 90690.40 | RSI2: 92.97 | Trend: DOWN | No signal
+2026-01-10 10:33:32,611 - Fetching data...
+2026-01-10 10:33:32,616 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:33:34,171 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:33:34,179 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:33:34,183 - 숏 모델 예측 확률: 14.94%
+2026-01-10 10:33:35,826 - 📊 Status | Price: 90,690.3 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:33:36,329 - Price: 90690.30 | RSI2: 92.95 | Trend: DOWN | No signal
+2026-01-10 10:33:46,241 - 📊 Status | Price: 90,676.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:33:46,539 - Price: 90676.00 | RSI2: 89.64 | Trend: DOWN | No signal
+2026-01-10 10:33:56,742 - Price: 90676.10 | RSI2: 89.68 | Trend: DOWN | No signal
+2026-01-10 10:33:57,432 - 📊 Status | Price: 90,676.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:34:06,935 - Price: 90690.70 | RSI2: 93.02 | Trend: DOWN | No signal
+2026-01-10 10:34:07,715 - 📊 Status | Price: 90,690.7 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:34:17,111 - Price: 90691.80 | RSI2: 93.18 | Trend: DOWN | No signal
+2026-01-10 10:34:19,055 - 📊 Status | Price: 90,691.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:34:27,245 - Price: 90691.90 | RSI2: 93.20 | Trend: DOWN | No signal
+2026-01-10 10:34:29,156 - 📊 Status | Price: 90,691.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:34:35,562 - Fetching data...
+2026-01-10 10:34:35,562 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:34:37,879 - Price: 90684.00 | RSI2: 91.80 | Trend: DOWN | No signal
+2026-01-10 10:34:37,950 - check_entry 호출됨. 현재 잔고: 100, 현재 포지션: 0
+2026-01-10 10:34:37,973 - 예측된 시장 체제: 2 (BEAR), 취할 행동: short
+2026-01-10 10:34:38,009 - 숏 모델 예측 확률: 14.82%
+2026-01-10 10:34:40,391 - 📊 Status | Price: 90,682.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:34:48,187 - Price: 90682.00 | RSI2: 91.35 | Trend: DOWN | No signal
+2026-01-10 10:34:51,308 - 📊 Status | Price: 90,682.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:34:58,559 - Price: 90682.10 | RSI2: 91.37 | Trend: DOWN | No signal
+2026-01-10 10:35:04,396 - 📊 Status | Price: 90,684.2 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:35:08,773 - Price: 90686.90 | RSI2: 92.37 | Trend: DOWN | No signal
+2026-01-10 10:35:14,821 - 📊 Status | Price: 90,681.4 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:35:18,913 - Price: 90686.90 | RSI2: 92.37 | Trend: DOWN | No signal
+2026-01-10 10:38:59,473 - Auto-starting all bots...
+2026-01-10 10:38:59,480 - Started Bot_30M
+2026-01-10 10:38:59,480 - 🚀 Bot started... Waiting for next candle.
+2026-01-10 10:38:59,481 - Started Bot_5M
+2026-01-10 10:38:59,497 - Started Bot_1H
+2026-01-10 10:38:59,497 - 🚀 Bot started... Waiting for next candle.
+2026-01-10 10:38:59,498 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:38:59,505 - Loaded .env file
+2026-01-10 10:38:59,584 - Multi-Models Loaded Successfully (XGBoost)
+2026-01-10 10:38:59,584 - Initializing Paper Trader...
+2026-01-10 10:38:59,584 - Loaded Configuration:
+2026-01-10 10:38:59,584 - Leverage: 25x
+2026-01-10 10:38:59,584 - Risk: 12.0%
+2026-01-10 10:38:59,584 - Strategy: RSI2_Trend_MeanReversion_MaxROI (RSI2 + Trend Filter)
+2026-01-10 10:38:59,584 - --------------------------------------------------
+2026-01-10 10:39:01,466 - Initializing bot data...
+2026-01-10 10:39:01,558 - Triggering Bot_30M logic for initial data...
+2026-01-10 10:39:02,674 - 🔍 Analysis | Regime: BEAR | Action: SHORT | Prob: 14.82% | Bal: 100
+2026-01-10 10:39:02,681 - Price: 90,600.0 | RSI: 53.3 | Trend: DOWN | Pos: NONE
+2026-01-10 10:39:03,651 - Price: 90715.00 | RSI2: 95.46 | Trend: DOWN | No signal
+2026-01-10 10:39:03,651 - Failed to fetch real balance: bybit requires "apiKey" credential
+2026-01-10 10:39:04,853 - Triggering Bot_1H fetch for initial data...
+2026-01-10 10:39:04,853 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:39:06,521 - Data initialization complete.
+2026-01-10 10:39:09,797 - Price: 90716.30 | RSI2: 95.54 | Trend: DOWN | No signal
+2026-01-10 10:39:11,659 - 📊 Status | Price: 90,716.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:39:13,169 - Price: 90,600.0 | RSI: 53.3 | Trend: DOWN | Pos: NONE
+2026-01-10 10:39:20,052 - Price: 90716.90 | RSI2: 95.58 | Trend: DOWN | No signal
+2026-01-10 10:39:22,753 - 📊 Status | Price: 90,716.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:39:23,426 - Price: 90,600.0 | RSI: 53.3 | Trend: DOWN | Pos: NONE
+2026-01-10 10:39:30,215 - Price: 90704.10 | RSI2: 94.61 | Trend: DOWN | No signal
+2026-01-10 10:39:33,633 - Price: 90,600.0 | RSI: 53.3 | Trend: DOWN | Pos: NONE
+2026-01-10 10:39:34,821 - 📊 Status | Price: 90,700.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:39:40,586 - Price: 90698.90 | RSI2: 94.09 | Trend: DOWN | No signal
+2026-01-10 10:39:43,804 - Price: 90,600.0 | RSI: 53.3 | Trend: DOWN | Pos: NONE
+2026-01-10 10:39:46,838 - 📊 Status | Price: 90,698.8 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:39:50,721 - Price: 90694.00 | RSI2: 93.49 | Trend: DOWN | No signal
+2026-01-10 10:39:54,013 - Price: 90,600.0 | RSI: 53.3 | Trend: DOWN | Pos: NONE
+2026-01-10 10:39:58,710 - 📊 Status | Price: 90,694.1 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:40:00,870 - Price: 90694.10 | RSI2: 93.50 | Trend: DOWN | No signal
+2026-01-10 10:40:04,303 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:40:06,875 - 🔍 Analysis | Regime: BEAR | Action: SHORT | Prob: 15.62% | Bal: 100
+2026-01-10 10:40:06,875 - Price: 90,600.0 | RSI: 53.1 | Trend: DOWN | Pos: NONE
+2026-01-10 10:40:11,203 - Price: 90694.00 | RSI2: 93.49 | Trend: DOWN | No signal
+2026-01-10 10:40:11,376 - 📊 Status | Price: 90,694.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:40:17,054 - Price: 90,600.0 | RSI: 53.1 | Trend: DOWN | Pos: NONE
+2026-01-10 10:40:21,357 - Price: 90694.00 | RSI2: 93.49 | Trend: DOWN | No signal
+2026-01-10 10:40:23,007 - 📊 Status | Price: 90,694.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:40:27,200 - Price: 90,600.0 | RSI: 53.1 | Trend: DOWN | Pos: NONE
+2026-01-10 10:40:31,511 - Price: 90694.00 | RSI2: 93.49 | Trend: DOWN | No signal
+2026-01-10 10:40:34,491 - 📊 Status | Price: 90,694.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:40:37,384 - Price: 90,600.0 | RSI: 53.1 | Trend: DOWN | Pos: NONE
+2026-01-10 10:40:41,680 - Price: 90694.00 | RSI2: 93.49 | Trend: DOWN | No signal
+2026-01-10 10:40:46,910 - 📊 Status | Price: 90,694.0 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:40:47,628 - Price: 90,600.0 | RSI: 53.1 | Trend: DOWN | Pos: NONE
+2026-01-10 10:40:51,890 - Price: 90694.00 | RSI2: 93.49 | Trend: DOWN | No signal
+2026-01-10 10:40:57,204 - 📊 Status | Price: 90,689.5 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:40:57,828 - Price: 90,600.0 | RSI: 53.1 | Trend: DOWN | Pos: NONE
+2026-01-10 10:41:02,060 - Price: 90694.00 | RSI2: 93.49 | Trend: DOWN | No signal
+2026-01-10 10:41:08,028 - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:41:09,551 - 🔍 Analysis | Regime: BEAR | Action: SHORT | Prob: 16.18% | Bal: 100
+2026-01-10 10:41:09,552 - Price: 90,600.0 | RSI: 53.2 | Trend: DOWN | Pos: NONE
+2026-01-10 10:41:09,971 - 📊 Status | Price: 90,704.9 | Pos: NONE | Balance: 100.00 USDT
+2026-01-10 10:41:12,390 - Price: 90704.90 | RSI2: 94.69 | Trend: DOWN | No signal

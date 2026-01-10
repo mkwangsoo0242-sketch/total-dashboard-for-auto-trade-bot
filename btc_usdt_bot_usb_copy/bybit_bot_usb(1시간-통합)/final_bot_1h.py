@@ -19,7 +19,7 @@ import random
 from dotenv import load_dotenv
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 log_dir = os.path.dirname(os.path.abspath(__file__))
 log_file = os.path.join(log_dir, 'bot_1h.log')
@@ -108,6 +108,9 @@ class FinalBot1H:
                 def set_leverage(self, leverage, symbol):
                     self.logger.info(f"Paper trading mode: Mocking set_leverage {leverage} for {symbol}.")
                     return True
+                    
+                def fetch_ticker(self, symbol):
+                    return {'last': 90600} # Mock price for status log
             self.exchange = MockExchange(self.balance, logger)
         
         # 전략 설정 (초공격적 - 4.1억 승리 플랜)
@@ -341,9 +344,31 @@ class FinalBot1H:
                 # self.save_state()
                 # logger.debug("Bot state saved. Waiting 60 seconds.")
                 
-                # Wait loop with frequent status checks
-                for _ in range(600):
+                # Wait loop with frequent status checks (10s log)
+                for i in range(600):
                     if not self.is_running: break
+                    
+                    if i % 100 == 0:
+                        try:
+                            # Lightweight status check
+                            ticker = self.exchange.fetch_ticker(self.symbol)
+                            current_p = ticker['last']
+                            
+                            p_str = "NONE"
+                            if self.position > 0: p_str = f"LONG"
+                            elif self.position < 0: p_str = f"SHORT"
+                            
+                            # Use last known indicators if available
+                            rsi_str = f"{row['rsi']:.1f}" if 'row' in locals() else "-"
+                            trend_val = row['ema_200'] if 'row' in locals() else 0
+                            trend_str = "UP" if current_p > trend_val else "DOWN"
+                            
+                            msg = f"Price: {current_p:,.1f} | RSI: {rsi_str} | Trend: {trend_str} | Pos: {p_str}"
+                            logger.info(msg)
+                            
+                        except Exception as e:
+                            pass
+
                     time.sleep(0.1)
 
             except KeyboardInterrupt:
@@ -419,16 +444,17 @@ class FinalBot1H:
             logger.debug("포지션 초기화 완료.")
 
     def check_entry(self, df, row):
-        logger.debug(f"check_entry 호출됨. 현재 잔고: {self.balance}, 현재 포지션: {self.position}")
+        # logger.debug(f"check_entry 호출됨. 현재 잔고: {self.balance}, 현재 포지션: {self.position}")
         input_data = pd.DataFrame([row])
         try:
             regime = int(self.regime_model.predict(input_data[self.regime_model_data['features']])[0])
             cfg = self.regime_config.get(regime, {'action': 'skip'})
             action = cfg['action']
-            logger.debug(f"예측된 시장 체제: {regime} ({cfg['name']}), 취할 행동: {action}")
+            regime_name = cfg['name']
+            # logger.debug(f"예측된 시장 체제: {regime} ({cfg['name']}), 취할 행동: {action}")
             
             if action == 'skip':
-                logger.debug("시장 체제 'SKIP'으로 인해 진입 건너뜀.")
+                logger.info(f"🔍 Analysis | Regime: {regime_name} | Action: SKIP | Bal: {self.balance:.0f}")
                 return
                 
             signal = None
@@ -436,13 +462,15 @@ class FinalBot1H:
             
             if action == 'long':
                 prob = self.long_model.predict_proba(input_data[self.long_model_data['features']])[0][1]
-                logger.debug(f"롱 모델 예측 확률: {prob:.2%}")
+                # logger.debug(f"롱 모델 예측 확률: {prob:.2%}")
+                logger.info(f"🔍 Analysis | Regime: {regime_name} | Action: LONG | Prob: {prob:.2%} | Bal: {self.balance:.0f}")
                 if prob > self.threshold: 
                     signal = 'long'
                     logger.info(f"✅ 롱 진입 신호 발생! (확률: {prob:.2%}, 임계값: {self.threshold:.2%})")
             elif action == 'short':
                 prob = self.short_model.predict_proba(input_data[self.short_model_data['features']])[0][1]
-                logger.debug(f"숏 모델 예측 확률: {prob:.2%}")
+                # logger.debug(f"숏 모델 예측 확률: {prob:.2%}")
+                logger.info(f"🔍 Analysis | Regime: {regime_name} | Action: SHORT | Prob: {prob:.2%} | Bal: {self.balance:.0f}")
                 if prob > self.threshold: 
                     signal = 'short'
                     logger.info(f"✅ 숏 진입 신호 발생! (확률: {prob:.2%}, 임계값: {self.threshold:.2%})")
@@ -474,4 +502,4 @@ class FinalBot1H:
 
 if __name__ == "__main__":
     bot = FinalBot1H()
-    bot.run()
+    bot.start()

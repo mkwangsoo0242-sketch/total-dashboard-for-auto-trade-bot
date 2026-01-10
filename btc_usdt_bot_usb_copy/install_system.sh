@@ -86,6 +86,23 @@ chmod +x *.sh
 sed -i 's|nohup python3 |nohup ./venv/bin/python3 |g' start_dashboard.sh
 sed -i 's|nohup python -u |nohup ./venv/bin/python3 -u |g' start_dashboard.sh
 
+# 5.5 Setup Log Rotation
+echo "🔄 Configuring Log Rotation..."
+LOG_CONFIG="/etc/logrotate.d/trading_bot"
+cat > $LOG_CONFIG <<EOF
+$SCRIPT_DIR/*.log $SCRIPT_DIR/*/*.log {
+    daily
+    missingok
+    rotate 7
+    compress
+    delaycompress
+    notifempty
+    create 640 root root
+    copytruncate
+}
+EOF
+echo "   -> Log rotation configured at $LOG_CONFIG"
+
 # 6. Auto-Start Setup (Integrated)
 echo "🚀 Configuring Auto-Start Service..."
 # Update service file path
