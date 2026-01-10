@@ -1,14 +1,13 @@
 [Unit]
-Description=BTC USDT Bot Dashboard Docker Compose Service
-After=docker.service network-online.target
-Requires=docker.service network-online.target
+Description=BTC/USDT Trading Bot Dashboard Service
+After=network.target
 
 [Service]
 User=root
 Group=root
-WorkingDirectory=/home/ser1/새 폴더/btc/usdt 봇 통합관리/btc_usdt_bot_usb_copy
-ExecStart=/usr/bin/docker compose up --build
-ExecStop=/usr/bin/docker compose down
+# The setup script will replace THIS_PATH with the actual directory
+WorkingDirectory=THIS_PATH
+ExecStart=/bin/bash THIS_PATH/start_dashboard.sh
 Restart=always
 RestartSec=10
 

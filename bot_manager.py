@@ -279,6 +279,39 @@ async def stop_bot_api(name: str):
     manager.stop_bot(name)
     return {"success": True}
 
+def get_log_tail(file_path, lines=50):
+    """Read last N lines from a log file."""
+    if not os.path.exists(file_path):
+        return ["Log file not found."]
+    
+    try:
+        with open(file_path, 'r', encoding='utf-8', errors='replace') as f:
+            # Efficiently read last N lines
+            # This is a simple implementation; for very large files, 'seek' might be better
+            # but for 50 lines, reading all lines is okay-ish if file isn't massive.
+            # Ideally use collections.deque
+            from collections import deque
+            return list(deque(f, lines))
+    except Exception as e:
+        return [f"Error reading log: {e}"]
+
+@app.get("/api/logs/{name}")
+async def get_bot_logs(name: str):
+    """Return the last 50 lines of logs for the specified bot."""
+    log_map = {
+        "Bot_30M": os.path.join(BASE_DIR, "BTC_30분봉_Live", "bot.log"),
+        "Bot_5M": os.path.join(BASE_DIR, "RealTradingBot_Deployment(5분봉)", "bot.log"),
+        "Bot_1H": os.path.join(BASE_DIR, "bybit_bot_usb(1시간-통합)", "bot_1h.log"),
+        "Bot_15M": os.path.join(BASE_DIR, "deploy_package--15분봉", "bot.log"),
+    }
+    
+    path = log_map.get(name)
+    if not path:
+        return {"logs": ["Unknown bot name."]}
+        
+    logs = get_log_tail(path, lines=50)
+    return {"logs": logs}
+
 if __name__ == "__main__":
     # 서버 시작 시 모든 봇 자동 실행
     logger.info("Auto-starting all bots...")

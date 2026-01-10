@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 바이비트 실거래 봇 - 대시보드</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- TradingView Lightweight Charts (CDN) -->
+    <script src="https://unpkg.com/lightweight-charts@3.8.0/dist/lightweight-charts.standalone.production.js"></script>
+    <!-- Custom JS -->
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <header>
+            <div>
+                <h1>🏆 바이비트 실거래 봇</h1>
+                <p style="color: #8b949e; margin-top: 5px;">프로페셔널 트레이딩 대시보드 | <span id="last-updated" style="color: #79c0ff;">업데이트 중...</span></p>
+            </div>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <div id="status-badge" class="badge stopped">상태 확인 중...</div>
+                <div class="controls">
+                    <button id="startBtn" class="btn btn-success">▶ 봇 시작</button>
+                    <button id="stopBtn" class="btn btn-danger">⏹ 봇 정지</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- 알림 -->
+        <div id="alert-container"></div>
+
+        <!-- 실시간 트레이딩 상태 요약 (추가) -->
+        <div class="trading-status-bar">
+            <div class="status-item">
+                <span class="label">거래 상황:</span>
+                <span id="trading-status-msg" class="value">봇 대기 중</span>
+            </div>
+            <div class="status-item">
+                <span class="label">현재 포지션:</span>
+                <span id="current-position-display" class="value">없음</span>
+            </div>
+            <div class="status-item">
+                <span class="label">진입가:</span>
+                <span id="entry-price-display" class="value">-</span>
+            </div>
+            <div class="status-item">
+                <span class="label">종료가:</span>
+                <span id="exit-price-display" class="value">-</span>
+            </div>
+            <div class="status-item">
+                <span class="label">손절가:</span>
+                <span id="sl-price-display" class="value">-</span>
+            </div>
+        </div>
+
+        <!-- 탭 네비게이션 -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('overview', this)">📊 개요</button>
+            <button class="tab" onclick="switchTab('chart', this)">📈 차트</button>
+            <button class="tab" onclick="switchTab('trades', this)">💰 거래</button>
+            <button class="tab" onclick="switchTab('logs', this)">📋 로그</button>
+            <button class="tab" onclick="switchTab('settings', this)">⚙️ 설정</button>
+        </div>
+
+        <!-- 개요 탭 -->
+        <div id="overview-tab" class="tab-content active">
+            <div class="stats-overview">
+                <div class="stat-card-new">
+                    <h3>💰 총 수익률</h3>
+                    <div id="totalPnl" class="value positive">로딩중...</div>
+                    <div id="winLossRatio" class="change">승/패: -/-</div>
+                </div>
+                <div class="stat-card-new">
+                    <h3>📊 총 거래 수</h3>
+                    <div id="totalTrades" class="value">-</div>
+                    <div id="todayTrades" class="change">오늘: -건</div>
+                </div>
+                <div class="stat-card-new">
+                    <h3>🎯 승률</h3>
+                    <div id="winRate" class="value">-</div>
+                    <div id="avgPnl" class="change">평균: - USDT</div>
+                </div>
+                <div class="stat-card-new">
+                    <h3>💳 계좌 잔고</h3>
+                    <div id="balance" class="value">- USDT</div>
+                    <div id="balanceChange" class="change">24h: -%</div>
+                </div>
+                <div class="stat-card-new">
+                    <h3>📈 현재 가격</h3>
+                    <div id="currentPrice" class="value">- USDT</div>
+                    <div id="priceChange" class="change">24h: -%</div>
+                </div>
+                <div class="stat-card-new">
+                    <h3>🔄 복리 적용</h3>
+                    <div id="compoundCount" class="value">-회</div>
+                    <div id="compoundProfit" class="change">재투자: - USDT</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 차트 탭 -->
+        <div id="chart-tab" class="tab-content">
+            <div class="card">
+                <h2>📈 실시간 차트 - <span id="chartSymbol">BTCUSDT</span></h2>
+                <div class="chart-controls">
+                    <button onclick="changeTimeframe('1m', this)">1분</button>
+                    <button onclick="changeTimeframe('5m', this)">5분</button>
+                    <button onclick="changeTimeframe('15m', this)" class="active">15분</button>
+                    <button onclick="changeTimeframe('30m', this)">30분</button>
+                    <button onclick="changeTimeframe('1h', this)">1시간</button>
+                    <button onclick="changeTimeframe('4h', this)">4시간</button>
+                    <button onclick="changeTimeframe('1d', this)">1일</button>
+                    <button onclick="refreshChart()" style="margin-left: auto; background: var(--warning-color);">🔄 새로고침</button>
+                </div>
+                <div id="chartContainer" style="height: 450px; width: 100%; background: #0d1117;"></div>
+            </div>
+        </div>
+
+        <!-- 거래 탭 -->
+        <div id="trades-tab" class="tab-content">
+            <div class="card">
+                <h2>💰 최근 거래</h2>
+                <div style="padding: 16px 24px; display: flex; gap: 16px; border-bottom: 1px solid var(--border-color);">
+                    <button class="btn btn-secondary" onclick="filterTrades('all')" id="filterAll">전체</button>
+                    <button class="btn btn-secondary" onclick="filterTrades('profit')" id="filterProfit">수익</button>
+                    <button class="btn btn-secondary" onclick="filterTrades('loss')" id="filterLoss">손실</button>
+                </div>
+                <div id="tradesContainer" class="trades-window">
+                    <div class="no-data" style="padding: 20px; text-align: center; color: #8b949e;">
+                        아직 거래 내역이 없습니다.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 거래 통계 -->
+            <div class="card" style="margin-top: 20px;">
+                <h2>📈 상세 통계</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>최대 수익</h3>
+                        <div id="maxProfit" class="stat-value positive">+0.00 USDT</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>최대 손실</h3>
+                        <div id="maxLoss" class="stat-value negative">-0.00 USDT</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>연속 승리</h3>
+                        <div id="winStreak" class="stat-value">0회</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>연속 패배</h3>
+                        <div id="lossStreak" class="stat-value">0회</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 로그 탭 -->
+        <div id="logs-tab" class="tab-content">
+            <div class="card">
+                <h2>📋 실시간 봇 로그</h2>
+                <div style="padding: 16px 24px; display: flex; gap: 16px; border-bottom: 1px solid var(--border-color);">
+                    <button class="btn btn-secondary" onclick="filterLogs('all')">전체</button>
+                    <button class="btn btn-secondary" onclick="filterLogs('INFO')">INFO</button>
+                    <button class="btn btn-secondary" onclick="filterLogs('WARNING')">WARNING</button>
+                    <button class="btn btn-secondary" onclick="filterLogs('ERROR')">ERROR</button>
+                    <button class="btn btn-primary" onclick="refreshLogs()" style="margin-left: auto;">🔄 새로고침</button>
+                </div>
+                <div class="logs-window">
+                    <pre id="logsPre">[12:30:15] INFO: 봇 상태 확인 완료
+[12:30:10] INFO: 현재 가격: 44,650 USDT
+[12:30:05] INFO: 포지션 없음
+[12:30:00] INFO: 시장 분석 중...
+[12:29:55] INFO: 상한선: 45,200 / 하한선: 44,100</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 설정 탭 -->
+        <div id="settings-tab" class="tab-content">
+            <div class="settings-section">
+                <h3>⚙️ 거래 설정</h3>
+                <div class="setting-item">
+                    <label>심볼</label>
+                    <select id="settingSymbol">
+                        <option value="BTCUSDT">BTCUSDT</option>
+                        <option value="ETHUSDT">ETHUSDT</option>
+                        <option value="SOLUSDT">SOLUSDT</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label>레버리지</label>
+                    <input type="number" id="settingLeverage" value="2" min="1" max="100">
+                </div>
+                <div class="setting-item">
+                    <label>손절 (%)</label>
+                    <input type="number" id="settingStopLoss" value="2" step="0.1" min="0.1" max="50">
+                </div>
+                <div class="setting-item">
+                    <label>익절 (%)</label>
+                    <input type="number" id="settingTakeProfit" value="5" step="0.1" min="0.1" max="100">
+                </div>
+            </div>
+            <div class="settings-section">
+                <h3>🔄 복리 설정</h3>
+                <div class="setting-item">
+                    <label>복리 주기 (거래 수)</label>
+                    <input type="number" id="settingCompoundFreq" value="25" min="1" max="100">
+                </div>
+                <div class="setting-item">
+                    <label>재투자 비율 (%)</label>
+                    <input type="number" id="settingReinvest" value="95" min="0" max="100">
+                </div>
+            </div>
+            <div style="padding: 20px; text-align: center;">
+                <button class="btn btn-primary" onclick="saveSettings()">💾 설정 저장</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- app.js 로드 -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

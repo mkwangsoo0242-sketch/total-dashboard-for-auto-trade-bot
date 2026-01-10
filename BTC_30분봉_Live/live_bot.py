@@ -20,7 +20,7 @@ log_file = os.path.join(log_dir, 'bot.log')
 
 logger = logging.getLogger("BTC_30M_Bot")
 logger.setLevel(logging.INFO)
-logger.propagate = False  # 상위 로거로 전파 방지
+logger.propagate = True  # 상위 로거로 전파 허용 (대시보드 노출 위해)
 
 # 파일 핸들러가 없으면 추가
 has_file_handler = any(isinstance(h, logging.FileHandler) for h in logger.handlers)

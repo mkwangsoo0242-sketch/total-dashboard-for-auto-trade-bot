@@ -420,8 +420,35 @@ class LiveTradingBot:
                     logger.error(f"포지션 종료 실패: {e}")
 
     def wait_while_running(self, seconds):
-        # 0.1초씩 여러 번 대기하여 봇 중지 명령에 더 빠르게 반응
-        time.sleep(seconds)
+        # 10초마다 상태 로그 출력하며 대기
+        end_time = time.time() + seconds
+        next_log_time = time.time()
+        
+        while time.time() < end_time:
+            if not self.is_running: 
+                break
+            
+            if time.time() >= next_log_time:
+                try:
+                    ticker = self.exchange.fetch_ticker(self.symbol)
+                    current_price = ticker['last']
+                    
+                    # Position String
+                    if self.mode == 'paper':
+                        pos_str = f"{self.paper_position['type'].upper()} ({self.paper_position['amount']})" if self.paper_position else "NONE"
+                        bal = self.paper_balance
+                    else:
+                        pos = self.get_position()
+                        pos_str = f"{pos['type'].upper()} ({pos['amount']})" if pos else "NONE"
+                        bal = float(self.exchange.fetch_balance()['USDT']['total'])
+                        
+                    logger.info(f"📊 Status | Price: {current_price:,.1f} | Pos: {pos_str} | Balance: {bal:.2f} USDT")
+                except Exception as e:
+                    logger.debug(f"Status Log Error: {e}")
+                    
+                next_log_time = time.time() + 10 # 10초 주기
+
+            time.sleep(0.1)
 
     def run(self):
         logger.info("🚀 라이브 트레이딩 봇 시작 (다중 ML 모델)")

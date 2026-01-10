@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High ROI Bot Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #1e1e1e;
+            --card-bg: #252526;
+            --text-color: #d4d4d4;
+            --accent-color: #0e92eb;
+            --success-color: #4ec9b0;
+            --danger-color: #f44747;
+            --border-color: #333;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        h1, h2, h3 { margin: 0; }
+        
+        /* Status Badge */
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .status-running { background-color: var(--success-color); color: #000; }
+        .status-stopped { background-color: var(--danger-color); color: #fff; }
+
+        /* Control Buttons */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .btn-start { background-color: var(--success-color); color: #000; }
+        .btn-stop { background-color: var(--danger-color); color: #fff; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .card-title { font-size: 14px; color: #888; margin-bottom: 10px; }
+        .card-value { font-size: 24px; font-weight: bold; }
+        .value-up { color: var(--success-color); }
+        .value-down { color: var(--danger-color); }
+
+        /* Sections */
+        .section { margin-bottom: 30px; }
+        .section-header { margin-bottom: 15px; border-left: 4px solid var(--accent-color); padding-left: 10px; }
+
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { color: #888; }
+
+        /* Logs */
+        #log-container {
+            background-color: #000;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 5px;
+            height: 400px;
+            overflow-y: auto;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+        .log-line { line-height: 1.4; border-bottom: 1px solid #111; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/ansi_up@5.1.0/ansi_up.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>🤖 High ROI Bot Dashboard</h1>
+                <p style="color: #888;">Survival Mode 163x</p>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span id="bot-status" class="status-badge status-stopped">Checking...</span>
+                <button id="btn-start" class="btn btn-start" onclick="controlBot('start')">Start</button>
+                <button id="btn-stop" class="btn btn-stop" onclick="controlBot('stop')">Stop</button>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <div class="dashboard-grid">
+            <div class="card">
+                <div class="card-title">Real Wallet Balance</div>
+                <div id="stat-real-balance" class="card-value" style="color: #4ec9b0;">Checking...</div>
+            </div>
+            <!-- Paper Balance Removed -->
+            <div class="card">
+                <div class="card-title">Total ROI</div>
+                <div id="stat-roi" class="card-value">0.00%</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Win Rate</div>
+                <div id="stat-winrate" class="card-value">0.00%</div>
+            </div>
+        </div>
+
+        <!-- Active Position -->
+        <div class="section">
+            <h2 class="section-header">Active Position</h2>
+            <div class="card">
+                <div id="active-position-details">No active position</div>
+            </div>
+        </div>
+
+        <!-- Recent Trades -->
+        <div class="section">
+            <h2 class="section-header">Recent Trades</h2>
+            <div class="card" style="overflow-x: auto;">
+                <table id="trades-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Side</th>
+                            <th>Entry</th>
+                            <th>Exit</th>
+                            <th>PnL</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Trades will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Logs -->
+        <div class="section">
+            <h2 class="section-header">Live Logs</h2>
+            <div id="log-container">Loading logs...</div>
+        </div>
+    </div>
+
+    <script>
+        const ansi_up = new AnsiUp();
+        
+        // --- API Functions ---
+        async function fetchStatus() {
+            try {
+                const res = await fetch('/api/status');
+                const data = await res.json();
+                updateDashboard(data);
+            } catch (err) {
+                console.error("Status fetch error:", err);
+            }
+        }
+
+        async function fetchLogs() {
+            try {
+                const res = await fetch('/api/logs');
+                const data = await res.json();
+                const container = document.getElementById('log-container');
+                
+                if (data.logs) {
+                    container.innerHTML = '';
+                    data.logs.forEach(line => {
+                        const div = document.createElement('div');
+                        div.className = 'log-line';
+                        div.innerHTML = ansi_up.ansi_to_html(line);
+                        container.appendChild(div);
+                    });
+                }
+            } catch (err) {
+                console.error("Log fetch error:", err);
+            }
+        }
+
+        async function controlBot(action) {
+            if (!confirm(`Are you sure you want to ${action} the bot?`)) return;
+            
+            try {
+                const res = await fetch('/api/control', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action })
+                });
+                const data = await res.json();
+                alert(data.message);
+                fetchStatus(); // Refresh immediately
+            } catch (err) {
+                alert("Error: " + err);
+            }
+        }
+
+        // --- UI Update Logic ---
+        function updateDashboard(data) {
+            // 1. Bot Status
+            const statusBadge = document.getElementById('bot-status');
+            const btnStart = document.getElementById('btn-start');
+            const btnStop = document.getElementById('btn-stop');
+
+            if (data.running) {
+                statusBadge.textContent = "Working";
+                statusBadge.className = "status-badge status-running";
+                btnStart.disabled = true;
+                btnStop.disabled = false;
+            } else {
+                statusBadge.textContent = "Stopped";
+                statusBadge.className = "status-badge status-stopped";
+                btnStart.disabled = false;
+                btnStop.disabled = true;
+            }
+
+            // 2. Stats (from trade_data)
+            const tradeData = data.trade_data || {};
+            const balance = tradeData.balance || 1000.0;
+            const history = tradeData.trade_history || [];
+            
+            // Calculate Stats
+            const startBalance = tradeData.start_balance || 1000.0;
+            const roi = ((balance - startBalance) / startBalance) * 100;
+            const wins = history.filter(t => t.pnl > 0).length;
+            const winRate = history.length > 0 ? (wins / history.length) * 100 : 0;
+
+            const realBalanceData = data.real_balance || { balance: 0.0, currency: 'USDT' };
+            document.getElementById('stat-real-balance').textContent = `${realBalanceData.balance.toFixed(2)} ${realBalanceData.currency}`;
+            // document.getElementById('stat-balance').textContent = `${balance.toFixed(2)} USDT`;
+            
+            const roiEl = document.getElementById('stat-roi');
+            roiEl.textContent = `${roi.toFixed(2)}%`;
+            roiEl.className = `card-value ${roi >= 0 ? 'value-up' : 'value-down'}`;
+
+            document.getElementById('stat-winrate').textContent = `${winRate.toFixed(1)}%`;
+            // document.getElementById('stat-trades').textContent = history.length;
+
+            // 3. Active Position
+            const pos = tradeData.position;
+            const posContainer = document.getElementById('active-position-details');
+            if (pos) {
+                posContainer.innerHTML = `
+                    <div style="display: flex; gap: 20px;">
+                        <div><strong>Side:</strong> <span style="color: ${pos.side === 'buy' ? '#4ec9b0' : '#f44747'}">${pos.side.toUpperCase()}</span></div>
+                        <div><strong>Entry:</strong> ${pos.entry_price.toFixed(2)} USDT</div>
+                        <div><strong>Size:</strong> ${pos.amount.toFixed(4)}</div>
+                        <div><strong>SL:</strong> ${pos.stop_loss.toFixed(2)} USDT</div>
+                        <div><strong>TP:</strong> ${pos.take_profit.toFixed(2)} USDT</div>
+                    </div>
+                `;
+            } else {
+                posContainer.textContent = "No active position. Scanning market...";
+            }
+
+            // 4. Recent Trades Table
+            const tableBody = document.querySelector('#trades-table tbody');
+            tableBody.innerHTML = '';
+            // Show last 5 trades
+            history.slice().reverse().slice(0, 5).forEach(t => {
+                const row = document.createElement('row');
+                const pnlClass = t.pnl >= 0 ? 'value-up' : 'value-down';
+                tableBody.innerHTML += `
+                    <tr>
+                        <td>${t.exit_time.split('T')[1].split('.')[0]}</td>
+                        <td style="color: ${t.side === 'buy' ? '#4ec9b0' : '#f44747'}">${t.side.toUpperCase()}</td>
+                        <td>${t.entry_price.toFixed(2)}</td>
+                        <td>${t.exit_price.toFixed(2)}</td>
+                        <td class="${pnlClass}">${t.pnl.toFixed(2)}</td>
+                        <td>${t.reason}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        // --- Init ---
+        setInterval(fetchStatus, 2000); // Check status every 2s
+        setInterval(fetchLogs, 2000);   // Check logs every 2s
+        fetchStatus();
+        fetchLogs();
+    </script>
+</body>
+</html>

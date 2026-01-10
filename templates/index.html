@@ -156,6 +156,55 @@
             } catch (e) { console.error("Control Failed:", e); }
         }
 
+        let logInterval = null;
+
+        // Log Modal Logic
+        async function showLogs(name) {
+            const modal = document.getElementById('log-modal');
+            const logContent = document.getElementById('log-content');
+            const modalTitle = document.getElementById('log-modal-title');
+
+            modalTitle.innerText = `${name} Logs`;
+            logContent.innerText = "Loading logs...";
+            modal.classList.remove('hidden');
+
+            const fetchLogs = async () => {
+                try {
+                    const res = await fetch(`/api/logs/${name}`);
+                    const data = await res.json();
+
+                    // 현재 스크롤 위치 저장 check if user is at bottom
+                    const isAtBottom = logContent.scrollHeight - logContent.scrollTop === logContent.clientHeight;
+
+                    logContent.innerText = data.logs.join('');
+
+                    // 처음에만 혹은 사용자가 바닥에 있을 때만 자동 스크롤
+                    if (logContent.innerText === "Loading logs..." || isAtBottom) {
+                        logContent.scrollTop = logContent.scrollHeight;
+                    }
+                } catch (e) {
+                    // console.error(e); // Silent fail on polling error
+                }
+            };
+
+            // Clear any existing interval just in case
+            if (logInterval) clearInterval(logInterval);
+
+            // Initial fetch
+            await fetchLogs();
+
+            // Set poll interval (2 seconds)
+            logInterval = setInterval(fetchLogs, 2000);
+        }
+
+        function closeLogs() {
+            document.getElementById('log-modal').classList.add('hidden');
+            if (logInterval) {
+                clearInterval(logInterval);
+                logInterval = null;
+            }
+        }
+
         async function update() {
             try {
                 const res = await fetch('/api/data?t=' + Date.now()); const data = await res.json();
@@ -186,7 +235,8 @@
                         <td class="px-3 text-center text-xs text-slate-500">${bot.last_update}</td>
                         <td class="px-3 text-center">
                             <button onclick="controlBot('start', '${bot.name}')" class="bg-green-600/20 text-green-400 px-3 py-1 rounded text-xs font-bold mr-1">Start</button>
-                            <button onclick="controlBot('stop', '${bot.name}')" class="bg-red-600/20 text-red-400 px-3 py-1 rounded text-xs font-bold">Stop</button>
+                            <button onclick="controlBot('stop', '${bot.name}')" class="bg-red-600/20 text-red-400 px-3 py-1 rounded text-xs font-bold mr-1">Stop</button>
+                            <button onclick="showLogs('${bot.name}')" class="bg-slate-600/20 text-slate-300 px-3 py-1 rounded text-xs font-bold">Logs</button>
                         </td>
                     `;
                     tbody.appendChild(tr);
@@ -225,6 +275,20 @@
         }
         setInterval(update, 2000); update(); // 주기 2초로 단축하여 반응성 향상
     </script>
+
+    <!-- Log Modal -->
+    <div id="log-modal" class="fixed inset-0 bg-black/80 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-lg w-full max-w-4xl h-[80vh] flex flex-col shadow-2xl">
+            <div class="flex justify-between items-center p-4 border-b border-slate-700 bg-slate-800 rounded-t-lg">
+                <h3 id="log-modal-title" class="text-lg font-bold text-white">Bot Logs</h3>
+                <button onclick="closeLogs()" class="text-slate-400 hover:text-white font-bold text-xl">&times;</button>
+            </div>
+            <div class="flex-1 p-4 overflow-hidden">
+                <pre id="log-content"
+                    class="w-full h-full bg-black text-slate-300 p-4 rounded overflow-auto font-mono text-xs whitespace-pre-wrap"></pre>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

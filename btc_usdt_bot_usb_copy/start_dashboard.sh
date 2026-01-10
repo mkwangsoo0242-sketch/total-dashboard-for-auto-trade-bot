@@ -1,15 +1,39 @@
 #!/bin/bash
 
-# 스크립트가 위치한 디렉토리로 이동
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-cd "$SCRIPT_DIR"
+# Kill existing processes
+echo "Killing existing bot manager and uvicorn processes..."
+pkill -f "bot_manager.py"
+pkill -f "uvicorn"
 
-echo "기존 봇 대시보드 컨테이너를 중지합니다..."
-docker-compose down
+# Wait a moment
+sleep 2
 
-echo "도커 컴포즈를 사용하여 봇 대시보드를 빌드하고 시작합니다..."
-docker-compose up --build -d
+# [CRON FIX] Define PATH explicitly to ensure commands like python3, pkill are found
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-echo "봇 대시보드가 도커에서 시작되었습니다. http://localhost:8000 에서 접속하세요."
-echo "로그를 보려면: docker-compose logs -f"
-echo "중지하려면: docker-compose down"
+# Logging start time
+echo "--- Starting Dashboard at $(date) ---" >> dashboard_boot.log
+
+# Add PYTHONPATH for robust imports
+export PYTHONPATH=$PYTHONPATH:$(pwd):$(pwd)/"BTC_30분봉_Live":$(pwd)/"RealTradingBot_Deployment(5분봉)":$(pwd)/"bybit_bot_usb(1시간-통합)":$(pwd)/"deploy_package--15분봉"
+
+# Set Trading Mode to Paper for safety
+export TRADING_MODE=paper
+
+# Start the bot manager
+echo "Starting Bot Dashboard..."
+# Move to the directory where the script is located
+cd "$(dirname "$0")"
+
+nohup python3 -u bot_manager.py > dashboard.log 2>&1 &
+PID=$!
+
+sleep 2
+
+if ps -p $PID > /dev/null; then
+  echo "Dashboard started successfully. PID: $PID"
+  echo "Check dashboard.log for output."
+else
+  echo "Dashboard failed to start. Checking log:"
+  cat dashboard.log
+fi
