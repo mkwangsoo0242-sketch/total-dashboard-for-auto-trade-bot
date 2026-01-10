@@ -4095,3 +4095,88 @@
 2026-01-10 10:41:08,028 - INFO - Paper trading mode: Fetching REAL OHLCV...
 2026-01-10 10:41:09,551 - INFO - 🔍 Analysis | Regime: BEAR | Action: SHORT | Prob: 16.18% | Bal: 100
 2026-01-10 10:41:09,552 - INFO - Price: 90,600.0 | RSI: 53.2 | Trend: DOWN | Pos: NONE
+2026-01-10 10:41:16,661 - INFO - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:41:17,953 - INFO - 🔍 Analysis | Regime: BEAR | Action: SHORT | Prob: 20.87% | Bal: 100
+2026-01-10 10:41:17,953 - INFO - Price: 90,600.0 | RSI: 53.3 | Trend: DOWN | Pos: NONE
+2026-01-10 10:41:19,809 - INFO - Price: 90,600.0 | RSI: 53.2 | Trend: DOWN | Pos: NONE
+2026-01-10 10:41:27,978 - INFO - Price: 90,600.0 | RSI: 53.3 | Trend: DOWN | Pos: NONE
+2026-01-10 10:41:30,057 - INFO - Price: 90,600.0 | RSI: 53.2 | Trend: DOWN | Pos: NONE
+2026-01-10 10:41:37,999 - INFO - Price: 90,600.0 | RSI: 53.3 | Trend: DOWN | Pos: NONE
+2026-01-10 10:41:40,261 - INFO - Price: 90,600.0 | RSI: 53.2 | Trend: DOWN | Pos: NONE
+2026-01-10 10:41:48,021 - INFO - Price: 90,600.0 | RSI: 53.3 | Trend: DOWN | Pos: NONE
+2026-01-10 10:41:50,413 - INFO - Price: 90,600.0 | RSI: 53.2 | Trend: DOWN | Pos: NONE
+2026-01-10 10:41:58,042 - INFO - Price: 90,600.0 | RSI: 53.3 | Trend: DOWN | Pos: NONE
+2026-01-10 10:42:00,594 - INFO - Price: 90,600.0 | RSI: 53.2 | Trend: DOWN | Pos: NONE
+2026-01-10 10:42:08,064 - INFO - Price: 90,600.0 | RSI: 53.3 | Trend: DOWN | Pos: NONE
+2026-01-10 10:42:10,855 - INFO - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:42:13,454 - INFO - 🔍 Analysis | Regime: BEAR | Action: SHORT | Prob: 15.28% | Bal: 100
+2026-01-10 10:42:13,454 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:42:18,085 - INFO - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:42:19,976 - INFO - 🔍 Analysis | Regime: BEAR | Action: SHORT | Prob: 15.28% | Bal: 100
+2026-01-10 10:42:19,976 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:42:23,689 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:42:29,998 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:42:33,831 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:42:40,019 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:42:44,069 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:42:50,066 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:42:54,263 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:43:00,089 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:43:04,521 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:43:10,108 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:43:14,660 - INFO - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:43:16,520 - INFO - 🔍 Analysis | Regime: BEAR | Action: SHORT | Prob: 15.28% | Bal: 100
+2026-01-10 10:43:16,521 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:43:20,128 - INFO - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:43:22,170 - INFO - 🔍 Analysis | Regime: BEAR | Action: SHORT | Prob: 15.28% | Bal: 100
+2026-01-10 10:43:22,171 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:43:26,735 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:43:32,193 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:43:36,942 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:43:42,222 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:43:47,225 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:43:52,245 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:43:57,495 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:44:02,268 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:44:07,731 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:44:12,291 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:44:17,990 - INFO - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:44:19,695 - INFO - 🔍 Analysis | Regime: BEAR | Action: SHORT | Prob: 18.35% | Bal: 100
+2026-01-10 10:44:19,695 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:44:22,312 - INFO - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:44:23,779 - INFO - 🔍 Analysis | Regime: BEAR | Action: SHORT | Prob: 18.35% | Bal: 100
+2026-01-10 10:44:23,779 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:44:29,878 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:44:33,801 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:44:40,147 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:44:43,823 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:44:50,373 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:44:53,845 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:45:00,592 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:45:03,867 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:45:10,770 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:45:13,887 - INFO - Price: 90,600.0 | RSI: 53.4 | Trend: DOWN | Pos: NONE
+2026-01-10 10:45:21,019 - INFO - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:45:23,907 - INFO - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:45:24,115 - INFO - 🔍 Analysis | Regime: BEAR | Action: SHORT | Prob: 30.88% | Bal: 100
+2026-01-10 10:45:24,115 - INFO - Price: 90,600.0 | RSI: 53.5 | Trend: DOWN | Pos: NONE
+2026-01-10 10:45:25,233 - INFO - 🔍 Analysis | Regime: BEAR | Action: SHORT | Prob: 30.88% | Bal: 100
+2026-01-10 10:45:25,233 - INFO - Price: 90,600.0 | RSI: 53.5 | Trend: DOWN | Pos: NONE
+2026-01-10 10:45:34,208 - INFO - Price: 90,600.0 | RSI: 53.5 | Trend: DOWN | Pos: NONE
+2026-01-10 10:45:35,253 - INFO - Price: 90,600.0 | RSI: 53.5 | Trend: DOWN | Pos: NONE
+2026-01-10 10:45:44,640 - INFO - Price: 90,600.0 | RSI: 53.5 | Trend: DOWN | Pos: NONE
+2026-01-10 10:45:45,276 - INFO - Price: 90,600.0 | RSI: 53.5 | Trend: DOWN | Pos: NONE
+2026-01-10 10:45:54,910 - INFO - Price: 90,600.0 | RSI: 53.5 | Trend: DOWN | Pos: NONE
+2026-01-10 10:45:55,294 - INFO - Price: 90,600.0 | RSI: 53.5 | Trend: DOWN | Pos: NONE
+2026-01-10 10:46:05,146 - INFO - Price: 90,600.0 | RSI: 53.5 | Trend: DOWN | Pos: NONE
+2026-01-10 10:46:05,314 - INFO - Price: 90,600.0 | RSI: 53.5 | Trend: DOWN | Pos: NONE
+2026-01-10 10:46:15,332 - INFO - Price: 90,600.0 | RSI: 53.5 | Trend: DOWN | Pos: NONE
+2026-01-10 10:46:15,334 - INFO - Price: 90,600.0 | RSI: 53.5 | Trend: DOWN | Pos: NONE
+2026-01-10 10:46:25,354 - INFO - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:46:25,544 - INFO - Paper trading mode: Fetching REAL OHLCV...
+2026-01-10 10:46:26,907 - INFO - 🔍 Analysis | Regime: BEAR | Action: SHORT | Prob: 23.94% | Bal: 100
+2026-01-10 10:46:26,907 - INFO - Price: 90,600.0 | RSI: 53.6 | Trend: DOWN | Pos: NONE
+2026-01-10 10:46:27,127 - INFO - 🔍 Analysis | Regime: BEAR | Action: SHORT | Prob: 23.94% | Bal: 100
+2026-01-10 10:46:27,128 - INFO - Price: 90,600.0 | RSI: 53.6 | Trend: DOWN | Pos: NONE
+2026-01-10 10:46:37,140 - INFO - Price: 90,600.0 | RSI: 53.6 | Trend: DOWN | Pos: NONE
+2026-01-10 10:46:37,150 - INFO - Price: 90,600.0 | RSI: 53.6 | Trend: DOWN | Pos: NONE
